@@ -3,7 +3,19 @@ import './ChatMessage.css';
 import BotIcon from "../BotIcon.png";
 import UserIcon from "../UserIcon.png";
 
-const ChatMessage = ({ msg: { id, sender, receiver, message } }) => {
+const ChatMessage = ({ msg: { id, sender, receiver, message } } ) => {
+
+const isBot = sender === "Bot";
+
+if (isBot){
+  const synth = window.speechSynthesis;
+  let voices = [];
+  voices = synth.getVoices();
+  const toSpeak = new SpeechSynthesisUtterance(message);
+  toSpeak.voice = voices.find(voice => voice.lang === "sv-SE");
+  synth.speak(toSpeak);
+}
+
     return (
         sender === "Bot" ? (
             <div className="msgContainer leftJustify">
