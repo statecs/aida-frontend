@@ -1,0 +1,50 @@
+.agreeBtn {
+    background-color: #EDEDED;
+    color: black;
+    border-color: #EDEDED;
+    border-width: 2px;
+    border-radius: 35px 35px 35px 5px;
+}
+
+.modal-header{
+    border-bottom:0;
+}
+
+.modal-footer{
+    border-top:0;
+}
+
+.agreeBtn:hover {
+    background-color: white;
+    color: black;
+    border-color: #EDEDED;
+
+    border-width: 2px;
+}
+
+.agreeBtn:focus-within {
+    background-color: #EDEDED;
+    color: black;
+    border-color: #EDEDED;
+    border-width: 2px;
+
+}
+
+.agreeBtn:active {
+    background-color: #EDEDED !important;
+    color: black !important;
+    border-color: #EDEDED !important;
+    border-width: 2px !important;
+    font-weight: bold !important;
+}
+.agreeBtn:visited {
+    background-color: #EDEDED;
+    color: black;
+    border-color: #EDEDED;
+    border-width: 2px;
+
+}
+
+.display-linebreak {
+    white-space: pre;
+}

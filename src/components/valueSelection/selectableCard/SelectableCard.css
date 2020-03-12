@@ -1,0 +1,13 @@
+.selectCard {
+    margin:10px;
+    text-align: center;
+    padding: 5% 0;
+    border-radius: 35px 35px 35px 5px;
+}
+.card-body{
+    padding: 0;
+}
+.currentSelection {
+    background-color: #2177D2;
+    color: white;
+}
