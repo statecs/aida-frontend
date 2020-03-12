@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import './ChatInput.css';
+import SpeechInput from "./SpeechInput";
 
 class ChatInput extends Component {
     constructor(props) {
@@ -16,6 +17,15 @@ class ChatInput extends Component {
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
     };
+
+     handleInputChange = async (
+        message: string,
+        scrollToEnd: boolean = false
+        ) => {
+        await this.setState({
+        message
+    });
+  };
 
     sendMessage = () => {
         const { receiver, message } = this.state;
@@ -44,7 +54,13 @@ class ChatInput extends Component {
                             };
                         }}
                     />
-                    <button onClick={this.sendMessage} className="btn btn-primary submitBtn">Ok</button>
+            
+            <SpeechInput
+              language="sv-SE"
+              onSpeechInput={message => this.handleInputChange(message, true)}
+              onSpeechEnd={message => this.sendMessage()}
+            />
+                <button onClick={this.sendMessage} className="btn btn-primary submitBtn">Ok</button>
                 </div>
 
             </React.Fragment>
