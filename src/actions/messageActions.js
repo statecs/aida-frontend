@@ -15,7 +15,7 @@ export const sendMessage = (msgData) => dispatch => {
         type: SET_LOADING,
         payload: null
     });
-    axios.post('http://localhost:5005/webhooks/rest/webhook', msgData)
+    axios.post('http://localhost/webhooks/rest/webhook', msgData)
         .then(res => {
             let msgText = "";
             res.data.map((newMsg) => {
