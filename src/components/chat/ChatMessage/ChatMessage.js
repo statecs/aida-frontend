@@ -5,7 +5,7 @@ import UserIcon from "../UserIcon.png";
 
 const ChatMessage = ({ msg: { id, sender, receiver, message } }) => {
     return (
-        sender === "Bot" ? (
+        sender === "bot" ? (
             <div className="msgContainer leftJustify">
                 <div className="bot-messages-img">
                     <img src={BotIcon} alt="chatbot icon"/>

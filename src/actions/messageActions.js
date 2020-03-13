@@ -22,8 +22,8 @@ export const sendMessage = (msgData) => dispatch => {
                 msgText = msgText + newMsg.text + '\n';
                 return msgText;
             });
-            let userMsg = {sender: msgData.sender, receiver: 'Bot', message: msgData.message};
-            let botMsg = {sender: 'Bot', receiver: msgData.sender, message: msgText};
+            let userMsg = {sender: msgData.sender, receiver: 'bot', message: msgData.message};
+            let botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText};
 
             dispatch({
                 type: SEND_MESSAGE,

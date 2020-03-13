@@ -1,7 +1,7 @@
 import { FETCH_MESSAGES, SEND_MESSAGE, SET_LOADING } from '../actions/types';
 
 const initialState = {
-    messages: [{ id: 1, sender: 'Bot', receiver: 'User', message: 'Hej, mitt namn är Aida! Vad söker du vård för?' }],
+    messages: [{ id: 1, sender: 'bot', receiver: 'User', message: 'Hej, mitt namn är Aida! Vad söker du vård för?' }],
     numMsgs: 1,
     loading: false
 }

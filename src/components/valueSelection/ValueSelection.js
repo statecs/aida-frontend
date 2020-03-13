@@ -25,8 +25,19 @@ class ValueSelection extends Component {
         super(props);
         this.state = {
             chosenVals: [],
+            value: '',
             numChosen: 0
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
     }
 
     selectVal = (valName) => {
@@ -62,8 +73,18 @@ class ValueSelection extends Component {
 
     sendValues = () => {
         let sender = this.props.user;
-        let receiver = 'Bot';
+        let receiver = 'bot';
         let message = this.state.chosenVals.join(', ');
+        const rasaMsg = { sender, receiver, message };
+        //Send message to rasa and get chatbot response
+        this.props.sendMessage(rasaMsg);
+        this.props.exitValueSelect();
+    };
+
+    sendFormValues = () => {
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = this.state.value;
         const rasaMsg = { sender, receiver, message };
         //Send message to rasa and get chatbot response
         this.props.sendMessage(rasaMsg);
@@ -74,6 +95,15 @@ class ValueSelection extends Component {
         return (
             <React.Fragment>
                 <div class="container">
+                    <form action="" onSubmit={this.handleSubmit}>
+                        <div data-widget="accessible-autocomplete">
+                            
+                            <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Hej, Vad söker du vård för?" id="search" autocomplete="off" class="autocomplete-search-field" aria-describedby="initInstr" aria-owns="results" aria-expanded="false" aria-autocomplete="both" aria-activedescendant="" />
+                            <button onClick={this.sendFormValues} type="submit" id="submit">Sök</button>
+                            <ul id="results" class="autocomplete-list" role="listbox" tabindex="0"></ul>
+                            <div aria-live="assertive" class="screen-reader-text"></div>
+                        </div>
+                    </form>
                     <h3 className='intro' >Vanliga ärenden</h3>
                     <div className='cardDisplay'>
                         {values.map((value) => (
