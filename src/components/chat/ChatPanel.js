@@ -9,7 +9,7 @@ export default function ChatPanel() {
             <div className="outerContainer">
                 <div className="container">
                     <ChatMessages />
- <div className="inputContainer">
+                        <div className="inputContainer">
                     <ChatInput />
                 </div>
                 </div>

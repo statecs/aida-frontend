@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { sendMessage } from '../../actions/messageActions';
 import './ChatMessages.css';
 import ChatMessage from './ChatMessage/ChatMessage';
 import PulseLoader from 'react-spinners/PulseLoader';
@@ -9,6 +10,13 @@ import PulseLoader from 'react-spinners/PulseLoader';
 const spinnerCss = "display: table; margin: 20px auto;";
 class ChatMessages extends Component {
 
+    sendValues = (payload) => {
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = payload;
+        const rasaMsg = { sender, receiver, message };
+        this.props.sendMessage(rasaMsg);
+    };
     render() {
         let spinner;
     if (this.props.loading) {
@@ -18,23 +26,28 @@ class ChatMessages extends Component {
     }
         return (
             <React.Fragment>
-                <ScrollToBottom className="messagesDisplay" scrollViewClassName="msgScroll">
-                {this.props.messages.map(msg => <div id={msg.id} key={msg.id}><ChatMessage msg={msg}/></div>)}
-                {spinner}
-                </ScrollToBottom>
-                
-                
-                { /*<div className="container">
+
+                {  <ScrollToBottom className="messagesDisplay" scrollViewClassName="msgScroll">
+                  
+                <div className="container">
                     <div className="chat-container">
                         <div className="chat-display">
                             <div className="chats">
                                 <div className="msg-display">
 
-                                    {this.props.messages.map(msg => {
-                                        if (msg.sender == "Bot") {
-                                            return (<div className="bot-messages">
+                                    {this.props.messages.map((msg) => {
+                                        if (msg.sender === "bot" && msg.buttons) {
+                                            
+                                            return (<div className="bot-messages" key={"bot-" + msg.id }>
                                                 <div className="bot-messages-img">
                                                 
+                                               {
+                                                   msg.buttons.map((button, id) => (
+                                                      <button key={"buttons-" + id }type="submit" onClick={() => this.sendValues(button.payload)}>{button.title}</button>
+                                                )
+                                                   
+                                                   )
+                                               }
                                                 </div>
                                                 <div className="bot-msg">
                                                     <div className="bot-msg-text">
@@ -45,7 +58,7 @@ class ChatMessages extends Component {
                                         }
                                         else {
                                             return (
-                                                <div className="user-messages">
+                                                <div className="user-messages" key={"user-" + msg.id }>
                                                     <div className="user-msg">
                                                         <div className="user-msg-text">
                                                             <p className="display-linebreak">{msg.message}</p>
@@ -71,7 +84,9 @@ class ChatMessages extends Component {
                             </div>
                         </div>
                     </div>
-                </div> */}
+                </div>
+                {spinner}
+                 </ScrollToBottom>}
 
                 {/*<table className="table table-striped">
                     <thead>
@@ -95,7 +110,13 @@ class ChatMessages extends Component {
                             </tr>
                         ))}
                     </tbody>
-                </table>*/}
+                </table>
+                
+                <ScrollToBottom className="messagesDisplay" scrollViewClassName="msgScroll">
+                {this.props.messages.map(msg => <div id={msg.id} key={msg.id}><ChatMessage msg={msg}/></div>)}
+                {spinner}
+                </ScrollToBottom>
+                */}
             </React.Fragment>
         );
     }
@@ -110,4 +131,4 @@ const mapStateToProps = state => ({
     loading: state.messages.loading
 })
 
-export default connect(mapStateToProps)(ChatMessages);
+export default connect(mapStateToProps, { sendMessage })(ChatMessages);
