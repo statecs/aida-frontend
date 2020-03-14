@@ -36,29 +36,12 @@ class ChatMessages extends Component {
                                 <div className="msg-display">
 
                                     {this.props.messages.map((msg) => {
-                                        if (msg.sender === "bot" && msg.buttons) {
-                                            
-                                            return (<div className="bot-messages" key={"bot-" + msg.id }>
-                                                <div className="bot-messages-img">
-                                                
-                                               {
-                                                   msg.buttons.map((button, id) => (
-                                                      <button key={"buttons-" + id }type="submit" onClick={() => this.sendValues(button.payload)}>{button.title}</button>
-                                                )
-                                                   
-                                                   )
-                                               }
-                                                </div>
-                                                <div className="bot-msg">
-                                                    <div className="bot-msg-text">
-                                                        <p className="display-linebreak">{msg.message}</p>
-                                                    </div>
-                                                </div>
-                                            </div>)
-                                        }
-                                        else {
+                                        
                                             return (
-                                                <div className="user-messages" key={"user-" + msg.id }>
+
+                                         <div className="messages-container" key={"messages-" + msg.id }>
+                                            {msg.sender !== "bot" &&
+                                           <div className="user-messages" key={"user-" + msg.id }>
                                                     <div className="user-msg">
                                                         <div className="user-msg-text">
                                                             <p className="display-linebreak">{msg.message}</p>
@@ -68,8 +51,27 @@ class ChatMessages extends Component {
                                                    
                                                     </div>
                                                 </div>
-                                            )
-                                        }
+
+                                            }
+
+                                            {msg.sender === "bot" &&
+                                            <div className="bot-msg" key={"user-" + msg.id }>
+                                                        <div className="bot-msg">
+                                                            <div className="bot-msg-text">
+                                                                <p className="display-linebreak">{msg.message}</p>
+                                                                {msg.buttons &&
+                                                                    msg.buttons.map((button, id) =>
+                                                                        <button key={"buttons-" + id } type="submit" onClick={() => this.sendValues(button.payload)}>{button.title}</button> 
+                                                                    )}
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+
+                                            }
+                                            </div>)
+                                        
+                                       
                                         // <tr key={msg.id}>
                                         //     <td>{msg.id}</td>
                                         //     <td>{msg.sender}</td>
