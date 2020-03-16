@@ -3,7 +3,7 @@ import './ChatMessage.css';
 import BotIcon from "../BotIcon.png";
 import UserIcon from "../UserIcon.png";
 
-const ChatMessage = ({ msg: { id, sender, receiver, message } }) => {
+const ChatMessage = ({ msg: { id, sender, receiver, message, buttons } }) => {
     return (
         sender === "bot" ? (
             <div className="msgContainer leftJustify">
@@ -15,6 +15,9 @@ const ChatMessage = ({ msg: { id, sender, receiver, message } }) => {
                 <div className="msgBubble botBubbleColor">
                     <div className="msgText botText display-linebreak">{message}</div>
                 </div>
+                 {buttons && 
+                    buttons.map((button, id) =>
+                <button key={"buttons-" + id } type="submit" onClick={() => this.sendValues(button.payload)}>{button.title}</button> )} 
             </div>
         )
             : (
