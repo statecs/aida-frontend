@@ -1,6 +1,5 @@
 import React from 'react';
 import ChatMessages from './ChatMessages';
-import ChatInput from './ChatInput';
 import './ChatPanel.css';
 
 export default function ChatPanel() {
@@ -8,15 +7,9 @@ export default function ChatPanel() {
         <React.Fragment>
             <div className="outerContainer">
                 <div className="container">
-                    <ChatMessages />
-                        <div className="inputContainer">
-                    <ChatInput />
+                    <ChatMessages /> 
                 </div>
-                </div>
-               
-
             </div>
-
         </React.Fragment>
     )
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 /* eslint react/prop-types: 0 */
 import styles from './nav.less';
-import ChatInput from './ChatInput';
 
 const Nav = (props) => {
     const dots = [];
@@ -17,13 +16,8 @@ const Nav = (props) => {
     }
 
     return (
-        
-    
-        <div className={styles.nav}>{dots}
+        <div className={styles.nav}>
          <p><button onClick={props.previousStep}>Tillbaka</button></p>
-           <p><button onClick={props.lastStep}>Nästa</button></p>
-
-
         </div>
     );
 };

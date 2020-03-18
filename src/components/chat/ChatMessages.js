@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendMessage } from '../../actions/messageActions';
 import './ChatMessages.css';
-import ChatMessage from './ChatMessage/ChatMessage';
 import PulseLoader from 'react-spinners/PulseLoader';
 import StepWizard from 'react-step-wizard';
 import Nav from './Nav';
+import StepMsg from './StepMsg';
+import StepController from './StepController';
 import "./transitions.css";
 
 const spinnerCss = "display: table; margin: 20px auto;";
@@ -19,14 +19,12 @@ const animations = {
 
 class ChatMessages extends Component {
 
-    sendValues = (payload) => {
-        let sender = this.props.user;
-        let receiver = 'bot';
-        let message = payload;
-        const rasaMsg = { sender, receiver, message };
-        this.props.sendMessage(rasaMsg);
-    };
+    setInstance = instance => this.setState({instance});
+
     render() {
+
+    const instance = this.state;
+
         let spinner;
     if (this.props.loading) {
       spinner = <PulseLoader css={spinnerCss} color={"#2177D2"} />;
@@ -43,63 +41,28 @@ class ChatMessages extends Component {
                             <div className="chats">
                                 <div className="msg-display">
 
-                                    <StepWizard className="msg-display" nav={<Nav />} isHashEnabled={true} isLazyMount={true} transitions={animations}>
+                                    {spinner}
 
+                                    <StepWizard className="msg-display" nav={<Nav />} isHashEnabled={true} isLazyMount={true} transitions={animations} instance={this.setInstance}>
                                         {this.props.messages.map((msg, index) => {
-
-                                     if (msg.sender === "bot" ){
-                                        
-                                         return (
-
-                                         <React.Fragment key={"messages-" + index }>
-                                         
-                                            {msg.sender !== "bot" &&
-                                           <div className="user-messages" hasKey={"messages-" + msg.sender } >
-                                                    <div className="user-msg">
-                                                        <div className="user-msg-text">
-                                                            <p className="display-linebreak">{msg.message}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="user-messages-img">
-                                                   
-                                                    </div>
-                                                </div>
-
-                                            }
-
-                                            {msg.sender === "bot" &&
-                                            <div className="bot-msg" hasKey={"messages-" + msg.sender } >
-                                                        <div className="bot-msg">
-                                                            <div className="bot-msg-text">
-                                                                <p className="display-linebreak">{msg.message}</p>
-                                                                {msg.buttons &&
-                                                                    msg.buttons.map((button, id) =>
-                                                                        <button key={"buttons-" + id } type="submit" onClick={() => {  this.sendValues(button.payload)} }>{button.title}</button> 
-                                                                    )}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    </div>
-
-                                            }
-                                        
                                             
-                                            </React.Fragment>)
+                                            if (msg.sender === "bot" ){
 
-                                    }
-                                        
-                                    }
-                                    
-                                    )}</StepWizard> 
-
+                                                return (
+                                                    <StepMsg msg={msg} key={"messages-"+ index } hashKey={'basic' + index} ></StepMsg>
+                                                    
+                                                )
+                                                }
+                                            })
+                                        }
+                                    </StepWizard> 
+                                    {instance ? <StepController stepInstance={this.state.instance}/> : null }
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-    }
-                {spinner}
-    
+            }
        </React.Fragment>
         );
     }
@@ -117,4 +80,4 @@ const mapStateToProps = state => ({
     loading: state.messages.loading
 })
 
-export default connect(mapStateToProps, { sendMessage })(ChatMessages);
+export default connect(mapStateToProps)(ChatMessages);
