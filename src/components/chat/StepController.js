@@ -4,7 +4,6 @@ import ChatInput from './ChatInput';
 const StepController = ({ stepInstance }) => {
     return (
         <React.Fragment>
-            <button onClick={stepInstance.lastStep}>Nästa</button>
                 <div className="inputContainer">
                     <ChatInput stepInstance={stepInstance} />
                 </div>

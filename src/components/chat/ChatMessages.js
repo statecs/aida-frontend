@@ -44,13 +44,12 @@ class ChatMessages extends Component {
                                     {spinner}
 
                                     <StepWizard className="msg-display" nav={<Nav />} isHashEnabled={true} isLazyMount={true} transitions={animations} instance={this.setInstance}>
-                                        {this.props.messages.map((msg, index) => {
+                                        {this.props.messages.map((msg) => {
                                             
                                             if (msg.sender === "bot" ){
 
                                                 return (
-                                                    <StepMsg msg={msg} key={"messages-"+ index } hashKey={'basic' + index} ></StepMsg>
-                                                    
+                                                     <StepMsg key={msg.id} msg={msg} hasKey={msg.id} ></StepMsg>   
                                                 )
                                                 }
                                             })

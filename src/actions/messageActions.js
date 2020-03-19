@@ -22,11 +22,15 @@ export const sendMessage = (msgData) => dispatch => {
         .then(res => {
             let msgText = "";
             let msgButtons = "";
+            let msgCustom = "";
             let botMsg = "";
 
             res.data.map((newMsg) => {
-                msgText = msgText + newMsg.text + '\n';
-                return msgText;
+                if (newMsg.text){
+                    msgText = msgText + newMsg.text + '\n';
+                    return msgText;
+                }
+                return msgText;  
             });
 
             res.data.map((newButtons) => {
@@ -34,11 +38,17 @@ export const sendMessage = (msgData) => dispatch => {
                 return msgButtons;
             });
 
+             res.data.map((customType) => {
+                msgCustom = customType.custom;
+                return msgCustom;
+            });
             let userMsg = {sender: msgData.sender, receiver: 'bot', message: msgData.message};
 
             if (msgButtons) {
                 botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText, buttons: msgButtons};
-            }  else {
+            }  else if (msgCustom) {
+                botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText, custom: msgCustom};
+            } else {
                 botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText};
             }
 
