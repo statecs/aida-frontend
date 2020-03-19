@@ -114,6 +114,7 @@ class ValueSelection extends Component {
                     </div>
                     <Button disabled={this.state.numChosen !== maxValuesAllowed} onClick={this.sendValues} className="valSubmitBtn">Sök</Button>
 
+                    <a target='_blank' rel="noopener noreferrer" href="https://forms.gle/72kUUsRsk48VRuNUA">Ge feedback</a>
                 </div>
 
             </React.Fragment>

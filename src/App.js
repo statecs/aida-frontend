@@ -11,7 +11,7 @@ import ValueSelection from './components/valueSelection/ValueSelection';
 class App extends Component {
   state = {
     showPopupForm: false,
-    showValueSelect: true
+    showValueSelect: false
   };
 
   closePopupForm = () => {

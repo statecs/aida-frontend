@@ -34,6 +34,11 @@ class ChatInput extends Component {
         //Send message to rasa and get chatbot response
         this.props.sendMessage(rasaMsg);
         this.setState({ message: '' });
+
+        setTimeout(() => {
+        this.props.stepInstance.lastStep()
+        }, 1000);
+        
     };
 
     render() {

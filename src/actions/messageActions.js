@@ -15,15 +15,42 @@ export const sendMessage = (msgData) => dispatch => {
         type: SET_LOADING,
         payload: null
     });
+    if (msgData.message === "") {
+        return;
+    }
     axios.post('http://localhost/webhooks/rest/webhook', msgData)
         .then(res => {
             let msgText = "";
+            let msgButtons = "";
+            let msgCustom = "";
+            let botMsg = "";
+
             res.data.map((newMsg) => {
-                msgText = msgText + newMsg.text + '\n';
-                return msgText;
+                if (newMsg.text){
+                    msgText = msgText + newMsg.text + '\n';
+                    return msgText;
+                }
+                return msgText;  
+            });
+
+            res.data.map((newButtons) => {
+                msgButtons = newButtons.buttons;
+                return msgButtons;
+            });
+
+             res.data.map((customType) => {
+                msgCustom = customType.custom;
+                return msgCustom;
             });
             let userMsg = {sender: msgData.sender, receiver: 'bot', message: msgData.message};
-            let botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText};
+
+            if (msgButtons) {
+                botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText, buttons: msgButtons};
+            }  else if (msgCustom) {
+                botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText, custom: msgCustom};
+            } else {
+                botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText};
+            }
 
             dispatch({
                 type: SEND_MESSAGE,
