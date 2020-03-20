@@ -1,4 +1,4 @@
-import { FETCH_MESSAGES, SEND_MESSAGE, SET_LOADING } from './types';
+import { SEND_MESSAGE, SET_LOADING } from './types';
 import axios from 'axios';
 
 

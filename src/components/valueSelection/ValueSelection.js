@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import SelectableCard from './selectableCard/SelectableCard';
 import './ValueSelection.css';
 import Button from 'react-bootstrap/Button';
+import useInitialFocus from '../hooks/useInitialFocus';
+
+    //const mainRef = useRef(null);
+     //useInitialFocus(mainRef);
 
 let values = [{
     name: "Jag har huvudvärk",
@@ -28,6 +32,7 @@ class ValueSelection extends Component {
             value: '',
             numChosen: 0
         };
+         //useInitialFocus(this.exampleRef);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -78,7 +83,6 @@ class ValueSelection extends Component {
         const rasaMsg = { sender, receiver, message };
         //Send message to rasa and get chatbot response
         this.props.sendMessage(rasaMsg);
-        this.props.exitValueSelect();
     };
 
     sendFormValues = () => {
@@ -88,20 +92,17 @@ class ValueSelection extends Component {
         const rasaMsg = { sender, receiver, message };
         //Send message to rasa and get chatbot response
         this.props.sendMessage(rasaMsg);
-        this.props.exitValueSelect();
     };
 
     render() {
         return (
             <React.Fragment>
-                <div class="container">
+                <div className="container">
                     <form action="" onSubmit={this.handleSubmit}>
                         <div data-widget="accessible-autocomplete">
                             
-                            <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Hej, Vad söker du vård för?" id="search" autocomplete="off" class="autocomplete-search-field" aria-describedby="initInstr" aria-owns="results" aria-expanded="false" aria-autocomplete="both" aria-activedescendant="" />
+                            <input tabIndex="-1" type="text" value={this.state.value} onChange={this.handleChange} placeholder="Hej, Vad söker du vård för?" id="search" />
                             <button onClick={this.sendFormValues} type="submit" id="submit">Sök</button>
-                            <ul id="results" class="autocomplete-list" role="listbox" tabindex="0"></ul>
-                            <div aria-live="assertive" class="screen-reader-text"></div>
                         </div>
                     </form>
                     <h3 className='intro' >Vanliga ärenden</h3>
@@ -114,7 +115,7 @@ class ValueSelection extends Component {
                     </div>
                     <Button disabled={this.state.numChosen !== maxValuesAllowed} onClick={this.sendValues} className="valSubmitBtn">Sök</Button>
 
-                    <a target='_blank' rel="noopener noreferrer" href="https://forms.gle/72kUUsRsk48VRuNUA">Ge feedback</a>
+                    <Button target='_blank' rel="noopener noreferrer" href="https://forms.gle/72kUUsRsk48VRuNUA">Ge feedback</Button>
                 </div>
 
             </React.Fragment>

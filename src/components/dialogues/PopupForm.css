@@ -4,6 +4,12 @@
     border-color: #EDEDED;
     border-width: 2px;
     border-radius: 35px 35px 35px 5px;
+    padding: 1em;
+    margin: 0.5em;
+}
+.modal-body{
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-header{

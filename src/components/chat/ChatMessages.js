@@ -5,7 +5,7 @@ import './ChatMessages.css';
 import PulseLoader from 'react-spinners/PulseLoader';
 import StepWizard from 'react-step-wizard';
 import Nav from './Nav';
-import StepMsg from './StepMsg';
+import ChatStep from './ChatStep';
 import StepController from './StepController';
 import "./transitions.css";
 
@@ -44,16 +44,11 @@ class ChatMessages extends Component {
                                     {spinner}
 
                                     <StepWizard className="msg-display" nav={<Nav />} isHashEnabled={true} isLazyMount={true} transitions={animations} instance={this.setInstance}>
-                                        {this.props.messages.map((msg) => {
-                                            
-                                            if (msg.sender === "bot" ){
+                                    
+                                    {this.props.messages
+                                        .filter(msg => msg.sender === "bot" )
+                                        .map((msg, idx) =>  <ChatStep key={msg.id} msg={msg} hasKey={idx+1} ></ChatStep> )}
 
-                                                return (
-                                                     <StepMsg key={msg.id} msg={msg} hasKey={msg.id} ></StepMsg>   
-                                                )
-                                                }
-                                            })
-                                        }
                                     </StepWizard> 
                                     {instance ? <StepController stepInstance={this.state.instance}/> : null }
                                 </div>

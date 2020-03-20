@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import './ChatMessages.css';
 
-class StepMsg extends Component {
+class ChatStep extends Component {
 
  constructor(props) {
         super(props);
@@ -54,7 +54,12 @@ class StepMsg extends Component {
 
 
     };
+
     render() {
+        //Hack
+        if(this.props.currentStep !== this.props.totalSteps){
+            this.props.lastStep();
+        }
 
         return (
          <React.Fragment>
@@ -70,7 +75,7 @@ class StepMsg extends Component {
             }
 
             {this.props.msg.sender === "bot" &&
-                        <div className="bot-msg-text">
+                        <React.Fragment>
                             <p role="region" aria-live="polite" aria-atomic="true"  className="display-linebreak">{this.props.msg.message}</p>
 
                         {this.props.msg.buttons &&
@@ -88,11 +93,11 @@ class StepMsg extends Component {
                                     </label>
                                     </li>
                                 )}
-                                <button  onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Skicka</button>
+                                <button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Skicka</button>
                             </ul>
                           
                             }
-                       </div>
+                       </React.Fragment>
             }
                                              
         </React.Fragment>
@@ -100,7 +105,7 @@ class StepMsg extends Component {
     }
 }
 
-StepMsg.propTypes = {
+ChatStep.propTypes = {
     messages: PropTypes.array.isRequired,
     nextStep: PropTypes.func,
     previousStep: PropTypes.func
@@ -112,4 +117,4 @@ const mapStateToProps = state => ({
     loading: state.messages.loading
 })
 
-export default connect(mapStateToProps, { sendMessage })(StepMsg);
+export default connect(mapStateToProps, { sendMessage })(ChatStep);
