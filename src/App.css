@@ -34,3 +34,24 @@
     transform: rotate(360deg);
   }
 }
+
+.dqpl-layout{
+  left:0 !important;
+}
+.dqpl-skip-container{
+  position: absolute;
+  width: 100%;
+  display: block;
+  padding: 10px;
+  color: #fff !important;
+  top: -50px;
+  text-align: center;
+  transition: top .3s ease-in-out;
+  background-image: none;
+  z-index: 6;
+  left:1px;
+}
+
+.dqpl-skip-container.dqpl-skip-container-active{
+  top:0;
+}

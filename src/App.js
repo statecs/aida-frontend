@@ -59,14 +59,26 @@ const closePopupForm = () => setShow(false);
       <Provider store={store}>
       <PopupForm show={show} handleClose={closePopupForm}/>
   
-      <SkipLink skipText="Hoppa till" target={'#content'} targetText="Sidans innehåll" />     
-      
-       <Link to="/aida" tabIndex={-1} aria-label="Start"><Button>
+  
+        <div class="dqpl-skip-container">
+          <a href="#content" class="dqpl-skip-link">Hoppa till sidans innehåll
+          </a>
+        </div>
+
+         <nav role="navigation"> 
+          <MenuItem aria-label="Start">
+            <Link to="/aida" >
               Start
-            </Button></Link>
-          <Link to="/aida/arenden" tabIndex={-1} aria-label="Mina ärenden" ><Button>
+            </Link>
+          </MenuItem>
+          <MenuItem aria-label="Mina ärenden">
+            <Link to="/aida/arenden" >
               Mina ärenden
-            </Button></Link>
+            </Link>
+          </MenuItem>
+          </nav>
+      
+      
         <Layout>
           <Main
             aria-labelledby="main-heading"

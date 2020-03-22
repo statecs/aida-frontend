@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import './Home.css';
 import {Button, TextField} from 'cauldron-react'
-import {navigate} from "@reach/router"
+import {navigate, Link} from "@reach/router"
 
 let values = [{
     name: "Jag har huvudvärk",
@@ -72,7 +72,16 @@ class Home extends Component {
     render() {
         return (
             <React.Fragment>
+           
                 <div className="container">
+                 <h1 className="site-logo"> 
+                    <Link to="/aida" itemProp="url"> 
+                        <span itemProp="logo" itemType="http://schema.org/ImageObject"> 
+                            <img itemrop="url" aria-label="Symptomkollen" alt="Symptomkollen" rel="home" src="feedback.png" width="370" height="75"/> 
+                    </span> 
+                    </Link>
+                </h1> 
+
                 
                         <form onSubmit={this.validate} noValidate>
 
@@ -91,7 +100,7 @@ class Home extends Component {
                         <div className='cardDisplay'>
                             {values.map((value) => (
                                     <div key={value.name}>
-                                        <Button onClick={this.sendValues} value={value.name} type="submit" id="submit">{value.name}</Button>
+                                        <Button onClick={this.sendValues} value={value.name} type="submit">{value.name}</Button>
                                     </div>
                                 ))}  
                     </div>

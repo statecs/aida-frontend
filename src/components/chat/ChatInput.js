@@ -46,6 +46,7 @@ class ChatInput extends Component {
                         className="textArea"
                         type="text"
                         name="message"
+                        label="Skriv ett svar"
                         placeholder="Skriv ett svar..."
                         onChange={this.onChange}
                         value={this.state.message}
