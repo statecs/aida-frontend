@@ -34,15 +34,30 @@
     transform: rotate(360deg);
   }
 }
+.navContainer{
+    width: 100%;
+    margin: 0 auto;
+    z-index: 1;
+    position: absolute;
+  }
 
+.icons svg{
+  font-size:2em;
+  margin: 0.7em;
+}
+.chatIcon{
+  float:right
+}
 .dqpl-layout{
   left:0 !important;
+  top:0;
 }
 .dqpl-skip-container{
   position: absolute;
   width: 100%;
   display: block;
   padding: 10px;
+  background-color: #2177D2;
   color: #fff !important;
   top: -50px;
   text-align: center;
@@ -51,7 +66,9 @@
   z-index: 6;
   left:1px;
 }
-
+.dqpl-skip-container a{
+  outline:none;
+}
 .dqpl-skip-container.dqpl-skip-container-active{
   top:0;
 }

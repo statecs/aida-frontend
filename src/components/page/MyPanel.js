@@ -10,10 +10,9 @@ class MyPanel extends Component {
             <React.Fragment>
                 <div className="container">
                     <h3 className='intro'>Mina ärenden</h3>
-
-                    <Link to="/aida/chat" tabIndex={-1} aria-label="Gå till chatt" >
-              Gå till chatt
-          </Link>
+                    <Link href="#content" to="/aida/chat" aria-label="Gå till chatt" >
+                            Gå till chatt
+                    </Link>
                 </div>
             </React.Fragment>
         )

@@ -25,11 +25,11 @@ class ChatMessages extends Component {
 
     const instance = this.state;
 
-    if(this.state){
+    if((this.state && this.state.instance.totalSteps > 0)){
         setTimeout(() => {
             this.state.instance.lastStep();
         }, 0);
-}
+    }
         let spinner;
     if (this.props.loading) {
       spinner = <PulseLoader css={spinnerCss} color={"#2177D2"} />;

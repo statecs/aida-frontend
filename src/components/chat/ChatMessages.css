@@ -38,6 +38,13 @@ html {
   font-size: calc(10px + 2vmin);
   color: black;
 } 
+
+.backNav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+}
 /* 
 .container {
     max-width: 500 !important;

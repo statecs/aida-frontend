@@ -17,7 +17,7 @@ const Nav = (props) => {
     }
 
     return (
-        <div className={styles.nav}>
+        <div className="backNav">
         {props.currentStep !== 1 && 
          <p><Button onClick={props.previousStep}>Tillbaka</Button></p>
         } 

@@ -6,10 +6,12 @@ import PopupForm from './components/dialogues/PopupForm';
 import ChatPanel from './components/chat/ChatPanel';
 import MyPanel from './components/page/MyPanel';
 import Home from './components/home/Home';
+import { TiHome } from "react-icons/ti";
+ import { IoIosChatbubbles } from "react-icons/io";
 
 import store from './store';
 import { Router, Link } from "@reach/router"
-import {Layout, Main, MenuItem, TopBar, SkipLink, Button} from 'cauldron-react'
+import {Layout, Main} from 'cauldron-react'
 
 let hasTransitioned = false // avoid focusing on the first render
 
@@ -59,26 +61,25 @@ const closePopupForm = () => setShow(false);
       <Provider store={store}>
       <PopupForm show={show} handleClose={closePopupForm}/>
   
-  
-        <div class="dqpl-skip-container">
-          <a href="#content" class="dqpl-skip-link">Hoppa till sidans innehåll
+ 
+        <nav className="dqpl-skip-container">
+          <a href="#content" className="dqpl-skip-link">Hoppa till sidans innehåll
           </a>
-        </div>
+        </nav>
+      
+      
+         <div className="navContainer">
+            <Link to="/aida" className="icons"  aria-label="Start">
+              <TiHome />
 
-         <nav role="navigation"> 
-          <MenuItem aria-label="Start">
-            <Link to="/aida" >
-              Start
             </Link>
-          </MenuItem>
-          <MenuItem aria-label="Mina ärenden">
-            <Link to="/aida/arenden" >
-              Mina ärenden
+    
+        
+            <Link to="/aida/arenden" className="icons chatIcon" aria-label="Mina ärenden">
+              <IoIosChatbubbles/>
             </Link>
-          </MenuItem>
-          </nav>
       
-      
+      </div>
         <Layout>
           <Main
             aria-labelledby="main-heading"
@@ -93,6 +94,7 @@ const closePopupForm = () => setShow(false);
         
           </Main>
           </Layout>
+           
         </Provider>
         </React.Fragment>
      

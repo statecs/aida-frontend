@@ -51,6 +51,21 @@
 
 }
 
+.call-btn{
+    background-color: #d10000;
+    color: white;
+    margin-top: 2em;
+}
 .display-linebreak {
     white-space: pre;
+}
+
+.modal-content{
+    height:100vh;
+}
+.modal-dialog{
+    margin:0 auto;
+}
+.modal-body{
+    padding-top: 50%;
 }
