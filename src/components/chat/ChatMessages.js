@@ -12,8 +12,8 @@ import "./transitions.css";
 const spinnerCss = "display: table; margin: 20px auto;";
 
 const animations = {
-    enterRight: "animated slideInUp",
-    enterLeft: "animated slideInUp",
+    enterRight: "animated intro",
+    enterLeft: "animated intro",
     intro: "animated intro"
   };
 
@@ -25,6 +25,11 @@ class ChatMessages extends Component {
 
     const instance = this.state;
 
+    if(this.state){
+        setTimeout(() => {
+            this.state.instance.lastStep();
+        }, 0);
+}
         let spinner;
     if (this.props.loading) {
       spinner = <PulseLoader css={spinnerCss} color={"#2177D2"} />;
@@ -34,29 +39,23 @@ class ChatMessages extends Component {
         return (
 
         <React.Fragment>
-            {    
-                <div className="container">
-                    <div className="chat-container">
-                        <div className="chat-display">
-                            <div className="chats">
-                                <div className="msg-display">
+        {spinner}
+        <div className="container" role="region" aria-live="polite">
 
-                                    {spinner}
-
-                                    <StepWizard className="msg-display" nav={<Nav />} isHashEnabled={true} isLazyMount={true} transitions={animations} instance={this.setInstance}>
-                                    
+            {!this.props.loading &&
+            <React.Fragment>
+            
+            <StepWizard className="msg-display" nav={<Nav />} isLazyMount={true} transitions={animations} instance={this.setInstance}>
                                     {this.props.messages
                                         .filter(msg => msg.sender === "bot" )
-                                        .map((msg, idx) =>  <ChatStep key={msg.id} msg={msg} hasKey={idx+1} ></ChatStep> )}
+                                        .map((msg, idx) => <ChatStep  key={idx+1} msg={msg} ></ChatStep> )}
 
                                     </StepWizard> 
                                     {instance ? <StepController stepInstance={this.state.instance}/> : null }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                              
+      </React.Fragment>
             }
+             </div> 
        </React.Fragment>
         );
     }

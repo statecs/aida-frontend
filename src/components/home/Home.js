@@ -95,8 +95,6 @@ class Home extends Component {
                                     </div>
                                 ))}  
                     </div>
-
-                    <Button target='_blank' rel="noopener noreferrer" href="https://forms.gle/72kUUsRsk48VRuNUA">Ge feedback</Button>
                 </div>
 
             </React.Fragment>

@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 95vh;
+    height: 80vh;
     background-color: #ffffff;
   }
   
@@ -12,12 +12,15 @@
     flex-direction: column;
     justify-content: space-between;
     background: #FFFFFF;
-    border-radius: 8px;
-    border: 2px solid;
     border-color: #f3f3f3;
-    height: 75%;
+    height: 90%;
     margin-top: 10px;
     margin-bottom: 10px;
+    border-left: 6px solid transparent;
+  }
+  .container:focus{
+    outline: 0;
+    border-left-color: #283640;
   }
 
   .inputContainer {

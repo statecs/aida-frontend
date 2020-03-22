@@ -1,6 +1,7 @@
 import React from 'react';
 /* eslint react/prop-types: 0 */
 import styles from './nav.less';
+import {Button} from 'cauldron-react'
 
 const Nav = (props) => {
     const dots = [];
@@ -17,7 +18,9 @@ const Nav = (props) => {
 
     return (
         <div className={styles.nav}>
-         <p><button onClick={props.previousStep}>Tillbaka</button></p>
+        {props.currentStep !== 1 && 
+         <p><Button onClick={props.previousStep}>Tillbaka</Button></p>
+        } 
         </div>
     );
 };

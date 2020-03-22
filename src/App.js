@@ -9,7 +9,7 @@ import Home from './components/home/Home';
 
 import store from './store';
 import { Router, Link } from "@reach/router"
-import {Layout, Main, MenuItem, TopBar} from 'cauldron-react'
+import {Layout, Main, MenuItem, TopBar, SkipLink, Button} from 'cauldron-react'
 
 let hasTransitioned = false // avoid focusing on the first render
 
@@ -59,23 +59,14 @@ const closePopupForm = () => setShow(false);
       <Provider store={store}>
       <PopupForm show={show} handleClose={closePopupForm}/>
   
-        <nav className="dqpl-skip-container">
-          <a href="#content" className="dqpl-skip-link">
-            <span className="dqpl-skip-two">Hoppa till sidans innehåll</span>
-          </a>
-        </nav>
-        <TopBar role="banner">
-          <MenuItem aria-label="Start">
-            <Link to="/aida" tabIndex={-1} >
+      <SkipLink skipText="Hoppa till" target={'#content'} targetText="Sidans innehåll" />     
+      
+       <Link to="/aida" tabIndex={-1} aria-label="Start"><Button>
               Start
-            </Link>
-          </MenuItem>
-          <MenuItem aria-label="Mina ärenden">
-            <Link to="/aida/arenden" tabIndex={-1} >
+            </Button></Link>
+          <Link to="/aida/arenden" tabIndex={-1} aria-label="Mina ärenden" ><Button>
               Mina ärenden
-            </Link>
-          </MenuItem>
-        </TopBar>
+            </Button></Link>
         <Layout>
           <Main
             aria-labelledby="main-heading"

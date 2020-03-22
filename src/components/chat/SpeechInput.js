@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { FaMicrophone, FaCircle } from "react-icons/fa";
+import {Button} from 'cauldron-react'
 
 type SpeechInputProps = {
   onSpeechInput: (message: string) => Promise<void>,
@@ -96,13 +97,13 @@ export default class SpeechInput extends Component<
 
   render() {
     return supportsSpeechRecognition() ? (
-      <button type="button" id="speech-input" onClick={this.startRecognition}>
+      <Button type="button" id="speech-input" onClick={this.startRecognition}>
         {this.state.isRecognizing ? (
           <FaCircle className="vertical-center" color="#ed4933" />
         ) : (
           <FaMicrophone className="vertical-center" />
         )}
-      </button>
+      </Button>
     ) : null;
   }
 }

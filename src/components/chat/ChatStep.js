@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import './ChatMessages.css';
+import {Button} from 'cauldron-react'
 
 class ChatStep extends Component {
 
@@ -35,10 +36,6 @@ class ChatStep extends Component {
         let message = messages.join(", ");
         const rasaMsg = { sender, receiver, message };
         this.props.sendMessage(rasaMsg);
-
-         setTimeout(() => {
-            this.props.lastStep()
-        }, 1000);
     };
 
     sendValues = (payload) => {
@@ -47,19 +44,9 @@ class ChatStep extends Component {
         let message = payload;
         const rasaMsg = { sender, receiver, message };
         this.props.sendMessage(rasaMsg);
-    
-        setTimeout(() => {
-            this.props.lastStep()
-        }, 1000);
-
-
     };
 
     render() {
-        //Hack
-        if(this.props.currentStep !== this.props.totalSteps){
-            this.props.lastStep();
-        }
 
         return (
          <React.Fragment>
@@ -75,12 +62,12 @@ class ChatStep extends Component {
             }
 
             {this.props.msg.sender === "bot" &&
-                        <React.Fragment>
-                            <p role="region" aria-live="polite" aria-atomic="true"  className="display-linebreak">{this.props.msg.message}</p>
+                <React.Fragment>
+                            <p >{this.props.msg.message}</p>
 
                         {this.props.msg.buttons &&
                             this.props.msg.buttons.map((button, id) =>
-                                <button key={"buttons-" + id } type="submit" onClick={() => {  this.sendValues(button.payload)} }>{button.title}</button> 
+                                <Button key={"buttons-" + id } type="submit" onClick={() => {  this.sendValues(button.payload)} }>{button.title}</Button>
                             )}
 
                               {this.props.msg.custom && 
@@ -93,7 +80,7 @@ class ChatStep extends Component {
                                     </label>
                                     </li>
                                 )}
-                                <button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Skicka</button>
+                                <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Skicka</Button>
                             </ul>
                           
                             }
