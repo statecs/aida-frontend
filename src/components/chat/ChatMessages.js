@@ -26,9 +26,7 @@ class ChatMessages extends Component {
     const instance = this.state;
 
     if((this.state && this.state.instance.totalSteps > 0)){
-        setTimeout(() => {
-            this.state.instance.lastStep();
-        }, 0);
+    this.state.instance.lastStep();
     }
         let spinner;
     if (this.props.loading) {
@@ -45,10 +43,10 @@ class ChatMessages extends Component {
             {!this.props.loading &&
             <React.Fragment>
             
-            <StepWizard className="msg-display" nav={<Nav />} isLazyMount={true} transitions={animations} instance={this.setInstance}>
+            <StepWizard className="msg-display" isHashEnabled={true} nav={<Nav />} isLazyMount={true} transitions={animations} instance={this.setInstance}>
                                     {this.props.messages
                                         .filter(msg => msg.sender === "bot" )
-                                        .map((msg, idx) => <ChatStep  key={idx+1} msg={msg} ></ChatStep> )}
+                                        .map((msg, idx) => <ChatStep key={idx} msg={msg} ></ChatStep> )}
 
                                     </StepWizard> 
                                     {instance ? <StepController stepInstance={this.state.instance}/> : null }
