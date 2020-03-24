@@ -117,8 +117,8 @@ class Home extends Component {
                                     </div>
                                 ))}  
                     </div>
+                      <Link to="/aida/exempel" className="icons"  aria-label="Visa fler"><h4>Visa fler</h4></Link>
                 </div>
-
             </React.Fragment>
         )
     };
