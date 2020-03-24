@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import './App.css';
 import { Provider } from 'react-redux';
 
@@ -7,7 +7,7 @@ import ChatPanel from './components/chat/ChatPanel';
 import MyPanel from './components/page/MyPanel';
 import Home from './components/home/Home';
 import { TiHome } from "react-icons/ti";
- import { IoIosChatbubbles } from "react-icons/io";
+import { IoIosChatbubbles } from "react-icons/io";
 
 import store from './store';
 import { Router, Link } from "@reach/router"
@@ -15,10 +15,24 @@ import {Layout, Main} from 'cauldron-react'
 
 let hasTransitioned = false // avoid focusing on the first render
 
-const App = () => {
+const HidePopup = localStorageKey => {
+  const [show, setShow] = React.useState(
+    localStorage.getItem(localStorageKey) || true
+  );
 
-const [show, setShow] = useState(true);
-const closePopupForm = () => setShow(false);
+  React.useEffect(() => {
+    localStorage.setItem(localStorageKey, show);
+  });
+  return [JSON.parse(show), setShow];
+};
+
+const App = () => {
+ const [show, setShow] = HidePopup(
+    'showPopup'
+  );
+
+  var closePopupForm = () => setShow(false);   
+
 
  const mainRef = useRef()
   // remove tabindex on blur of main so we don't

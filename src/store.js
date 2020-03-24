@@ -5,8 +5,6 @@ import rootReducer from './reducers';
 import { loadState, saveState } from './localStorage';
 
 const initialState = loadState();
-
-console.log(initialState);
 const middleware = [thunk];
 
 const store = createStore(
