@@ -5,6 +5,9 @@ import { Provider } from 'react-redux';
 import PopupForm from './components/dialogues/PopupForm';
 import ChatPanel from './components/chat/ChatPanel';
 import MyPanel from './components/page/MyPanel';
+import Examples from './components/page/Examples';
+import Categories from './components/page/Categories';
+import Voice from './components/page/Voice';
 import Home from './components/home/Home';
 import { TiHome } from "react-icons/ti";
 import { IoIosChatbubbles } from "react-icons/io";
@@ -101,11 +104,21 @@ const App = () => {
           >
           
           <Router>
+           <Home path="/" render={() => {focusMain()}} />
             <Home path="/aida" render={() => {focusMain()}} />
             <ChatPanel path="/aida/chat" render={() => {focusMain()}} />
             <MyPanel path="/aida/arenden" render={() => {focusMain()}} />
+            <Examples path="/aida/exempel" render={() => {focusMain()}} />
+            <Categories path="/aida/kategorier" render={() => {focusMain()}} />
+            <Voice path="/aida/assistent" render={() => {focusMain()}} />
           </Router>
         
+         <div aria-hidden="true" className="feedback-button">
+            <a tabIndex="-1" rel="noopener noreferrer" href="https://forms.gle/sK7gLEBRyirYFKVY8" target="_blank">
+                <img alt="feedback" src="/aida/feedback.png" width="38" height="94"/>
+            </a>
+        </div>
+
           </Main>
           </Layout>
            

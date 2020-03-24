@@ -73,3 +73,13 @@
 .dqpl-skip-container.dqpl-skip-container-active{
   top:0;
 }
+
+.feedback-button {
+  top: 67%;
+  margin-top: -47px;
+  position: fixed;
+  width: 38px;
+  height: 94px;
+  z-index: 2;
+  right: 0;
+}
