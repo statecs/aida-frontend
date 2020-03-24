@@ -35,7 +35,6 @@
   }
 }
 .navContainer{
-    width: 100%;
     margin: 0 auto;
     z-index: 1;
     position: fixed;
@@ -46,11 +45,13 @@
   margin: 0.7em;
 }
 .chatIcon{
-  float:right
+  position: fixed;
+  right: 0;
 }
 .dqpl-layout{
   left:0 !important;
   top:0;
+  padding:0;
 }
 .dqpl-skip-container{
   position: absolute;

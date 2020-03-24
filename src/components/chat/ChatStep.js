@@ -63,13 +63,21 @@ class ChatStep extends Component {
 
             {this.props.msg.sender === "bot" &&
                 <React.Fragment>
-                            <p >{this.props.msg.message}</p>
+                   <div className="bot-messages">
+                        <div className="bot-msg">
+                            <div className="bot-msg-text">
+                                <h3 aria-label={this.props.msg.message}>{this.props.msg.message}</h3>
+                            </div>
+                        </div>
+                    </div>    
 
+                    <div className="msgBtn">
                         {this.props.msg.buttons &&
                             this.props.msg.buttons.map((button, id) =>
                                 <Button key={"buttons-" + id } type="submit" onClick={() => {  this.sendValues(button.payload)} }>{button.title}</Button>
                             )}
-
+                            </div>
+                        <div className="msgCustom">
                               {this.props.msg.custom && 
                             <ul>
                                 {this.props.msg.custom.data.map((custom, id) =>
@@ -82,8 +90,8 @@ class ChatStep extends Component {
                                 )}
                                 <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Skicka</Button>
                             </ul>
-                          
                             }
+                             </div>
                        </React.Fragment>
             }
                                              

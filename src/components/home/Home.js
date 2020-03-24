@@ -73,7 +73,7 @@ class Home extends Component {
         return (
             <React.Fragment>
            
-                <div className="container">
+                <div className="container-home">
                  <h1 className="site-logo"> 
                     <Link to="/aida" itemProp="url"> 
                         <span itemProp="logo" itemType="http://schema.org/ImageObject" aria-label="Symptomkollen"> 

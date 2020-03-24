@@ -37,20 +37,22 @@ class ChatMessages extends Component {
         return (
 
         <React.Fragment>
-        {spinner}
-        <div className="container" role="region" aria-live="polite">
+
+        <div className="container">
+
+        {this.props.loading && 
+        <span className="alertLoading" role="alert" aria-busy="true">{spinner} Laddar</span>
+        }
 
             {!this.props.loading &&
             <React.Fragment>
-            
             <StepWizard className="msg-display" isHashEnabled={true} nav={<Nav />} isLazyMount={true} transitions={animations} instance={this.setInstance}>
                                     {this.props.messages
                                         .filter(msg => msg.sender === "bot" )
-                                        .map((msg, idx) => <ChatStep key={idx} msg={msg} ></ChatStep> )}
+                                        .map((msg, idx) => <div key={idx} role="region" aria-live="assertive" aria-atomic="true"><ChatStep msg={msg}></ChatStep></div> )}
 
                                     </StepWizard> 
                                     {instance ? <StepController stepInstance={this.state.instance}/> : null }
-                              
       </React.Fragment>
             }
              </div> 
