@@ -5,15 +5,15 @@ import './ChatMessages.css';
 import PulseLoader from 'react-spinners/PulseLoader';
 import StepWizard from 'react-step-wizard';
 import Nav from './Nav';
-import StepMsg from './StepMsg';
+import ChatStep from './ChatStep';
 import StepController from './StepController';
 import "./transitions.css";
 
 const spinnerCss = "display: table; margin: 20px auto;";
 
 const animations = {
-    enterRight: "animated slideInUp",
-    enterLeft: "animated slideInUp",
+    enterRight: "animated intro",
+    enterLeft: "animated intro",
     intro: "animated intro"
   };
 
@@ -25,6 +25,9 @@ class ChatMessages extends Component {
 
     const instance = this.state;
 
+    if((this.state && this.state.instance.totalSteps > 0)){
+    this.state.instance.lastStep();
+    }
         let spinner;
     if (this.props.loading) {
       spinner = <PulseLoader css={spinnerCss} color={"#2177D2"} />;
@@ -34,34 +37,25 @@ class ChatMessages extends Component {
         return (
 
         <React.Fragment>
-            {    
-                <div className="container">
-                    <div className="chat-container">
-                        <div className="chat-display">
-                            <div className="chats">
-                                <div className="msg-display">
 
-                                    {spinner}
+        <div className="container">
 
-                                    <StepWizard className="msg-display" nav={<Nav />} isHashEnabled={true} isLazyMount={true} transitions={animations} instance={this.setInstance}>
-                                        {this.props.messages.map((msg) => {
-                                            
-                                            if (msg.sender === "bot" ){
+        {this.props.loading && 
+        <span className="alertLoading" role="alert" aria-busy="true">{spinner} Laddar</span>
+        }
 
-                                                return (
-                                                     <StepMsg key={msg.id} msg={msg} hasKey={msg.id} ></StepMsg>   
-                                                )
-                                                }
-                                            })
-                                        }
+            {!this.props.loading &&
+            <React.Fragment>
+            <StepWizard className="msg-display" isHashEnabled={true} nav={<Nav />} isLazyMount={true} transitions={animations} instance={this.setInstance}>
+                                    {this.props.messages
+                                        .filter(msg => msg.sender === "bot" )
+                                        .map((msg, idx) => <div key={idx} role="region" aria-live="assertive" aria-atomic="true"><ChatStep msg={msg}></ChatStep></div> )}
+
                                     </StepWizard> 
                                     {instance ? <StepController stepInstance={this.state.instance}/> : null }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      </React.Fragment>
             }
+             </div> 
        </React.Fragment>
         );
     }

@@ -17,7 +17,7 @@
   }
   
   .intro {
-    animation: intro 1s ease-out;
+    animation: intro 0.3s ease-out;
   }
   
   @keyframes slideInUp {

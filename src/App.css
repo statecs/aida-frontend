@@ -34,3 +34,42 @@
     transform: rotate(360deg);
   }
 }
+.navContainer{
+    margin: 0 auto;
+    z-index: 1;
+    position: fixed;
+  }
+
+.icons svg{
+  font-size:2em;
+  margin: 0.7em;
+}
+.chatIcon{
+  position: fixed;
+  right: 0;
+}
+.dqpl-layout{
+  left:0 !important;
+  top:0;
+  padding:0;
+}
+.dqpl-skip-container{
+  position: absolute;
+  width: 100%;
+  display: block;
+  padding: 10px;
+  background-color: #2177D2;
+  color: #fff !important;
+  top: -50px;
+  text-align: center;
+  transition: top .3s ease-in-out;
+  background-image: none;
+  z-index: 6;
+  left:1px;
+}
+.dqpl-skip-container a{
+  outline:none;
+}
+.dqpl-skip-container.dqpl-skip-container-active{
+  top:0;
+}

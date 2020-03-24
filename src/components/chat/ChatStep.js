@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import './ChatMessages.css';
+import {Button} from 'cauldron-react'
 
-class StepMsg extends Component {
+class ChatStep extends Component {
 
  constructor(props) {
         super(props);
@@ -35,10 +36,6 @@ class StepMsg extends Component {
         let message = messages.join(", ");
         const rasaMsg = { sender, receiver, message };
         this.props.sendMessage(rasaMsg);
-
-         setTimeout(() => {
-            this.props.lastStep()
-        }, 1000);
     };
 
     sendValues = (payload) => {
@@ -47,13 +44,8 @@ class StepMsg extends Component {
         let message = payload;
         const rasaMsg = { sender, receiver, message };
         this.props.sendMessage(rasaMsg);
-    
-        setTimeout(() => {
-            this.props.lastStep()
-        }, 1000);
-
-
     };
+
     render() {
 
         return (
@@ -70,14 +62,22 @@ class StepMsg extends Component {
             }
 
             {this.props.msg.sender === "bot" &&
-                        <div className="bot-msg-text">
-                            <p role="region" aria-live="polite" aria-atomic="true"  className="display-linebreak">{this.props.msg.message}</p>
+                <React.Fragment>
+                   <div className="bot-messages">
+                        <div className="bot-msg">
+                            <div className="bot-msg-text">
+                                <h3 aria-label={this.props.msg.message}>{this.props.msg.message}</h3>
+                            </div>
+                        </div>
+                    </div>    
 
+                    <div className="msgBtn">
                         {this.props.msg.buttons &&
                             this.props.msg.buttons.map((button, id) =>
-                                <button key={"buttons-" + id } type="submit" onClick={() => {  this.sendValues(button.payload)} }>{button.title}</button> 
+                                <Button key={"buttons-" + id } type="submit" onClick={() => {  this.sendValues(button.payload)} }>{button.title}</Button>
                             )}
-
+                            </div>
+                        <div className="msgCustom">
                               {this.props.msg.custom && 
                             <ul>
                                 {this.props.msg.custom.data.map((custom, id) =>
@@ -88,11 +88,11 @@ class StepMsg extends Component {
                                     </label>
                                     </li>
                                 )}
-                                <button  onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Skicka</button>
+                                <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Skicka</Button>
                             </ul>
-                          
                             }
-                       </div>
+                             </div>
+                       </React.Fragment>
             }
                                              
         </React.Fragment>
@@ -100,7 +100,7 @@ class StepMsg extends Component {
     }
 }
 
-StepMsg.propTypes = {
+ChatStep.propTypes = {
     messages: PropTypes.array.isRequired,
     nextStep: PropTypes.func,
     previousStep: PropTypes.func
@@ -112,4 +112,4 @@ const mapStateToProps = state => ({
     loading: state.messages.loading
 })
 
-export default connect(mapStateToProps, { sendMessage })(StepMsg);
+export default connect(mapStateToProps, { sendMessage })(ChatStep);

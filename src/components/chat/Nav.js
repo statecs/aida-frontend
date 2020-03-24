@@ -1,6 +1,7 @@
 import React from 'react';
 /* eslint react/prop-types: 0 */
 import styles from './nav.less';
+import { MdKeyboardArrowUp } from "react-icons/md";
 
 const Nav = (props) => {
     const dots = [];
@@ -16,8 +17,10 @@ const Nav = (props) => {
     }
 
     return (
-        <div className={styles.nav}>
-         <p><button onClick={props.previousStep}>Tillbaka</button></p>
+        <div className="backNav">
+        {props.currentStep !== 1 && 
+         <button onClick={props.previousStep}><MdKeyboardArrowUp/><br /><span>Ångra</span></button>
+        } 
         </div>
     );
 };

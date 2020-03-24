@@ -28,17 +28,14 @@ class ChatInput extends Component {
   };
 
     sendMessage = () => {
-        const { receiver, message } = this.state;
-        let sender = this.props.user;
-        const rasaMsg = { sender, receiver, message };
-        //Send message to rasa and get chatbot response
-        this.props.sendMessage(rasaMsg);
-        this.setState({ message: '' });
-
-        setTimeout(() => {
-        this.props.stepInstance.lastStep()
-        }, 1000);
-        
+        if(this.state.message){
+            const { receiver, message } = this.state;
+            let sender = this.props.user;
+            const rasaMsg = { sender, receiver, message };
+            //Send message to rasa and get chatbot response
+            this.props.sendMessage(rasaMsg);
+            this.setState({ message: '' });
+        }
     };
 
     render() {
@@ -49,6 +46,7 @@ class ChatInput extends Component {
                         className="textArea"
                         type="text"
                         name="message"
+                        label="Skriv ett svar"
                         placeholder="Skriv ett svar..."
                         onChange={this.onChange}
                         value={this.state.message}
@@ -65,7 +63,6 @@ class ChatInput extends Component {
               onSpeechInput={message => this.handleInputChange(message, true)}
               onSpeechEnd={message => this.sendMessage()}
             />
-                <button onClick={this.sendMessage} className="btn btn-primary submitBtn">Ok</button>
                 </div>
 
             </React.Fragment>

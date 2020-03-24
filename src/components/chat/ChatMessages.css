@@ -28,17 +28,39 @@ html {
 
   
 
-.container {
-  background-color: #282c34;
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
-} 
-/* 
+
+
+.backNav{
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+
+}
+.alertLoading{
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+.msgBtn{
+    float: right;
+    width: 100px;
+    margin-top: 20vh;
+}
+.msgBtn button{
+    float: right;
+    margin:5px;
+    font-size: 1.3em;
+    height: 100%;
+    text-transform: none;
+    border-radius: 10em;
+    padding: 0.7em 1em;
+}
+
+/*
 .container {
     max-width: 500 !important;
     margin: auto;
@@ -91,6 +113,7 @@ img {
 .bot-messages {
     height: 80px;
 }
+*/
 
 .bot-messages-img {
     display: inline-block;
@@ -105,20 +128,18 @@ img {
     width: 92%;
 }
 
-.bot-msg-text {
-    width: 57%;
+.bot-msg-text h3 {
+    background-color: #EDEDED;
+    color: black;
+    border-color: #EDEDED;
+    border-width: 2px;
+    border-radius: 35px 35px 35px 5px;
+    padding: 1em;
+    margin: 0.5em;
+    font-size:18px;
+    float:left;
 }
-
-.bot-msg-text p {
-    background: #efefef none repeat scroll 0 0;
-    border-radius: 10px;
-    color: #646464;
-    font-size: 20px;
-    margin: 0;
-    padding: 5px 10px 5px 12px;
-    width: 100%;
-}
-
+/*
 .user-messages {
     overflow: hidden;
     margin: 26px 20px;
