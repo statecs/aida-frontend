@@ -108,6 +108,7 @@ ChatStep.propTypes = {
 
 
 const mapStateToProps = state => ({
+    user: state.sessionID.sessionID,
     messages: state.messages.messages,
     loading: state.messages.loading
 })
