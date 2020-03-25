@@ -11,6 +11,7 @@ import Voice from './components/page/Voice';
 import Home from './components/home/Home';
 import { TiHome } from "react-icons/ti";
 import { IoIosChatbubbles } from "react-icons/io";
+import { SkipNavLink, SkipNavContent } from "@reach/skip-nav";
 
 import store from './store';
 import { Router, Link } from "@reach/router"
@@ -77,12 +78,10 @@ const App = () => {
      <React.Fragment>
       <Provider store={store}>
       <PopupForm show={show} handleClose={closePopupForm}/>
-  
- 
-        <nav className="dqpl-skip-container">
-          <a href="#content" className="dqpl-skip-link">Hoppa till sidans innehåll
-          </a>
-        </nav>
+
+        <nav className="skip-nav-container">
+          <SkipNavLink>Hoppa till sidans innehåll</SkipNavLink>
+      </nav>
       
       
          <div className="navContainer">
@@ -102,6 +101,7 @@ const App = () => {
             aria-labelledby="main-heading"
             id="content"
           >
+          <SkipNavContent/>
           
           <Router>
            <Home path="/" render={() => {focusMain()}} />
