@@ -192,7 +192,7 @@ class Home extends Component {
         renderInputComponent={renderInputComponent}
       />
 
-                    <h2 className='intro' >Vanliga ärenden</h2>
+                    <h2 className='intro'>Vanliga ärenden</h2>
                         <div className='cardDisplay'>
                             {values.map((value) => (
                                     <div key={value.name}>

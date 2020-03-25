@@ -45,6 +45,7 @@ html {
     align-items: center;
     height: 100%;
 }
+
 .msgBtn{
     float: right;
     width: 100px;
@@ -58,6 +59,9 @@ html {
     text-transform: none;
     border-radius: 10em;
     padding: 0.7em 1em;
+}
+.msgCustom ul{
+    list-style:none;
 }
 
 /*
@@ -139,31 +143,20 @@ img {
     font-size:18px;
     float:left;
 }
-/*
 .user-messages {
+    display:none;
     overflow: hidden;
     margin: 26px 20px;
 }
 
 .user-msg-text p {
-    background: #007bff none repeat scroll 0 0;
-    color: #fff;
-    border-radius: 10px;
-    font-size: 20px;
     margin: 0;
     padding: 5px 10px 5px 12px;
     width: 100%;
+    border-radius: 49.5px;
+    border: 1px solid #EEEEEE;
 }
 
 .user-msg-text {
-    float: left;
-    width: 46%;
-    margin-left: 45%;
-}
-
-.user-messages-img {
-    display: inline-block;
-    width: 80px;
     float: right;
 }
-*/
