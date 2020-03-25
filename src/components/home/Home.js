@@ -5,8 +5,12 @@ import { sendMessage } from '../../actions/messageActions';
 import './Home.css';
 import {Button, TextField} from 'cauldron-react'
 import {navigate, Link} from "@reach/router"
+import Autosuggest from 'react-autosuggest';
+import match from 'autosuggest-highlight/match';
+import parse from 'autosuggest-highlight/parse';
+import { MdSearch } from "react-icons/md";
 
-let values = [{
+const values = [{
     name: "Jag har huvudvärk",
 },
 {
@@ -17,6 +21,61 @@ let values = [{
 
 }];
 
+// Teach Autosuggest how to calculate suggestions for any given input value.
+const getSuggestions = value => {
+  const inputValue = value.trim().toLowerCase();
+  const inputLength = inputValue.length;
+
+  return inputLength === 0 ? [] : values.filter(lang =>
+    lang.name.toLowerCase().slice(0, inputLength) === inputValue
+  );
+};
+
+// When suggestion is clicked, Autosuggest needs to populate the input
+// based on the clicked suggestion. Teach Autosuggest how to calculate the
+// input value for every given suggestion.
+const getSuggestionValue = suggestion => suggestion.name;
+
+// Render suggestions.
+const renderSuggestion = (suggestion, { query, suggestionValue }) => {
+ 
+const suggestionText = `${suggestion.name}`;
+  const matches = match(suggestionText, query);
+  const parts = parse(suggestionText, matches);
+
+return(
+  <div className={'suggestion-content'}>
+      <span className="name"><MdSearch/> 
+        {
+          parts.map((part, index) => {
+            const className = part.highlight ? null : 'highlight';
+
+            return (
+              <span className={className} key={index}>{part.text}</span>
+            );
+          })
+        }
+      </span>
+    </div>
+)
+}
+
+const renderInputComponent = inputProps => (
+  <div className="inputSearchContainer">
+    <input {...inputProps} />
+  </div>
+);
+
+const renderSuggestionsContainer = ({ containerProps, children, query }) => (
+     <div {...containerProps}>
+      <span className="hidden"> Hej, vad söker du vård för?</span>
+      {children}
+         
+   
+     
+    </div>
+);
+
 class Home extends Component {
     
     constructor(props) {
@@ -24,20 +83,52 @@ class Home extends Component {
         this.state = {
             error: null,
             value: '',
+            suggestions: []
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
     }
 
+    onChange = (event, { newValue }) => {
+        this.setState({
+        value: newValue
+        });
+    };
 
-    handleChange(event) {
-        this.setState({value: event.target.value});
+   onKeyDown(event) {
+       //On Enter submit form
+    if (event.key === 'Enter' && this.state.value) {
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = this.state.value;
+        const rasaMsg = { sender, receiver, message };
+        this.props.sendMessage(rasaMsg);
+        navigate('/aida/chat')
     }
+  }
+  
+   // Autosuggest will call this function every time you need to clear suggestions.
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
 
-    handleSubmit(event) {
-        event.preventDefault();
-    }
-    
+  // Autosuggest will call this function every time you need to update suggestions.
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: getSuggestions(value)
+    });
+  };
+
+    onSuggestionSelected = (event, { suggestionValue }) => {
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = suggestionValue;
+        const rasaMsg = { sender, receiver, message };
+        this.props.sendMessage(rasaMsg);
+        navigate('/aida/chat')
+  };
+
     sendValues = (el) => {
         let sender = this.props.user;
         let receiver = 'bot';
@@ -49,27 +140,19 @@ class Home extends Component {
         
     };
 
-     validate = e => {
-        e.preventDefault();
-        const isEmpty = !this.input.value.trim();
-        this.setState({
-             error: isEmpty ? 'Kan inte vara tomt' : null
-        });
-
-        if (isEmpty) {
-            this.input.focus();
-        } else{
-            let sender = this.props.user;
-            let receiver = 'bot';
-            let message = this.input.value;
-            const rasaMsg = { sender, receiver, message };
-            //Send message to rasa and get chatbot response
-            this.props.sendMessage(rasaMsg);
-            navigate('/aida/chat')
-        }
-  };
-
     render() {
+        const { value, suggestions } = this.state;
+
+         // Autosuggest will pass through all these props to the input.
+    
+        const inputProps = {
+            placeholder: 'Hej, vad söker du vård för?',
+            value,
+            onChange: this.onChange,
+            onKeyDown: this.onKeyDown,
+        };
+
+        
         return (
             <React.Fragment>
            
@@ -95,19 +178,19 @@ class Home extends Component {
                     </Link>
                 </h1> 
 
-                
-                        <form onSubmit={this.validate} noValidate>
 
-                                <TextField
-                                    id="name"
-                                    label="Hej, vad söker du vård för?"
-                                    placeholder="Hej, vad söker du vård för?"
-                                    aria-describedby="text-field-help"
-                                    error={this.state.error}
-                                    fieldRef={el => this.input = el}/>
 
-                           
-                        </form>
+    <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+        renderSuggestionsContainer={renderSuggestionsContainer}
+        onSuggestionSelected={this.onSuggestionSelected}
+        renderInputComponent={renderInputComponent}
+      />
 
                     <h2 className='intro' >Vanliga ärenden</h2>
                         <div className='cardDisplay'>

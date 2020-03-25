@@ -53,20 +53,15 @@
   top:0;
   padding:0;
 }
-.dqpl-skip-container{
-  position: absolute;
-  width: 100%;
-  display: block;
-  padding: 10px;
+[data-reach-skip-link] {
   background-color: #2177D2;
   color: #fff !important;
-  top: -50px;
-  text-align: center;
-  transition: top .3s ease-in-out;
-  background-image: none;
-  z-index: 6;
-  left:1px;
+
 }
+[data-reach-skip-link]:focus {
+    background-color: #2177D2;
+}
+
 .dqpl-skip-container a{
   outline:none;
 }
@@ -82,4 +77,12 @@
   height: 94px;
   z-index: 2;
   right: 0;
+}
+
+@media only screen and (min-width: 600px) {
+  .skip-nav-container{
+    position: absolute;
+    z-index: 6;
+    left:1px;
+  }
 }
