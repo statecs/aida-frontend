@@ -50,6 +50,19 @@ class ChatStep extends Component {
 
         return (
          <React.Fragment>
+           {this.props.messages.map((msg, id) =>
+                                    <span key={id}>
+                                      {msg.id === this.props.msg.id - 1 &&
+                                       <div className="user-messages">
+                                        <div className="user-msg">
+                                            <div className="user-msg-text">
+                                                <p aria-hidden="true" className="display-linebreak">{msg.message}</p>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    }
+                                    </span>
+                                )}
             {this.props.msg.sender !== "bot" &&
              <div className="user-messages">
                 <div className="user-msg">

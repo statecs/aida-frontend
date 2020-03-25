@@ -18,7 +18,7 @@ export const sendMessage = (msgData) => dispatch => {
     if (msgData.message === "") {
         return;
     }
-    axios.post('http://localhost/webhooks/rest/webhook', msgData)
+    axios.post('https://bot.cstate.se/webhooks/rest/webhook', msgData)
         .then(res => {
             let msgText = "";
             let msgButtons = "";
