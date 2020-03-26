@@ -2,16 +2,76 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
-import './ChatMessages.css';
-import {Button} from 'cauldron-react'
+import './ChatStep.css';
+import {Button, Link} from 'cauldron-react'
+import axios from 'axios';
+import Modal from 'react-bootstrap/Modal';
+import formUrl from '../../keys/formUrl';
+import { FaRegFrown, FaRegAngry, FaRegMeh, FaRegSmile, FaRegLaughBeam  } from "react-icons/fa";
 
 class ChatStep extends Component {
 
  constructor(props) {
         super(props);
         this.state = {
+            date: new Date(),
+            userAgent: navigator.userAgent,
+            user: this.props.user,
+            message: this.props.msg.message,
+            rating: "",
+            freeText: "",
+            showPopupForm: false,
             chosenVals: [],
+            submitted: false
         };
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+
+    closePopupForm = () => {
+        this.setState({ showPopupForm: false, submitted: false, rating: "", freeText: "", });
+    };
+
+    openPopupForm = () => {
+        this.setState({ showPopupForm: true });
+    };
+
+    handleInputChange(event) {
+            const target = event.target;
+            const value = target.value;
+            const name = target.name;
+
+            this.setState({
+                [name]: value
+            });
+    }
+
+    handleOptionChange = changeEvent => {
+        this.setState({
+            rating: changeEvent.target.value
+        });
+    };
+
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        let date = this.state.date;
+        let userAgent = this.state.userAgent;
+        let user = this.state.user;
+        let message = this.state.message;
+        let rating = this.state.rating;
+        let freeText = this.state.freeText;
+        let userMessage = this.props.messages.filter(msg => msg.id === this.props.msg.id - 1).map((msg) => msg.message);
+    
+
+        axios({
+            method: 'get',
+            url: `${formUrl}?date=${encodeURIComponent(date)}&userAgent=${encodeURIComponent(userAgent)}&user=${encodeURIComponent(user)}&userMessage=${encodeURIComponent(userMessage)}&message=${encodeURIComponent(message)}&rating=${encodeURIComponent(rating)}&freeText=${encodeURIComponent(freeText)}`
+        })
+
+        this.setState({submitted: true})
     }
 
     onToggle(index, e){
@@ -50,8 +110,77 @@ class ChatStep extends Component {
 
         return (
          <React.Fragment>
+
+            {this.state.showPopupForm===true &&
+            <Modal
+                        show={true}
+                        size="lg"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        backdrop='static'
+                        onHide={this.closePopupForm}
+                        enforceFocus={true}
+                        centered
+                    >
+                    <Modal.Header closeButton></Modal.Header>
+                    {this.state.submitted
+                    ? <Modal.Body> <div className="container-feedback"><h5> Tack så mycket för din feedback!</h5> </div> <button className="agreeBtn" variant="secondary" onClick={() => this.closePopupForm()}>Stäng</button></Modal.Body>
+                    : <Modal.Body>
+                    <form id="feedback-form" onSubmit={this.handleSubmit}>
+                      <h3> Feedback </h3>
+                        <div className="container-feedback">
+
+                            <div className="item">
+                            <label htmlFor="1">
+                            <input className="radio" type="radio" name="1" id="1" value="1" checked={this.state.rating === '1'} onChange={this.handleOptionChange}/>
+                            <span><FaRegAngry/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="2">
+                            <input className="radio" type="radio" name="2" id="2" value="2" checked={this.state.rating === '2'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegFrown/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="3">
+                            <input className="radio" type="radio" name="3" id="3" value="3" checked={this.state.rating === '3'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegMeh/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="4">
+                            <input className="radio" type="radio" name="4" id="4" value="4"  checked={this.state.rating === '4'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegSmile/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="5">
+                            <input className="radio" type="radio" name="5" id="5" value="5" checked={this.state.rating === '5'} onChange={this.handleOptionChange}/>
+                            <span><FaRegLaughBeam/></span>
+                            </label>
+                            </div>
+
+                        </div>
+
+                        <input className="textArea" type="text" placeholder="Skriv en kommentar.." name="freeText" value={this.state.freeText} onChange={this.handleInputChange}/>
+
+
+                        <button className="agreeBtn" variant="secondary">Skicka</button>
+                       
+
+                    </form>
+                    </Modal.Body>
+                    
+                }
+
+                </Modal>
+}
            {this.props.messages.map((msg, id) =>
-                                    <span key={id}>
+                                    <React.Fragment key={id}>
                                       {msg.id === this.props.msg.id - 1 &&
                                        <div className="user-messages">
                                         <div className="user-msg">
@@ -61,9 +190,9 @@ class ChatStep extends Component {
                                         </div>
                                         </div>
                                     }
-                                    </span>
+                                    </React.Fragment>
                                 )}
-            {this.props.msg.sender !== "bot" &&
+
              <div className="user-messages">
                 <div className="user-msg">
                     <div className="user-msg-text">
@@ -72,9 +201,6 @@ class ChatStep extends Component {
                 </div>
                 <div className="user-messages-img"></div>
             </div>
-            }
-
-            {this.props.msg.sender === "bot" &&
                 <React.Fragment>
                    <div className="bot-messages">
                         <div className="bot-msg">
@@ -82,6 +208,7 @@ class ChatStep extends Component {
                                 <h3 aria-label={this.props.msg.message}>{this.props.msg.message}</h3>
                             </div>
                         </div>
+                         <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Vill du ge feedback?</Link>   
                     </div>    
 
                     <div className="msgBtn">
@@ -106,8 +233,6 @@ class ChatStep extends Component {
                             }
                              </div>
                        </React.Fragment>
-            }
-                                             
         </React.Fragment>
         );
     }

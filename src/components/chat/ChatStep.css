@@ -1,0 +1,105 @@
+.msgBtn{
+    float: right;
+    width: 100px;
+    margin-top: 20vh;
+}
+.msgBtn button{
+    float: right;
+    margin:5px;
+    font-size: 1.3em;
+    height: 100%;
+    text-transform: none;
+    border-radius: 10em;
+    padding: 0.7em 1em;
+}
+.msgCustom ul{
+    list-style:none;
+}
+
+.bot-msg {
+    display: inline-block;
+    vertical-align: middle;
+    width: 92%;
+}
+
+.bot-msg-text h3 {
+    background-color: #EDEDED;
+    color: black;
+    border-color: #EDEDED;
+    border-width: 2px;
+    border-radius: 35px 35px 35px 5px;
+    padding: 1em;
+    font-size:18px;
+    float:left;
+}
+.user-messages {
+    display:none;
+    opacity:0.6;
+    overflow: hidden;
+}
+
+.user-msg-text p {
+    margin: 0;
+    padding: 5px 10px 5px 12px;
+    width: 100%;
+    border-radius: 49.5px;
+    border: 1px solid #EEEEEE;
+    display: inline-block;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+.user-msg-text {
+    float: right;
+}
+
+.active svg{
+    fill: black;
+    color:white;
+}
+
+.feedback-link {
+    display: flex;
+    font-size:12px;
+    cursor: pointer;
+  
+}
+
+.container-feedback {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+
+#feedback-form .agreeBtn {
+   width:100%;
+}
+
+
+.item {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+  }
+  .radio {
+    display: none;
+  }
+  .radio ~ span {
+    font-size: 3rem;
+    filter: grayscale(100);
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .radio:checked ~ span {
+    filter: grayscale(0);
+    font-size: 4rem;
+  }
+  

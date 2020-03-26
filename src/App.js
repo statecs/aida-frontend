@@ -112,12 +112,7 @@ const App = () => {
             <Categories path="/aida/kategorier" render={() => {focusMain()}} />
             <Voice path="/aida/assistent" render={() => {focusMain()}} />
           </Router>
-        
-         <div aria-hidden="true" className="feedback-button">
-            <a tabIndex="-1" rel="noopener noreferrer" href="https://forms.gle/sK7gLEBRyirYFKVY8" target="_blank">
-                <img alt="feedback" src="/aida/feedback.png" width="38" height="94"/>
-            </a>
-        </div>
+      
 
           </Main>
           </Layout>
