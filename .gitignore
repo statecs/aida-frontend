@@ -2,6 +2,5 @@ node_modules
 build
 src/components/chat/.DS_Store
 package-lock.json
-src/keys
 .DS_Store
 .DS_Store?
