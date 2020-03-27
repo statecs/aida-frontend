@@ -10,6 +10,8 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { MdSearch } from "react-icons/md";
 import searchTerms from './searchTerms';
+import { IoIosSearch } from "react-icons/io";
+import { MdKeyboardVoice } from "react-icons/md";
 
 const values = [{
     name: "Jag har huvudvärk",
@@ -63,7 +65,7 @@ return(
 
 const renderInputComponent = inputProps => (
   <div className="inputSearchContainer">
-    <input {...inputProps} />
+    <IoIosSearch className="searchIcon" /><input {...inputProps} /> <Link className="voiceIcon" aria-label="Röststyrning" to="/aida/"><MdKeyboardVoice/></Link>
   </div>
 );
 

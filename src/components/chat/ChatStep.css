@@ -61,7 +61,7 @@
 }
 
 .feedback-link {
-    display: flex;
+    float:left;
     font-size:12px;
     cursor: pointer;
     color:#3c7aae !important;

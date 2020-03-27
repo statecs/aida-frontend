@@ -47,21 +47,21 @@
 .icons svg{
   font-size:2em;
   margin: 0.7em;
+  stroke-width: 0.4em;
+  fill: transparent;
 }
 .chatIcon{
   position: fixed;
   right: 0;
+}
+.chatIcon svg{
+  margin-top: 0.6em;
 }
 .chatText{
   display: flex;
   color: #666;
   font-size: 10px;
   margin: -15px 15px 0px 3px;
-}
-
-.chatIcon svg{
-  stroke-width: 0.4em;
-  fill: transparent;
 }
 
 .dqpl-layout{

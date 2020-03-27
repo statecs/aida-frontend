@@ -13,6 +13,7 @@ const PopupForm = ({ handleClose, show }) => {
             onHide={handleClose}
             backdrop='static'
             enforceFocus={true}
+            dialogClassName="alert-modal"
             centered
         >
         <Modal.Body>
