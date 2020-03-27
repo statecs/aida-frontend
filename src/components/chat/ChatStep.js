@@ -28,6 +28,7 @@ class ChatStep extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    
 
     closePopupForm = () => {
         this.setState({ showPopupForm: false, submitted: false, rating: "", freeText: "", });
@@ -223,7 +224,7 @@ class ChatStep extends Component {
                                 {this.props.msg.custom.data.map((custom, id) =>
                                     <li key={id}>
                                     <label>
-                                        <input onChange={this.onToggle.bind(this, id)} type="checkbox" name={custom.payload} value={custom.payload}/>
+                                        <input onChange={this.onToggle.bind(this, id)} type="checkbox" checked={custom.checked === true} name={custom.payload} value={custom.payload}/>
                                         {custom.title}
                                     </label>
                                     </li>
