@@ -9,6 +9,7 @@ import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { MdSearch } from "react-icons/md";
+import searchTerms from './searchTerms';
 
 const values = [{
     name: "Jag har huvudvärk",
@@ -26,7 +27,7 @@ const getSuggestions = value => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
 
-  return inputLength === 0 ? [] : values.filter(lang =>
+  return inputLength === 0 ? [] : searchTerms.filter(lang =>
     lang.name.toLowerCase().slice(0, inputLength) === inputValue
   );
 };

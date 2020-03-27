@@ -92,7 +92,7 @@ const App = () => {
     
         
             <Link to="/aida/arenden" className="icons chatIcon" aria-label="Mina ärenden">
-              <IoIosChatbubbles/>
+              <IoIosChatbubbles/> <span className="chatText">Mina ärenden</span>
             </Link>
       
       </div>
