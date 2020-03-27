@@ -179,28 +179,6 @@ class ChatStep extends Component {
 
                 </Modal>
 }
-           {this.props.messages.map((msg, id) =>
-                                    <React.Fragment key={id}>
-                                      {msg.id === this.props.msg.id - 1 &&
-                                       <div className="user-messages">
-                                        <div className="user-msg">
-                                            <div className="user-msg-text">
-                                                <p aria-hidden="true" className="display-linebreak">{msg.message}</p>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    }
-                                    </React.Fragment>
-                                )}
-
-             <div className="user-messages">
-                <div className="user-msg">
-                    <div className="user-msg-text">
-                        <p className="display-linebreak">{this.props.msg.message}</p>
-                    </div>
-                </div>
-                <div className="user-messages-img"></div>
-            </div>
                 <React.Fragment>
                    <div className="bot-messages">
                         <div className="bot-msg">

@@ -26,10 +26,21 @@ html {
     /* border: 3px solid var(--scrollbarBG); */
   }
 
-  
+.progress{
+    width: 100vw;
+    left: 0;
+    position: fixed;
+    margin-top: -16px;
+    height: 5px;
+}
 
-
-
+.backNav-none{
+  padding-bottom:38px;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+}
 .backNav{
     top: 0;
     display: flex;
