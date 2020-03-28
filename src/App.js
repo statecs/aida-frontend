@@ -9,8 +9,7 @@ import Examples from './components/page/Examples';
 import Categories from './components/page/Categories';
 import Voice from './components/page/Voice';
 import Home from './components/home/Home';
-import { TiHome } from "react-icons/ti";
-import { IoIosChatbubbles } from "react-icons/io";
+import { IoIosChatbubbles, IoIosHome } from "react-icons/io";
 import { SkipNavLink, SkipNavContent } from "@reach/skip-nav";
 
 import store from './store';
@@ -86,13 +85,13 @@ const App = () => {
       
          <div className="navContainer">
             <Link to="/aida" className="icons"  aria-label="Start">
-              <TiHome />
+              <IoIosHome />
 
             </Link>
     
         
             <Link to="/aida/arenden" className="icons chatIcon" aria-label="Mina ärenden">
-              <IoIosChatbubbles/>
+              <IoIosChatbubbles/> <span className="chatText">Mina ärenden</span>
             </Link>
       
       </div>

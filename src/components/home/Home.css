@@ -7,14 +7,33 @@
     font-size: 20px;
 }
 .site-logo{
-    padding-bottom: 2em;
+    padding: 2em;
 }
 .inputSearchContainer{
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Screen-reader fix*/
     height:0;
 }
+
+.inputSearchContainer svg{
+    color:#9AA0A6;
+}
+
+.searchIcon{
+    margin-right: -42px;
+    z-index: 1;
+    width: 25px;
+}
+.voiceIcon {
+    width: 25px;
+    display: flex;
+    margin-left: -42px;
+}
+
+
 .hidden{
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);
@@ -47,9 +66,9 @@
     max-width: 500px;
     font-size: large;
     border: 1px solid #EEEEEE;
-    box-shadow: 0 1px 6px 0 rgba(33,33,36,0.50);
+    box-shadow: 0 1px 5px 0 rgba(33,33,36,0.20);
     border-radius: 49.5px;
-    padding: 15px;
+    padding: 15px 45px;
     height: 60px;
 }
 
@@ -93,7 +112,7 @@
 @media only screen and (max-width: 600px) {
     .react-autosuggest__container--open{
         position: fixed;
-        padding-top:110px;
+        padding-top:170px;
         top: 0;
         left: 0;
         z-index: 1050;
@@ -106,7 +125,7 @@
     .react-autosuggest__container:focus-within{
         position: absolute;
         visibility:visible;
-        padding-top:110px;
+        padding-top:170px;
         top: 0;
         left: 0;
         z-index: 1050;
@@ -138,4 +157,31 @@
         align-items: center;
         min-width: 0;
     }
+}
+
+
+.exampleCases{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin: 50px 0;
+    text-align: center;
+}
+
+.exampleCases .intro{
+    margin-top: 10px;
+    font-size: 0.6em;
+    font-weight: bold;
+}
+
+.exampleBtn{
+        color: black;
+        border-color: #979797;
+        border-width: 5px;
+        border-radius: 35px 35px 5px 35px;
+        padding: 1em;
+        margin: 0.5em;
+        font-size: 14px;
+        box-shadow: 0 1px 4px 0 rgba(33,33,36,0.15);
+        background-color: #ffffff;
 }

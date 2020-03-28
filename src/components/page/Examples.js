@@ -3,18 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import {Button} from 'cauldron-react'
+import './Examples.css';
 import {Link, navigate} from "@reach/router"
+import searchTerms from '../home/searchTerms';
+import { MdKeyboardArrowRight } from "react-icons/md";
 
-let values = [{
-    name: "Jag har huvudvärk",
-},
-{
-    name: "Jag har ont i halsen",
-},
-{
-    name: "Jag har hosta och feber",
-
-}];
 
 class Examples extends Component {
 
@@ -32,15 +25,15 @@ class Examples extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="container">
+                <div className="container top-margin">
                     <h3 className='intro'>Vanliga ärenden</h3>
-                     <Link to="/aida/kategorier" className="icons"  aria-label="Visa fler">Kategorier</Link>
+                     <Link to="/aida/kategorier">Kategorier  <MdKeyboardArrowRight/></Link>
                
-                        <div className='cardDisplay'>
-                            {values.map((value) => (
-                                    <div key={value.name}>
-                                        <Button onClick={this.sendValues} value={value.name} type="submit">{value.name}</Button>
-                                    </div>
+                        <div className='exampleDisplay'>
+                            {searchTerms.map((value) => (
+                                    <React.Fragment key={value.name}>
+                                        <button className="exampleBtn" onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
+                                    </React.Fragment>
                                 ))}  
                     </div>
                 </div>

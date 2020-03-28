@@ -120,6 +120,7 @@ class ChatStep extends Component {
                         backdrop='static'
                         onHide={this.closePopupForm}
                         enforceFocus={true}
+                        dialogClassName="feedback-modal"
                         centered
                     >
                     <Modal.Header closeButton></Modal.Header>
