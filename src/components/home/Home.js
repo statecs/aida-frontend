@@ -163,7 +163,7 @@ class Home extends Component {
                  <h1 className="site-logo"> 
                     <Link to="/aida" itemProp="url"> 
                         <span itemProp="logo" itemType="http://schema.org/ImageObject" aria-label="Symptomkollen"> 
-                    <svg width="129px" height="129px" viewBox="0 0 129 129" version="1.1">
+                    <svg width="120px" height="120px" viewBox="0 0 129 129" version="1.1">
                         <g id="Prototype" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                             <g id="Second-screen" transform="translate(-224.000000, -184.000000)">
                                 <g id="Group-5" transform="translate(226.000000, 186.000000)">
@@ -181,30 +181,31 @@ class Home extends Component {
                     </Link>
                 </h1> 
 
+                <Autosuggest
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    inputProps={inputProps}
+                    renderSuggestionsContainer={renderSuggestionsContainer}
+                    onSuggestionSelected={this.onSuggestionSelected}
+                    renderInputComponent={renderInputComponent}
+                  />
 
 
-    <Autosuggest
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        inputProps={inputProps}
-        renderSuggestionsContainer={renderSuggestionsContainer}
-        onSuggestionSelected={this.onSuggestionSelected}
-        renderInputComponent={renderInputComponent}
-      />
-
-                    <h2 className='intro'>Vanliga ärenden</h2>
+                  <div class="exampleCases">
+                    <p className='intro'>Vanliga ärenden</p>
                         <div className='cardDisplay'>
                             {values.map((value) => (
-                                    <div key={value.name}>
-                                        <Button onClick={this.sendValues} value={value.name} type="submit">{value.name}</Button>
-                                    </div>
+                                    <React.Fragment key={value.name}>
+                                        <button className="exampleBtn" onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
+                                    </React.Fragment>
                                 ))}  
-                    </div>
-                      <Link to="/aida/exempel" className="icons"  aria-label="Visa fler"><h4>Visa fler</h4></Link>
-                </div>
+                        </div>
+                      <Link to="/aida/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
+                  </div>
+              </div>
             </React.Fragment>
         )
     };

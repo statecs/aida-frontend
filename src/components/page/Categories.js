@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import {Link, navigate} from "@reach/router"
-import {Button} from 'cauldron-react'
+import { MdKeyboardArrowRight } from "react-icons/md";
+import Button from 'react-bootstrap/Button';
 
 let values = [{
     name: "Huvudvärk",
@@ -33,16 +34,16 @@ class Categories extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="container">
+                <div className="container top-margin">
                     <h3 className='intro'>Kategorier</h3>
                    
-                     <Link to="/aida/exempel" className="icons"  aria-label="Visa fler">Vanliga ärenden</Link>
+                     <Link to="/aida/exempel" >Vanliga ärenden  <MdKeyboardArrowRight/></Link>
                    
-                   <div className='cardDisplay'>
+                   <div className='catDisplay'>
                             {values.map((value) => (
-                                    <div key={value.name}>
-                                        <Button onClick={this.sendValues} value={value.name} type="submit">{value.name}</Button>
-                                    </div>
+                                    <React.Fragment key={value.name}>
+                                     <Button className="agreeBtn" variant="primary" onClick={this.sendValues} value={value.name}>{value.name}</Button>
+                                    </React.Fragment>
                                 ))}  
                     </div>
 

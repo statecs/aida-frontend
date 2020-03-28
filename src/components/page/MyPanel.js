@@ -14,15 +14,12 @@ class MyPanel extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="container">
+                <div className="container top-margin">
                     <h3 className='intro'>Mina ärenden</h3>
-                    <Link href="#content" to="/aida/chat" aria-label="Gå till chatt" >
-                            Gå till chatt
-                    </Link>
-                    
-                    <button onClick={() => {this.clearLocalStorage()}} aria-label="Logga ut">
-                            Logga ut
-                    </button>
+                    <div className="catDisplay">
+                        <button onClick={() => {navigate('/aida/chat')}}  className="agreeBtn " variant="primary" aria-label="Gå till chatt" > Gå till chatt</button>
+                        <button onClick={() => {this.clearLocalStorage()}}  className="agreeBtn call-btn" variant="primary" aria-label="Logga ut" >Logga ut</button>
+                    </div>
                 </div>
             </React.Fragment>
         )

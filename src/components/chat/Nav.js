@@ -19,7 +19,7 @@ const Nav = (props) => {
     return (
         <div className="backNav">
         {props.currentStep !== 1 && 
-         <button onClick={props.previousStep}><MdKeyboardArrowUp/><br /><span>Ångra</span></button>
+         <button onClick={props.previousStep}><MdKeyboardArrowUp/><span>Ångra</span></button>
         } 
         </div>
     );

@@ -1,0 +1,12 @@
+.top-margin{
+    margin-top: 100px;
+}
+.exampleDisplay{
+    margin-top: 30px;
+}
+.catDisplay{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+

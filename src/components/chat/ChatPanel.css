@@ -5,7 +5,7 @@
     height: 80vh;
   }
   
-  .container {
+  .container-messages {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
