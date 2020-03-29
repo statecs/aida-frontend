@@ -1,5 +1,5 @@
 .agreeBtn {
-    background-color: #EDEDED;
+    background-color: #ffffff;
     color: black;
     border-color: #EDEDED;
     border-width: 2px;
@@ -62,6 +62,7 @@
 
 .modal-content{
     height:100vh;
+    background-color: #f5f5f7;
 }
 .modal-dialog{
     margin:0 auto;

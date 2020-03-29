@@ -12,6 +12,9 @@
     border-radius: 10em;
     padding: 0.7em 1em;
 }
+.msgCustom {
+    padding-top:20vh;
+}
 .msgCustom ul{
     list-style:none;
 }
@@ -23,7 +26,7 @@
 }
 
 .bot-msg-text h3 {
-    background-color: #EDEDED;
+    background-color: #ffffff;
     color: black;
     border-color: #EDEDED;
     border-width: 2px;
@@ -104,3 +107,83 @@
     font-size: 4rem;
   }
   
+  .choice{
+    -webkit-padding-before: 0;
+    padding-block-start: 0;
+    -webkit-padding-after: 0;
+    padding-block-end: 0;
+    -webkit-padding-start: 16px;
+    padding-inline-start: 16px;
+    -webkit-padding-end: 16px;
+    padding-inline-end: 16px;
+    -webkit-margin-after: 16px;
+    margin-block-end: 16px;
+    border-radius: 11px;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #fff;
+    border: 3px solid #fff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: flex-start;
+    align-items: flex-start;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    inline-size: 100%;
+    text-align: start;
+    min-block-size: 88px;
+
+  }
+.choice .label{
+    -webkit-margin-before: 20px;
+    margin-block-start: 20px;
+    -webkit-margin-after: 1px;
+    margin-block-end: 1px;
+    font-size: 17px;
+    line-height: 21px;
+    color: #1d1d1f;
+    font-weight: 600;
+    max-width:200px;
+}
+
+  .choice svg {
+    margin-top: 19px;
+    margin-left: 20px;
+    width: 22px!important;
+    height: 22px!important;
+    -webkit-margin-before: 19px;
+    margin-block-start: 19px;
+    -webkit-margin-start: 20px;
+    margin-inline-start: 20px;
+    fill: #ededed;
+    inline-size: 22px!important;
+    block-size: 22px!important;
+  }
+
+.choice[aria-checked=true] svg {
+    fill: #0071e3;
+}
+
+.detailed-label{
+    margin-bottom: 20px;
+    margin-top: 4px;
+  }
+
+.valSubmitBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+    border-radius: 500px;
+  }
