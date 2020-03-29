@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import './Home.css';
-import {Button} from 'cauldron-react'
 import {navigate, Link} from "@reach/router"
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';

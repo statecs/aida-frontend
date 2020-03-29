@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './MyPanel.css';
-import { Link } from "@reach/router"
 import {navigate} from "@reach/router"
 
 

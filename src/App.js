@@ -88,8 +88,8 @@ const App = () => {
               <IoIosHome />
 
             </Link>
-            
-            <div class="flexible-space"></div>
+
+            <div className="flexible-space"></div>
     
         
             <Link to="/aida/arenden" className="icons chatIcon" aria-label="Mina ärenden">

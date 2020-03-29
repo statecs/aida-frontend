@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
-import {Button} from 'cauldron-react'
 import './Examples.css';
 import {Link, navigate} from "@reach/router"
 import searchTerms from '../home/searchTerms';
