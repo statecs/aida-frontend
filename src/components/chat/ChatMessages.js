@@ -6,7 +6,6 @@ import PulseLoader from 'react-spinners/PulseLoader';
 import StepWizard from 'react-step-wizard';
 import Nav from './Nav';
 import ChatStep from './ChatStep';
-import StepController from './StepController';
 import "./transitions.css";
 
 const spinnerCss = "display: table; margin: 20px auto;";
@@ -52,7 +51,6 @@ class ChatMessages extends Component {
                                         .map((msg, idx) => <div key={idx} role="region" aria-live="assertive" aria-atomic="true"><ChatStep msg={msg}></ChatStep></div> )}
 
                                     </StepWizard> 
-                                    {instance ? <StepController stepInstance={this.state.instance}/> : null }
       </React.Fragment>
             }
              </div> 

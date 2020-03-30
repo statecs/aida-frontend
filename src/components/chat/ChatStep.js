@@ -7,6 +7,7 @@ import {Button, Link} from 'cauldron-react'
 import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import formUrl from '../../keys/formUrl';
+import ChatInput from './ChatInput';
 import { FaRegFrown, FaRegAngry, FaRegMeh, FaRegSmile, FaRegLaughBeam  } from "react-icons/fa";
 
 class ChatStep extends Component {
@@ -125,11 +126,13 @@ class ChatStep extends Component {
             );
         })
 
-        let sender = this.props.user;
-        let receiver = 'bot';
-        let message = messages.join(", ");
-        const rasaMsg = { sender, receiver, message };
-        this.props.sendMessage(rasaMsg);
+        if (messages.length !== 0) {
+            let sender = this.props.user;
+            let receiver = 'bot';
+            let message = messages.join(", ");
+            const rasaMsg = { sender, receiver, message };
+            this.props.sendMessage(rasaMsg);
+        }
     };
 
     render() {
@@ -220,14 +223,6 @@ class ChatStep extends Component {
                                     </React.Fragment>
                                 )}
 
-             <div className="user-messages">
-                <div className="user-msg">
-                    <div className="user-msg-text">
-                        <p className="display-linebreak">{this.props.msg.message}</p>
-                    </div>
-                </div>
-                <div className="user-messages-img"></div>
-            </div>
                 <React.Fragment>
                    <div className="bot-messages">
                         <div className="bot-msg">
@@ -277,6 +272,16 @@ class ChatStep extends Component {
                             }
                              </div>
                        </React.Fragment>
+
+                       { ((!this.props.msg.custom) && (!this.props.msg.buttons)) &&
+                       <React.Fragment>
+                        <div class="flexible-space"></div>
+                        <div className="inputContainer">
+                        <ChatInput  />
+                        </div>
+                       </React.Fragment>
+                       }
+                       
         </React.Fragment>
         );
     }
