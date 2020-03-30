@@ -8,7 +8,13 @@ import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import formUrl from '../../keys/formUrl';
 import ChatInput from './ChatInput';
-import { FaRegFrown, FaRegAngry, FaRegMeh, FaRegSmile, FaRegLaughBeam  } from "react-icons/fa";
+import { Range, Direction, getTrackBackground } from 'react-range';
+import { FaRegFrown, FaRegAngry, FaRegMeh, FaRegSmile, FaRegLaughBeam, FaRegFrownOpen, FaRegGrinAlt  } from "react-icons/fa";
+
+const STEP = 0.1;
+const MIN = 0;
+const MAX = 100;
+
 
 class ChatStep extends Component {
 
@@ -21,6 +27,8 @@ class ChatStep extends Component {
             message: this.props.msg.message,
             rating: "",
             freeText: "",
+            values: [50],
+            valuesRange: [3],
             showPopupForm: false,
             chosenVals: [],
             submitted: false
@@ -101,6 +109,14 @@ class ChatStep extends Component {
 
       
     }
+
+    sendRangeValues = (values) => {
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = values;
+        const rasaMsg = { sender, receiver, message };
+        this.props.sendMessage(rasaMsg);
+    };
   
     sendFormValues = () => {
         const chosenVals = this.props.msg.custom.data.filter(item => item.checked);
@@ -228,6 +244,7 @@ class ChatStep extends Component {
                         <div className="bot-msg">
                             <div className="bot-msg-text">
                                 <h3 aria-label={this.props.msg.message}>{this.props.msg.message}</h3>
+                                
                             </div>
                         </div>
                          <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Vill du ge feedback?</Link>   
@@ -251,6 +268,9 @@ class ChatStep extends Component {
                         
                         {this.props.msg.custom && 
                             <React.Fragment>
+                                {this.props.msg.custom.type === "multipleSelect" && 
+                                <React.Fragment>
+                                
                                 {this.props.msg.custom.data.map((custom, id) =>
                                     <React.Fragment key={id}>
                                         <button className="choice" onClick={this.onToggle.bind(this, id)} role="radio" aria-checked={custom.checked === true} checked={custom.checked === true} name={custom.payload} value={custom.payload}>
@@ -268,8 +288,261 @@ class ChatStep extends Component {
                                     </React.Fragment>
                                 )}
                                 <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Skicka</Button>
+                                
+                                </React.Fragment>
+                                
+                                }
+
+                                {this.props.msg.custom.type === "reactRange" && 
+                                <React.Fragment>
+                                <div className="container-feedback">
+                                 <div className="item">
+                                 
+                            <label htmlFor="1">
+                            <input className="radio" type="radio" name="1" id="1" value="1" checked={this.state.rating === '1'} onChange={this.handleOptionChange}/>
+                            <span><FaRegGrinAlt/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="2">
+                            <input className="radio" type="radio" name="2" id="2" value="2" checked={this.state.rating === '2'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegSmile/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="3">
+                            <input className="radio" type="radio" name="3" id="3" value="3" checked={this.state.rating === '3'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegMeh/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="4">
+                            <input className="radio" type="radio" name="4" id="4" value="4"  checked={this.state.rating === '4'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegFrownOpen/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="5">
+                            <input className="radio" type="radio" name="5" id="5" value="5" checked={this.state.rating === '5'} onChange={this.handleOptionChange}/>
+                            <span><FaRegFrown/></span>
+                            </label>
+                            </div></div>
+
+                                <div
+                                style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                flexWrap: 'wrap'
+                                }}
+                            >
+                                <Range
+                                values={this.state.valuesRange}
+                                step="1"
+                                min="0"
+                                max="5"
+                                onChange={valuesRange => this.setState({ valuesRange })}
+                                renderTrack={({ props, children }) => (
+                                    <div
+                                    onMouseDown={props.onMouseDown}
+                                    onTouchStart={props.onTouchStart}
+                                    style={{
+                                        ...props.style,
+                                        height: '36px',
+                                        display: 'flex',
+                                        width: '100%'
+                                    }}
+                                    >
+                                    <div
+                                        ref={props.ref}
+                                        style={{
+                                        height: '5px',
+                                        width: '100%',
+                                        borderRadius: '4px',
+                                        background: getTrackBackground({
+                                            values: this.state.valuesRange,
+                                            colors: ['#3c7aae', '#ffffff'],
+                                            min: "0",
+                                            max: "5"
+                                        }),
+                                        alignSelf: 'center'
+                                        }}
+                                    >
+                                        {children}
+                                    </div>
+                                    </div>
+                                )}
+                                renderThumb={({ props, isDragged }) => (
+                                    <div
+                                    {...props}
+                                    style={{
+                                        ...props.style,
+                                        height: '42px',
+                                        width: '42px',
+                                        borderRadius: '4px',
+                                        backgroundColor: '#FFF',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        boxShadow: '0px 2px 6px #AAA',
+                                    }}
+                                    >
+                                    <div
+                                        style={{
+                                        height: '16px',
+                                        width: '5px',
+                                        backgroundColor: isDragged ? '#3c7aae' : '#CCC'
+                                        }}
+                                    />
+                                    </div>
+                                )}
+                                />
+                                <output style={{ marginTop: '60px' }} id="output">
+                            
+                                </output>
+                            </div>
+                            <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.valuesRange[0]))}} className="valSubmitBtn">Skicka</Button>
+
+                                </React.Fragment>
+                                
+                                }
+
+                                {this.props.msg.custom.type === "reactRangeUp" && 
+                                <React.Fragment>
+
+                                <div className="container-rangeUp">
+                                 <div className="item">
+                                 
+                            <label htmlFor="1">
+                            <input className="radio" type="radio" name="1" id="1" value="1" checked={this.state.rating === '1'} onChange={this.handleOptionChange}/>
+                            <span><FaRegLaughBeam/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="2">
+                            <input className="radio" type="radio" name="2" id="2" value="2" checked={this.state.rating === '2'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegSmile/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="3">
+                            <input className="radio" type="radio" name="3" id="3" value="3" checked={this.state.rating === '3'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegMeh/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="4">
+                            <input className="radio" type="radio" name="4" id="4" value="4"  checked={this.state.rating === '4'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegFrown/></span>
+                            </label>
+                            </div>
+
+                            <div className="item">
+                            <label htmlFor="5">
+                            <input className="radio" type="radio" name="5" id="5" value="5" checked={this.state.rating === '5'} onChange={this.handleOptionChange}/>
+                            <span><FaRegAngry/></span>
+                            </label>
+                            </div></div>
+
+                                <div
+                                style={{
+
+                                }}
+                            >
+                                <Range
+                                direction={Direction.Up}
+                                values={this.state.values}
+                                step={STEP}
+                                min={MIN}
+                                max={MAX}
+                                onChange={values => this.setState({ values })}
+                                renderTrack={({ props, children }) => (
+                                    <div
+                                    onMouseDown={props.onMouseDown}
+                                    onTouchStart={props.onTouchStart}
+                                    style={{
+                                        ...props.style,
+                                        flexGrow: 1,
+                                        width: '36px',
+                                        display: 'flex',
+                                        height: '430px'
+                                    }}
+                                    >
+                
+                                    <div
+                                        ref={props.ref}
+                                        style={{
+                                        width: '5px',
+                                        height: '100%',
+                                        borderRadius: '4px',
+                                        background: getTrackBackground({
+                                            values: this.state.values,
+                                            colors: ['#548BF4', '#ccc'],
+                                            min: MIN,
+                                            max: MAX,
+                                            direction: Direction.Up
+                                        }),
+                                        alignSelf: 'center'
+                                        }}
+                                    >
+                                        {children}
+                                    </div>
+                                    
+                                    </div>
+                                    
+                                )}
+                                renderThumb={({ props, isDragged }) => (
+                                    <div
+                                    {...props}
+                                    style={{
+                                        ...props.style,
+                                        height: '42px',
+                                        width: '42px',
+                                        borderRadius: '4px',
+                                        backgroundColor: '#FFF',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        boxShadow: '0px 2px 6px #AAA'
+                                    }}
+                                    >
+                                    <div
+                                        style={{
+                                        width: '16px',
+                                        height: '5px',
+                                        backgroundColor: isDragged ? '#548BF4' : '#CCC'
+                                        }}
+                                    />
+                                    
+                                    </div>
+                                    
+                                    
+                                )}
+                                />
+                                {
+                                <output style={{ marginTop: '00px', width: '56px' }} id="output">
+                                </output>
+                                }
+                            </div>
+                               
+                                <Button onClick={() => {this.sendRangeValues(this.state.values[0].toFixed(1))}} className="valSubmitBtn">Skicka</Button>
+                                </React.Fragment>
+                                
+                                }
+
+
+
+
+                               
                             </React.Fragment>
                             }
+
                              </div>
                        </React.Fragment>
 
