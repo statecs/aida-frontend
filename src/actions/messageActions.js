@@ -20,6 +20,7 @@ export const sendMessage = (msgData) => dispatch => {
     }
     axios.post('https://bot.cstate.se/webhooks/rest/webhook', msgData)
         .then(res => {
+            if (res.data.length !== 0){
             let msgText = "";
             let msgButtons = "";
             let msgCustom = "";
@@ -51,12 +52,24 @@ export const sendMessage = (msgData) => dispatch => {
             } else {
                 botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText};
             }
-
-            dispatch({
+             dispatch({
                 type: SEND_MESSAGE,
                 userMsg: userMsg,
                 botMsg: botMsg
             });
+            }
+            else{
+                    dispatch({
+                    type: SEND_MESSAGE,
+                });
+            }
+
         })
+        .catch(err => console.log(err));
+};
+
+export const sendBack = (msgData) => dispatch => {
+
+    axios.post('http://localhost/webhooks/rest/webhook', msgData)
         .catch(err => console.log(err));
 };
