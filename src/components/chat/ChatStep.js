@@ -247,7 +247,7 @@ class ChatStep extends Component {
                                 
                             </div>
                         </div>
-                         <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Vill du ge feedback?</Link>   
+                         <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Lämna synpunkter</Link>   
                     </div>    
 
                     <div className="msgCustom">
@@ -341,7 +341,7 @@ class ChatStep extends Component {
                             >
                                 <Range
                                 values={this.state.valuesRange}
-                                step="1"
+                                step="0.1"
                                 min="0"
                                 max="5"
                                 onChange={valuesRange => this.setState({ valuesRange })}
