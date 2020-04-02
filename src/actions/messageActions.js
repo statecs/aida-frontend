@@ -70,6 +70,6 @@ export const sendMessage = (msgData) => dispatch => {
 
 export const sendBack = (msgData) => dispatch => {
 
-    axios.post('http://localhost/webhooks/rest/webhook', msgData)
+    axios.post('https://bot.cstate.se/webhooks/rest/webhook', msgData)
         .catch(err => console.log(err));
 };
