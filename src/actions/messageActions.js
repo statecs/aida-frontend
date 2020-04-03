@@ -1,6 +1,5 @@
-import { SEND_MESSAGE, SET_LOADING } from './types';
+import { SEND_MESSAGE, SET_LOADING, BOTURL } from './types';
 import axios from 'axios';
-
 
 export const setLoading = () => dispatch => {
     dispatch({
@@ -18,7 +17,7 @@ export const sendMessage = (msgData) => dispatch => {
     if (msgData.message === "") {
         return;
     }
-    axios.post('https://bot.cstate.se/webhooks/rest/webhook', msgData)
+    axios.post(BOTURL, msgData)
         .then(res => {
             if (res.data.length !== 0){
             let msgText = "";
@@ -70,7 +69,7 @@ export const sendMessage = (msgData) => dispatch => {
 
 export const sendBack = (msgData) => dispatch => {
 
-    axios.post('https://bot.cstate.se/webhooks/rest/webhook', msgData)
+    axios.post(BOTURL, msgData)
         .catch(err => console.log(err));
 };
 
@@ -79,6 +78,6 @@ export const sendRestart = (sender, receiver) => dispatch => {
     let message = "/restart"
     let msgData = {sender, receiver, message}
 
-    axios.post('https://bot.cstate.se/webhooks/rest/webhook', msgData)
+    axios.post(BOTURL, msgData)
         .catch(err => console.log(err));
 };

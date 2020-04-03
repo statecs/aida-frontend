@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendMessage } from '../../actions/messageActions';
+import { sendMessage, sendRestart } from '../../actions/messageActions';
 import './Examples.css';
 import {Link, navigate} from "@reach/router"
 import searchTerms from '../home/searchTerms';
@@ -15,7 +15,7 @@ class Examples extends Component {
         let receiver = 'bot';
         let message = el.target.value;
         const rasaMsg = { sender, receiver, message };
-        //Send message to rasa and get chatbot response
+        this.props.sendRestart(sender, receiver);
         this.props.sendMessage(rasaMsg);
         navigate('/aida/chat')
         
@@ -51,4 +51,4 @@ const mapStateToProps = state => ({
     user: state.sessionID.sessionID // Get unique session id to use for user each time page is loaded.
 })
 
-export default connect(mapStateToProps, { sendMessage })(Examples);
+export default connect(mapStateToProps, { sendMessage, sendRestart })(Examples);

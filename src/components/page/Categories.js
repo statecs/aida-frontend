@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendMessage } from '../../actions/messageActions';
+import { sendMessage, sendRestart } from '../../actions/messageActions';
 import {Link, navigate} from "@reach/router"
 import { MdKeyboardArrowRight } from "react-icons/md";
 import Button from 'react-bootstrap/Button';
@@ -25,7 +25,7 @@ class Categories extends Component {
         let receiver = 'bot';
         let message = el.target.value;
         const rasaMsg = { sender, receiver, message };
-        //Send message to rasa and get chatbot response
+        this.props.sendRestart(sender, receiver);
         this.props.sendMessage(rasaMsg);
         navigate('/aida/chat')
         
@@ -62,4 +62,4 @@ const mapStateToProps = state => ({
     user: state.sessionID.sessionID // Get unique session id to use for user each time page is loaded.
 })
 
-export default connect(mapStateToProps, { sendMessage })(Categories);
+export default connect(mapStateToProps, { sendMessage, sendRestart })(Categories);
