@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendMessage } from '../../actions/messageActions';
+import { sendMessage, sendRestart } from '../../actions/messageActions';
 import './Home.css';
 import {navigate, Link} from "@reach/router"
 import Autosuggest from 'react-autosuggest';
@@ -102,7 +102,8 @@ class Home extends Component {
         let sender = this.props.user;
         let receiver = 'bot';
         let message = this.state.value;
-        const rasaMsg = { sender, receiver, message };
+        const rasaMsg = { sender, receiver, message};
+        this.props.sendRestart(sender, receiver);
         this.props.sendMessage(rasaMsg);
         navigate('/aida/chat')
     }
@@ -127,6 +128,7 @@ class Home extends Component {
         let receiver = 'bot';
         let message = suggestionValue;
         const rasaMsg = { sender, receiver, message };
+        this.props.sendRestart(sender, receiver);
         this.props.sendMessage(rasaMsg);
         navigate('/aida/chat')
   };
@@ -136,7 +138,7 @@ class Home extends Component {
         let receiver = 'bot';
         let message = el.target.value;
         const rasaMsg = { sender, receiver, message };
-        //Send message to rasa and get chatbot response
+        this.props.sendRestart(sender, receiver);
         this.props.sendMessage(rasaMsg);
         navigate('/aida/chat')
         
@@ -219,4 +221,4 @@ const mapStateToProps = state => ({
     user: state.sessionID.sessionID // Get unique session id to use for user each time page is loaded.
 })
 
-export default connect(mapStateToProps, { sendMessage })(Home);
+export default connect(mapStateToProps, { sendMessage, sendRestart })(Home);

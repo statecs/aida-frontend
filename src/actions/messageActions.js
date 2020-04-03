@@ -73,3 +73,12 @@ export const sendBack = (msgData) => dispatch => {
     axios.post('https://bot.cstate.se/webhooks/rest/webhook', msgData)
         .catch(err => console.log(err));
 };
+
+export const sendRestart = (sender, receiver) => dispatch => {
+
+    let message = "/restart"
+    let msgData = {sender, receiver, message}
+
+    axios.post('https://bot.cstate.se/webhooks/rest/webhook', msgData)
+        .catch(err => console.log(err));
+};

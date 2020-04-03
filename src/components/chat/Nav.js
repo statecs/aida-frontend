@@ -34,7 +34,7 @@ class Nav extends Component {
 
             <div className="backNav">
         {this.props.currentStep !== 1 && 
-         <button onClick={this.sendValues}><MdKeyboardArrowUp/><span>Ångra</span></button>
+         <button onClick={this.sendValues}><MdKeyboardArrowUp/><span>Bakåt</span></button>
         } 
         </div>
         )
