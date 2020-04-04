@@ -548,7 +548,7 @@ class ChatStep extends Component {
 
                        { ((!this.props.msg.custom) && (!this.props.msg.buttons)) &&
                        <React.Fragment>
-                        <div class="flexible-space"></div>
+                        <div className="flexible-space"></div>
                         <div className="inputContainer">
                         <ChatInput  />
                         </div>

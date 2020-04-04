@@ -22,8 +22,6 @@ class ChatMessages extends Component {
 
     render() {
 
-    const instance = this.state;
-
     if((this.state && this.state.instance.totalSteps > 0)){
     this.state.instance.lastStep();
     }

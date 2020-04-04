@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendMessage, sendRestart } from '../../actions/messageActions';
+import { sendStart } from '../../actions/messageActions';
 import {Link, navigate} from "@reach/router"
 import { MdKeyboardArrowRight } from "react-icons/md";
 import Button from 'react-bootstrap/Button';
@@ -25,8 +25,7 @@ class Categories extends Component {
         let receiver = 'bot';
         let message = el.target.value;
         const rasaMsg = { sender, receiver, message };
-        this.props.sendRestart(sender, receiver);
-        this.props.sendMessage(rasaMsg);
+        this.props.sendStart(sender, receiver, rasaMsg);
         navigate('/aida/chat')
         
     };
@@ -54,7 +53,6 @@ class Categories extends Component {
 };
 
 Categories.propTypes = {
-    sendMessage: PropTypes.func.isRequired,
     user: PropTypes.string.isRequired
 }
 
@@ -62,4 +60,4 @@ const mapStateToProps = state => ({
     user: state.sessionID.sessionID // Get unique session id to use for user each time page is loaded.
 })
 
-export default connect(mapStateToProps, { sendMessage, sendRestart })(Categories);
+export default connect(mapStateToProps, { sendStart })(Categories);
