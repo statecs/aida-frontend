@@ -97,13 +97,13 @@ export default class SpeechInput extends Component<
 
   render() {
     return supportsSpeechRecognition() ? (
-      <Button aria-label="Aktivera mikrofon" type="button" id="speech-input" onClick={this.startRecognition}>
+      <button aria-label="Aktivera mikrofon" type="button" id="speech-input" onClick={this.startRecognition}>
         {this.state.isRecognizing ? (
           <FaCircle className="vertical-center" color="#ed4933" />
         ) : (
           <FaMicrophone className="vertical-center" />
         )}
-      </Button>
+      </button>
     ) : null;
   }
 }

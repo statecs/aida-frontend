@@ -6,6 +6,13 @@
     
 }
 
+.chatInput #speech-input{
+    position: absolute;
+    margin: 20px 0px 0px -45px;
+    border:0;
+    padding:0;
+}
+
 .textArea {
     width: 100%;
     font-size: large;

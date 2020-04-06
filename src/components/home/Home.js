@@ -64,7 +64,7 @@ return(
 
 const renderInputComponent = inputProps => (
   <div className="inputSearchContainer">
-    <IoIosSearch className="searchIcon" /><input {...inputProps} /> <Link className="voiceIcon" aria-label="Röststyrning" to="/aida/"><MdKeyboardVoice/></Link>
+    <IoIosSearch className="searchIcon" /><input {...inputProps} /> <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
   </div>
 );
 
@@ -104,7 +104,7 @@ class Home extends Component {
         let message = this.state.value;
         const rasaMsg = { sender, receiver, message};
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/aida/chat')
+        navigate('/chat')
     }
   }
   
@@ -128,7 +128,7 @@ class Home extends Component {
         let message = suggestionValue;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/aida/chat')
+        navigate('/chat')
   };
 
     sendValues = (el) => {
@@ -137,7 +137,7 @@ class Home extends Component {
         let message = el.target.value;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/aida/chat')
+        navigate('/chat')
         
     };
 
@@ -159,7 +159,7 @@ class Home extends Component {
            
                 <div className="container-home">
                  <h1 className="site-logo"> 
-                    <Link to="/aida" itemProp="url"> 
+                    <Link to="/" itemProp="url"> 
                         <span itemProp="logo" itemType="http://schema.org/ImageObject" aria-label="Symptomkollen"> 
                     <svg width="120px" height="120px" viewBox="0 0 129 129" version="1.1">
                         <g id="Prototype" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -201,7 +201,7 @@ class Home extends Component {
                                     </React.Fragment>
                                 ))}  
                         </div>
-                      <Link to="/aida/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
+                      <Link to="/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
                   </div>
               </div>
             </React.Fragment>

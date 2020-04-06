@@ -84,7 +84,7 @@ const App = () => {
       
       
          <div className="navContainer">
-            <Link to="/aida" className="icons"  aria-label="Start">
+            <Link to="/" className="icons"  aria-label="Start">
               <IoIosHome />
 
             </Link>
@@ -92,7 +92,7 @@ const App = () => {
             <div className="flexible-space"></div>
     
         
-            <Link to="/aida/arenden" className="icons chatIcon" aria-label="Mina ärenden">
+            <Link to="/arenden" className="icons chatIcon" aria-label="Mina ärenden">
               <IoIosChatbubbles/> <span className="chatText">Mina ärenden</span>
             </Link>
       
@@ -106,12 +106,11 @@ const App = () => {
           
           <Router>
            <Home path="/" render={() => {focusMain()}} />
-            <Home path="/aida" render={() => {focusMain()}} />
-            <ChatPanel path="/aida/chat" render={() => {focusMain()}} />
-            <MyPanel path="/aida/arenden" render={() => {focusMain()}} />
-            <Examples path="/aida/exempel" render={() => {focusMain()}} />
-            <Categories path="/aida/kategorier" render={() => {focusMain()}} />
-            <Voice path="/aida/assistent" render={() => {focusMain()}} />
+            <ChatPanel path="/chat" render={() => {focusMain()}} />
+            <MyPanel path="/arenden" render={() => {focusMain()}} />
+            <Examples path="/exempel" render={() => {focusMain()}} />
+            <Categories path="/kategorier" render={() => {focusMain()}} />
+            <Voice path="/assistent" render={() => {focusMain()}} />
           </Router>
       
 
