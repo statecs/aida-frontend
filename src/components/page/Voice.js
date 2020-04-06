@@ -103,8 +103,37 @@ constructor() {
                       </svg>
                     </button>
                   <div>
-                  <p className="voiceMsg">{this.props.text}</p>                              
-                  </div>     
+                  <p className="voiceMsg">{this.props.text}</p>       
+
+              {this.props.buttons && 
+              <React.Fragment>       
+              {this.props.buttons.map((msg, i) =>   
+                                  <div>
+                                  {msg.payload}
+                                  </div>
+                                
+                                
+                                )}
+                                </React.Fragment>       
+              }
+
+                  {this.props.custom && 
+              <React.Fragment>       
+              {this.props.custom.map((msg, i) =>   
+                                  <div>
+                                  {msg.payload}
+                                  </div>
+                                
+                                
+                                )}
+                                </React.Fragment>       
+              }
+
+                 
+
+                              
+                  </div>  
+                      
 
                   </React.Fragment>           
                   }
