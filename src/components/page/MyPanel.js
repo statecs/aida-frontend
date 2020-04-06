@@ -16,8 +16,8 @@ class MyPanel extends Component {
                 <div className="container top-margin">
                     <h3 className='intro'>Mina ärenden</h3>
                     <div className="catDisplay">
-                        <button onClick={() => {navigate('/aida/chat')}}  className="agreeBtn " variant="primary" aria-label="Gå till chatt" > Gå till chatt</button>
-                        <button onClick={() => {this.clearLocalStorage()}}  className="agreeBtn call-btn" variant="primary" aria-label="Logga ut" >Logga ut</button>
+                        <button onClick={() => {navigate('/aida/chat')}}  className="agreeBtn " variant="primary" aria-label="Gå till chatt"> Gå till chatt</button>
+                        <button onClick={() => {this.clearLocalStorage()}}  className="agreeBtn call-btn" variant="primary" aria-label="Logga ut" >Avsluta</button>
                     </div>
                 </div>
             </React.Fragment>
