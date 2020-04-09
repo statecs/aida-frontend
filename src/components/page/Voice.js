@@ -21,35 +21,11 @@ class Voice extends Component {
 constructor() {
     super();
     this.state = {
-      message: ''
+      message: '',
+      record: false,
     };
-    
-    this.play = this.play.bind(this);
 }
 
-  play(text) {
-    speech.speak({
-        text: text,
-    })
-
-    if (this.props.buttons) {
-            let custom = this.props.buttons.map((msg, i) =>  { return msg.payload});
-            let customButtons = custom.join(", ");
-
-            speech.speak({
-              text: customButtons
-            })
-      }
-
-    if (this.props.custom) {
-          let custom = this.props.custom.map((msg, i) =>  { return msg.payload});
-          let customButtons = custom.join(", ");
-
-          speech.speak({
-            text: customButtons
-          })
-      }
-  }
 
 
     render() {
@@ -87,21 +63,6 @@ constructor() {
                 <div className="container top-margin">
                     {this.props.text &&
                       <React.Fragment>
-                      
-                      <button
-                        className="rs-play"
-                        onClick={() => this.play(this.props.text)}
-                      >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                        <path d="M0 0h24v24H0z" fill="none" />
-                      </svg>
-                    </button>
                   <div>
                   <p className="voiceMsg">{this.props.text}</p>       
 

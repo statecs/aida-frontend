@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import './VoiceInput.css';
 import SpeechInput from "./SpeechInput";
+import SpeechInputCloud from "./SpeechInputCloud";
 
+function supportsSpeechRecognition() {
+  return "webkitSpeechRecognition" in window;
+}
 class VoiceInput extends Component {
     constructor(props) {
         super(props);
@@ -39,22 +43,35 @@ class VoiceInput extends Component {
     };
 
     render() {
-        return (
-            <React.Fragment>
-       
+      
+        return supportsSpeechRecognition() ? (
+             <React.Fragment>
             <div className="userMessage">{this.state.message}</div>
+             <div className="voicePageIcon">
 
-            <div className="voicePageIcon">
-                <SpeechInput
+     <SpeechInput
                 language="sv-SE"
                 onSpeechInput={message => this.handleInputChange(message, true)}
                 onSpeechEnd={message => this.sendMessage()}
-                />
-            </div>
-           
+                /> 
+                
+                </div>
 
-            </React.Fragment>
-        );
+    </React.Fragment>
+
+    ) :   <React.Fragment>
+            <div className="userMessage">{this.state.message}</div>
+             <div className="voicePageIcon">
+
+     <SpeechInputCloud
+                language="sv-SE"
+                onSpeechInput={message => this.handleInputChange(message, true)}
+                onSpeechEnd={message => this.sendMessage()}
+                /> 
+                
+                </div>
+
+    </React.Fragment>
     };
 };
 
