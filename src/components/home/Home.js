@@ -85,8 +85,10 @@ class Home extends Component {
         this.state = {
             error: null,
             value: '',
-            suggestions: []
+            suggestions: [],
+            active: false,
         };
+        this.toggleClass = this.toggleClass.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
     }
 
@@ -128,6 +130,7 @@ class Home extends Component {
         let message = suggestionValue;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
+        this.toggleClass();
         navigate('/chat')
   };
 
@@ -141,6 +144,17 @@ class Home extends Component {
         
     };
 
+    toggleClass() {
+            if (this.state.active){
+              document.body.classList.remove('no-scroll');
+              this.setState({ active: false });
+          
+            } else {     
+              document.body.classList.add('no-scroll');
+              const currentState = this.state.active;
+              this.setState({ active: !currentState });
+            }
+        };
     render() {
         const { value, suggestions } = this.state;
 
@@ -151,6 +165,8 @@ class Home extends Component {
             value,
             onChange: this.onChange,
             onKeyDown: this.onKeyDown,
+            onFocus: this.toggleClass,
+            onBlur: this.toggleClass,
         };
 
         
