@@ -106,6 +106,7 @@ class Home extends Component {
         let message = this.state.value;
         const rasaMsg = { sender, receiver, message};
         this.props.sendStart(sender, receiver, rasaMsg);
+        this.toggleClass();
         navigate('/chat')
     }
   }

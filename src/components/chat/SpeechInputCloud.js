@@ -18,14 +18,11 @@ type SpeechInputState = {
   interimTranscript: string
 };
 
-const audioContext =  new (window.AudioContext || window.webkitAudioContext)();
- 
-const recorder = new Recorder(audioContext, {
-  // An array of 255 Numbers
-  // You can use this to visualize the audio stream
-  // If you use react, check out react-wave-stream
+function supportsMediaDevices() {
+  return navigator.mediaDevices;
+}
 
-});
+
 
 export default class SpeechInputCloud extends Component<
   SpeechInputProps,
@@ -37,37 +34,74 @@ constructor() {
     this.state = {
       audio: null,
       text: "",
+      stream: null,
       message: '',
+      accept: true,
       record: false,
       blob: null,
+      recording: false,
+      recorder: null,
+      audioContext: null,
     };
     
     this.toggleMicrophone = this.toggleMicrophone.bind(this);
+
+    this.startRecord = this.startRecord.bind(this)
+    this.stopRecord = this.stopRecord.bind(this)
+
 }
 
-  async getMicrophone() {
+    isIOS = () => {
+        return /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())
+    }
 
-    await navigator.mediaDevices.getUserMedia({audio: true})
-          .then(stream => recorder.init(stream))
-          .catch(err => console.log('Uh oh... unable to get stream...', err));
-      
-    const audio = await navigator.mediaDevices.getUserMedia({
-      audio: true
-    })
+    startRecord = async () => {
+     try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            this.setState({ stream });
+        } catch (error) {
+            this.setState({
+                accept: false
+            })
+        }
+        
+        if (this.isIOS()) {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            this.setState({ stream })
+        }
+        const { stream } = this.state;
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const recorder = new Recorder(audioContext);
+        recorder.init(stream)
+            .then(
+                this.setState(
+                    {
+                        audioContext,
+                        recorder,
+                        recording: true
+                    },
+                    () => {
+                        recorder.start();
+                    }
+                )
+            );
+    }
 
-    recorder.start()
 
-    this.setState({ audio });
- 
-  }
-
-  saveAudio() {
-
-    recorder.stop()
-    .then(({blob, buffer}) => {
-
-    CloudSpeechAPI.sendRequest(blob, buffer, "sv-SE")
-    .then((data: any) => {
+    stopRecord = () => {
+        if (this.isIOS()) {
+            const { stream, audioContext } = this.state;
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        }
+        const { recorder } = this.state;
+        this.setState({
+            recording: false
+        },
+            () => {
+                recorder.stop().then(({ blob, buffer }) => {
+                    CloudSpeechAPI.sendRequest(blob, buffer, "sv-SE")
+                    .then((data: any) => {
     
             if (data && data['results']) {
               const finalTranscript = data['results'][0].alternatives[0].transcript;
@@ -79,52 +113,45 @@ constructor() {
               console.log("failed");
             }
           });
+                })
+            }
+        );
+    }
 
-      })
-
- 
-  }
 
 
-  stopMicrophone() {
- 
-     this.saveAudio();
-    this.setState({ audio: null });
-  }
 
   toggleMicrophone() {
-    if (this.state.audio) {
-      this.stopMicrophone();
+    if (this.state.recording) {
+      this.stopRecord();
 
     } else {
-      this.getMicrophone();
+      this.startRecord();
     }
   }
+    
+
 
 
     render() {
 
+          return supportsMediaDevices() ? (  
+          
+          <React.Fragment>
 
-        return (
-            <React.Fragment>
-
-
-   
               <div className="controls">
 
-                      <button onClick={this.toggleMicrophone}>
-            {this.state.audio ? <FaCircle className="vertical-center" color="#ed4933" /> : <FaMicrophone className="vertical-center" />}
+          <button onClick={this.toggleMicrophone}>
+            {this.state.recording ? <FaCircle className="vertical-center recording" color="#ed4933" /> : <FaMicrophone className="vertical-center" />}
           </button>
 
         </div>
 
+      </React.Fragment> ) : (  <React.Fragment> <span>Voice is not supported</span></React.Fragment>
 
 
-     
+)
 
-          
-            </React.Fragment>
-        )
 };
 
 }

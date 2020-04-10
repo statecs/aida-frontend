@@ -10,7 +10,7 @@ const speech = new Speech() // will throw an exception if not browser supported
 speech.init({
    	'volume': 1,
         'lang': 'sv-SE',
-        'rate': 1.1,
+        'rate': 1,
         'pitch': 1,
         'splitSentences': true,
 })
@@ -63,13 +63,14 @@ constructor() {
                 <div className="container top-margin">
                     {this.props.text &&
                       <React.Fragment>
+
                   <div>
                   <p className="voiceMsg">{this.props.text}</p>       
 
               {this.props.buttons && 
               <React.Fragment>       
               {this.props.buttons.map((msg, i) =>   
-                                  <div>
+                                  <div key={i}>
                                   {msg.payload}
                                   </div>
                                 
@@ -81,7 +82,7 @@ constructor() {
                   {this.props.custom && 
               <React.Fragment>       
               {this.props.custom.map((msg, i) =>   
-                                  <div>
+                                  <div key={i}>
                                   {msg.payload}
                                   </div>
                                 
