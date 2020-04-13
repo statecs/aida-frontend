@@ -191,9 +191,36 @@ constructor() {
 
               <div className="controls">
 
-          <button onClick={this.toggleMicrophone}>
-            {this.state.recording ? <FaCircle className="vertical-center recording" color="#ed4933" /> : <FaMicrophone className="vertical-center" />}
-          </button>
+          <div onClick={this.toggleMicrophone}>
+            {this.state.recording ? (
+            
+               <div class="speech-control-container listen">
+              <div class="speech-control">
+              <FaMicrophone className="microphone-icon" />
+          </div>
+          <div class="speech-control-pulse"></div>
+          <svg x="0px" y="0px" class="speech-control-loader">
+              <circle class="circle" stroke-width="10" r="101" />
+          </svg>
+          
+      </div>
+      
+
+          ) :  (
+             
+                 <div class="speech-control-container ">
+              <div class="speech-control">
+              <FaMicrophone className="microphone-icon" />
+          </div>
+          <div class="speech-control-pulse"></div>
+          <svg x="0px" y="0px" class="speech-control-loader">
+              <circle class="circle" stroke-width="10" r="101" />
+          </svg>
+      </div>
+
+             
+          )}
+          </div>
 
           <div id="log"></div>
         </div>

@@ -98,13 +98,35 @@ export default class SpeechInput extends Component<
 
   render() {
     return supportsSpeechRecognition() ? (
-      <button aria-label="Aktivera mikrofon" type="button" id="speech-input" onClick={this.startRecognition}>
+
+      <div aria-label="Aktivera mikrofon" type="button" id="speech-input" onClick={this.startRecognition}>
+
         {this.state.isRecognizing ? (
-          <FaCircle className="vertical-center" color="#ed4933" />
+
+             <div class="speech-control-container listen">
+              <div class="speech-control">
+              <FaMicrophone className="microphone-icon" />
+          </div>
+          <div class="speech-control-pulse"></div>
+          <svg x="0px" y="0px" class="speech-control-loader">
+              <circle class="circle" stroke-width="10" r="101" />
+          </svg>
+      </div>
+      
         ) : (
-          <FaMicrophone className="vertical-center" />
+        
+  <div class="speech-control-container">
+                    <div class="speech-control">
+              <FaMicrophone className="microphone-icon" />
+          </div>
+          <div class="speech-control-pulse"></div>
+          <svg x="0px" y="0px" class="speech-control-loader">
+              <circle class="circle" stroke-width="10" r="101" />
+          </svg>
+      </div>
         )}
-      </button>
+        
+      </div>
     ) : null;
   }
 }

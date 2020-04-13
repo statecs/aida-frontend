@@ -1,6 +1,7 @@
 import React, { Component, useEffect } from 'react';
 import './Voice.css';
 import PropTypes from 'prop-types';
+import {navigate} from "@reach/router"
 import { connect } from 'react-redux';
 import VoiceInput from '../chat/VoiceInput';
 import Speech from 'speak-tts'
@@ -183,10 +184,14 @@ playSound(){
 
 }
 
+  closePopupForm = () => {
+       navigate('/')
+    };
+
 
     render() {
 
-      
+    
      
   let spinner;
     if (this.props.loading) {
@@ -195,6 +200,16 @@ playSound(){
       spinner = null;
     }
     return (
+
+        <Modal show={true}
+                        size="lg"
+                        backdrop='static'
+                        onHide={this.closePopupForm}
+                        enforceFocus={true}
+                        dialogClassName="feedback-modal"
+                        centered>
+
+                        <Modal.Header closeButton></Modal.Header>
 
 <React.Fragment>
 
@@ -227,26 +242,45 @@ playSound(){
 
 
   {this.props.loading && 
+
+
+
         <span className="alertLoading" role="alert" aria-busy="true">{spinner} Laddar</span>
+         
         }
+     
 
     {!this.props.loading && 
 
 <div className="container">
 
-<div className="container top-margin">
+<div className="container">
                     {this.props.text &&
                       <React.Fragment>
 
         
        <div onClick={() => this.handlePlay()}>
-                  <p className="voiceMsg">{this.props.text}</p>       
+       <div className="bot-msg">
+                            <div className="bot-msg-text">
+                                <h3 aria-label={this.props.text}>{this.props.text}</h3>
+                                
+                            </div>
+                        </div>
+
+                   
 
               {this.props.buttons && 
               <React.Fragment>       
               {this.props.buttons.map((msg, i) =>   
-                                  <div key={i}>
-                                  {msg.payload}
+                                  <div key={i}  >
+                             
+                            
+                              {msg.payload}
+                                
+                           
+                       
+
+
                                   </div>
                                 
                                 
@@ -257,8 +291,13 @@ playSound(){
                   {this.props.custom && 
               <React.Fragment>       
               {this.props.custom.map((msg, i) =>   
-                                  <div key={i}>
-                                  {msg.payload}
+                                  <div key={i} >
+                                
+                         
+                              {msg.payload}
+                                
+                          
+                       
                                   </div>
                                 
                                 
@@ -283,6 +322,7 @@ playSound(){
             </div>    
       </div>  }
             </React.Fragment>
+              </Modal >
         )
     };
 };
