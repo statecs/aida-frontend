@@ -5,3 +5,19 @@
 .voiceMsg{
   font-size:20px;
 }
+
+.voiceButton {
+  margin: 0 auto;
+  font-size: 5em;
+  margin-top: 20vh;
+}
+
+.voiceButton svg{
+  margin:0 auto;
+}
+
+.activateMic {
+    margin:0 auto;
+    padding-top:2em;
+    font-size:1em;
+}

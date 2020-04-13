@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FaMicrophone, FaCircle } from "react-icons/fa";
 import CloudSpeechAPI from '../../helpers/SpeechApi';
+import Speech from 'speak-tts'
 
 import Recorder from '../../helpers/Recorder';
 
@@ -82,14 +83,18 @@ constructor() {
                     },
                     () => {
                         recorder.start();
+                          this.detectSilence(stream, audioContext, recorder, this.stopRecord, this.onSpeak, 3500);
                     }
                 )
-            );
+            ).catch(function(err) {
+              console.log('Error: ' + err);
+            });
     }
 
 
     stopRecord = () => {
-        if (this.isIOS()) {
+      if (this.state.recording){
+      if (this.isIOS()) {
             const { stream, audioContext } = this.state;
             stream.getTracks().forEach(track => track.stop());
             audioContext.close();
@@ -108,18 +113,54 @@ constructor() {
 
               this.props.onSpeechInput(finalTranscript);
               this.props.onSpeechEnd();
+              if(document.getElementById("log")){
+                  document.getElementById("log").innerHTML="";
+              }
             }
             else {
-              console.log("failed");
+             document.getElementById("log").innerHTML="Hoppsan! Ett fel uppstod. Försök igen.";
             }
           });
                 })
             }
         );
+}
+
     }
 
+      detectSilence(stream, audioContext, recorder, onSoundEnd = _=>{}, onSoundStart = _=>{}, silence_delay = 3000) {
 
+      if (this.state.recording){
 
+        const analyser = audioContext.createAnalyser();
+        const streamNode = audioContext.createMediaStreamSource(stream);
+        streamNode.connect(analyser);
+
+        analyser.minDecibels = -70;
+
+        const data = new Uint8Array(analyser.frequencyBinCount); // will hold our data
+        let silence_start = performance.now();
+        let triggered = false; // trigger only once per silence event
+
+        function loop(time) {
+          requestAnimationFrame(loop); // we'll loop every 60th of a second to check
+          analyser.getByteFrequencyData(data); // get current data
+          if (data.some(v => v)) { // if there is data above the given db limit
+            if(triggered){
+                triggered = false;
+              }
+
+            silence_start = time; // set it to now
+          }
+
+          if (!triggered && time - silence_start > silence_delay) {
+            onSoundEnd();
+            triggered = true;
+          }
+        }
+        loop();
+      }
+}
 
   toggleMicrophone() {
     if (this.state.recording) {
@@ -131,8 +172,17 @@ constructor() {
   }
     
 
+  componentDidMount(prevProps, prevState){
+    if (supportsMediaDevices){
+        this.startRecord();
+    }
+  }
 
-
+  componentWillUnmount(prevProps, prevState){
+    if (supportsMediaDevices){
+        this.stopRecord();
+    }
+  }
     render() {
 
           return supportsMediaDevices() ? (  
@@ -145,6 +195,7 @@ constructor() {
             {this.state.recording ? <FaCircle className="vertical-center recording" color="#ed4933" /> : <FaMicrophone className="vertical-center" />}
           </button>
 
+          <div id="log"></div>
         </div>
 
       </React.Fragment> ) : (  <React.Fragment> <span>Voice is not supported</span></React.Fragment>

@@ -49,6 +49,7 @@ export default class SpeechInput extends Component<
     recognition.onend = this.onRecognitionEnd;
     recognition.onresult = this.onRecognitionResult;
     this.recognition = recognition;
+    this.startRecognition();
   }
 
   onRecognitionStart = () => {

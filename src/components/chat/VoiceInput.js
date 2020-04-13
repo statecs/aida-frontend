@@ -14,7 +14,8 @@ class VoiceInput extends Component {
         super(props);
         this.state = {
             receiver: 'Bot',
-            message: ''
+            message: '',
+            _isMounted: false
         };
     }
 
@@ -42,8 +43,15 @@ class VoiceInput extends Component {
         }
     };
 
-    render() {
-      
+    componentDidMount() {
+        this.setState({ _isMounted: true });
+    }
+
+     componentWillUnmount() {
+          this.setState({ _isMounted: false });
+  }
+
+    render() {  
         return supportsSpeechRecognition() ? (
              <React.Fragment>
             <div className="userMessage">{this.state.message}</div>
@@ -63,12 +71,15 @@ class VoiceInput extends Component {
             <div className="userMessage">{this.state.message}</div>
              <div className="voicePageIcon">
 
+    {this.state._isMounted && 
+
      <SpeechInputCloud
                 language="sv-SE"
                 onSpeechInput={message => this.handleInputChange(message, true)}
                 onSpeechEnd={message => this.sendMessage()}
                 /> 
                 
+    }
                 </div>
 
     </React.Fragment>

@@ -4,17 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import VoiceInput from '../chat/VoiceInput';
 import Speech from 'speak-tts'
+import PulseLoader from 'react-spinners/PulseLoader';
+import Modal from 'react-bootstrap/Modal';
+import { FaMicrophone } from "react-icons/fa";
 
-const speech = new Speech() // will throw an exception if not browser supported
-
-speech.init({
-   	'volume': 1,
-        'lang': 'sv-SE',
-        'rate': 1,
-        'pitch': 1,
-        'splitSentences': true,
-})
-
+const spinnerCss = "display: table; margin: 20px auto;";
 
 class Voice extends Component {
 
@@ -23,48 +17,229 @@ constructor() {
     this.state = {
       message: '',
       record: false,
+      playing: false,
     };
+    
+    this.speech = new Speech();
 }
 
+  isIOS = () => {
+        return /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())
+    }
+
+
+handlePause = () => {
+    this.speech.cancel();
+    
+    this.setState({
+      playing: false
+    });
+  };
+
+handlePlay = () => {
+  this.setState({
+      playing: true
+    });
+
+    this.speakNow();
+  
+ 
+  };
+
+   /**
+   * Plays back the message
+   */
+  speakNow = () => {
+
+    this.speech.setLanguage("sv-SE");
+
+     if (this.props.buttons) {
+      let custom = this.props.buttons.map((msg, i) =>  { return msg.payload});
+      let customButtons = custom.join(", ");
+
+      this.speech.speak({
+        text: this.props.text + customButtons , 
+         queue: false,
+         listeners: {
+
+            onend: () => {
+                console.log("End utterance")
+            },
+
+    }
+         
+            }).then(() => {
+            this.speech.cancel();
+              this.setState({
+            playing: false,
+          });
+
+      }).catch(e => {
+          console.error("An error occurred :", e)
+      })
+      
+    }  else if (this.props.custom) {
+      let custom = this.props.custom.map((msg, i) =>  { return msg.payload});
+      let customButtons = custom.join(", ");
+
+       this.speech.speak({
+        text: this.props.text + customButtons, 
+         queue: false,
+         listeners: {
+
+            onend: () => {
+                console.log("End utterance")
+            },
+
+    }
+      }).then(() => {
+        this.speech.cancel();
+            this.setState({
+            playing: false,
+          });
+
+      }).catch(e => {
+          console.error("An error occurred :", e)
+      })
+
+    }
+
+      else {
+        this.speech.speak({
+            text: this.props.text, 
+            queue: false,
+            listeners: {
+
+              onend: () => {
+                  console.log("End utterance")
+              },
+
+          }
+        }).then(() => {
+           this.speech.cancel();
+              this.setState({
+              playing: false,
+            });
+        }).catch(e => {
+          console.error("An error occurred :", e)
+        })
+
+      }
+      
+    }
+
+  
+componentDidUpdate(prevProps, prevState){
+
+  if (prevProps.loading){
+
+    this.handlePlay();
+    
+      if (prevState.playing !== this.state.playing) {
+          this.setState({
+              playing: false
+        });
+    }
+  
+    } 
+    
+    const uA = navigator.userAgent;
+    const vendor = navigator.vendor;
+    if (/Safari/i.test(uA) && /Apple Computer/.test(vendor) && !/Mobi|Android/i.test(uA)) {
+      //Desktop Safari
+      if (prevState.playing !== this.state.playing) {
+              this.setState({
+                  playing: false
+            });
+    }
+}
+
+
+}
+
+componentDidMount (){
+
+    if (this.isIOS()) {
+      this.setState({ showVoiceStart: true});
+    }
+  
+}
+
+componentWillUnmount(){
+    this.handlePause();
+     this.setState({
+          playing: false
+       });
+}
+
+
+playSound(){
+  
+    this.setState({ showVoiceStart: false});
+
+    this.speech.speak({
+            queue: false,
+        })
+
+}
 
 
     render() {
 
-    if (this.props.loading === false){
-      speech.resume();
-      speech.speak({
-        text: this.props.text
-    })
-
-    if (this.props.buttons) {
-      let custom = this.props.buttons.map((msg, i) =>  { return msg.payload});
-      let customButtons = custom.join(", ");
-
-      speech.speak({
-        text: customButtons
-      })
+      
+     
+  let spinner;
+    if (this.props.loading) {
+      spinner = <PulseLoader css={spinnerCss} color={"#2177D2"} />;
+    } else {
+      spinner = null;
     }
-
-    if (this.props.custom) {
-      let custom = this.props.custom.map((msg, i) =>  { return msg.payload});
-      let customButtons = custom.join(", ");
-
-      speech.speak({
-        text: customButtons
-      })
-    }
-
-    } else if (this.props.loading === true){
-        speech.cancel();
-    }
-  
     return (
-            <React.Fragment>
-                <div className="container top-margin">
+
+<React.Fragment>
+
+{this.state.showVoiceStart &&
+
+<Modal onClick={() => this.playSound()}
+                        show={true}
+                        size="lg"
+                        backdrop='static'
+                        enforceFocus={true}
+                        dialogClassName="feedback-modal"
+                        centered
+                    >
+               
+
+                  <Modal.Body>
+
+                      <div className="voiceButton" onClick={() => this.playSound()} id="enableSound"><FaMicrophone /> </div>
+                      <span className="activateMic">Klicka här för att aktivera mikrofonen</span>
+
+                    
+                    </Modal.Body>
+                    
+                }
+
+                </Modal>
+
+}
+
+
+
+  {this.props.loading && 
+        <span className="alertLoading" role="alert" aria-busy="true">{spinner} Laddar</span>
+        }
+
+    {!this.props.loading && 
+
+<div className="container">
+
+<div className="container top-margin">
                     {this.props.text &&
                       <React.Fragment>
 
-                  <div>
+        
+       <div onClick={() => this.handlePlay()}>
                   <p className="voiceMsg">{this.props.text}</p>       
 
               {this.props.buttons && 
@@ -100,9 +275,13 @@ constructor() {
                   </React.Fragment>           
                   }
           
-            <VoiceInput  />
+          {!this.state.playing && !this.state.showVoiceStart &&
+             <VoiceInput/>
+          }
+            
         
-            </div>
+            </div>    
+      </div>  }
             </React.Fragment>
         )
     };
