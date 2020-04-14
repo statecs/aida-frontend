@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import './ChatInput.css';
+import {Link} from "@reach/router"
 import SpeechInput from "./SpeechInput";
+import { MdKeyboardVoice } from "react-icons/md";
 
 class ChatInput extends Component {
     constructor(props) {
@@ -14,6 +16,9 @@ class ChatInput extends Component {
         };
     }
 
+    supportsMediaDevices = () => {
+        return navigator.mediaDevices;
+    }
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
     };
@@ -58,11 +63,9 @@ class ChatInput extends Component {
                         }}
                     />
             
-            <SpeechInput
-              language="sv-SE"
-              onSpeechInput={message => this.handleInputChange(message, true)}
-              onSpeechEnd={message => this.sendMessage()}
-            />
+            {this.supportsMediaDevices() &&
+                        <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
+            }
                 </div>
 
             </React.Fragment>

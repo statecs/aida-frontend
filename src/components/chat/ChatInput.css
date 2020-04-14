@@ -6,6 +6,16 @@
     
 }
 
+.chatInput .voiceIcon{
+    width: 25px;
+    display: inline-block;
+    position: absolute;
+    margin: 20px 0px 0px -45px;
+    border:0;
+    padding:0;
+    color: #9AA0A6;
+}
+
 .textArea {
     width: 100%;
     font-size: large;

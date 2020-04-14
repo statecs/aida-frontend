@@ -16,7 +16,7 @@ class Examples extends Component {
         let message = el.target.value;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/aida/chat')
+        navigate('/chat')
         
     };
 
@@ -25,7 +25,7 @@ class Examples extends Component {
             <React.Fragment>
                 <div className="container top-margin">
                     <h3 className='intro'>Vanliga ärenden</h3>
-                     <Link to="/aida/kategorier">Kategorier  <MdKeyboardArrowRight/></Link>
+                     <Link to="/kategorier">Kategorier  <MdKeyboardArrowRight/></Link>
                
                         <div className='exampleDisplay'>
                             {searchTerms.map((value) => (

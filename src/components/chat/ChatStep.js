@@ -134,11 +134,13 @@ class ChatStep extends Component {
             
             );
         })
-        let sender = this.props.user;
-        let receiver = 'bot';
-        let message = messages.join(", ");
-        const rasaMsg = { sender, receiver, message };
-        this.props.sendMessage(rasaMsg);
+         if (messages.length !== 0) {
+            let sender = this.props.user;
+            let receiver = 'bot';
+            let message = messages.join(", ");
+            const rasaMsg = { sender, receiver, message };
+            this.props.sendMessage(rasaMsg);
+         }
     };
 
     sendValues = (payload) => {

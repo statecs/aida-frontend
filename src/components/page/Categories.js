@@ -26,7 +26,7 @@ class Categories extends Component {
         let message = el.target.value;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/aida/chat')
+        navigate('/chat')
         
     };
 
@@ -36,7 +36,7 @@ class Categories extends Component {
                 <div className="container top-margin">
                     <h3 className='intro'>Kategorier</h3>
                    
-                     <Link to="/aida/exempel" >Vanliga ärenden  <MdKeyboardArrowRight/></Link>
+                     <Link to="/exempel" >Vanliga ärenden  <MdKeyboardArrowRight/></Link>
                    
                    <div className='catDisplay'>
                             {values.map((value) => (

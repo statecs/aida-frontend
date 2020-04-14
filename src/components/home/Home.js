@@ -12,6 +12,10 @@ import searchTerms from './searchTerms';
 import { IoIosSearch } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
 
+function supportsMediaDevices() {
+  return navigator.mediaDevices;
+}
+
 const values = [{
     name: "Jag har huvudvärk",
 },
@@ -64,7 +68,7 @@ return(
 
 const renderInputComponent = inputProps => (
   <div className="inputSearchContainer">
-    <IoIosSearch className="searchIcon" /><input {...inputProps} /> <Link className="voiceIcon" aria-label="Röststyrning" to="/aida/"><MdKeyboardVoice/></Link>
+    <IoIosSearch className="searchIcon" /><input {...inputProps} /> {supportsMediaDevices() && <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>}
   </div>
 );
 
@@ -85,8 +89,10 @@ class Home extends Component {
         this.state = {
             error: null,
             value: '',
-            suggestions: []
+            suggestions: [],
+            active: false,
         };
+        this.toggleClass = this.toggleClass.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
     }
 
@@ -104,7 +110,8 @@ class Home extends Component {
         let message = this.state.value;
         const rasaMsg = { sender, receiver, message};
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/aida/chat')
+        this.toggleClass();
+        navigate('/chat')
     }
   }
   
@@ -128,7 +135,8 @@ class Home extends Component {
         let message = suggestionValue;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/aida/chat')
+        this.toggleClass();
+        navigate('/chat')
   };
 
     sendValues = (el) => {
@@ -137,10 +145,21 @@ class Home extends Component {
         let message = el.target.value;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/aida/chat')
+        navigate('/chat')
         
     };
 
+    toggleClass() {
+            if (this.state.active){
+              document.body.classList.remove('no-scroll');
+              this.setState({ active: false });
+          
+            } else {     
+              document.body.classList.add('no-scroll');
+              const currentState = this.state.active;
+              this.setState({ active: !currentState });
+            }
+        };
     render() {
         const { value, suggestions } = this.state;
 
@@ -151,6 +170,8 @@ class Home extends Component {
             value,
             onChange: this.onChange,
             onKeyDown: this.onKeyDown,
+            onFocus: this.toggleClass,
+            onBlur: this.toggleClass,
         };
 
         
@@ -159,7 +180,7 @@ class Home extends Component {
            
                 <div className="container-home">
                  <h1 className="site-logo"> 
-                    <Link to="/aida" itemProp="url"> 
+                    <Link to="/" itemProp="url"> 
                         <span itemProp="logo" itemType="http://schema.org/ImageObject" aria-label="Symptomkollen"> 
                     <svg width="120px" height="120px" viewBox="0 0 129 129" version="1.1">
                         <g id="Prototype" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
@@ -201,7 +222,7 @@ class Home extends Component {
                                     </React.Fragment>
                                 ))}  
                         </div>
-                      <Link to="/aida/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
+                      <Link to="/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
                   </div>
               </div>
             </React.Fragment>

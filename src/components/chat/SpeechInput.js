@@ -49,6 +49,7 @@ export default class SpeechInput extends Component<
     recognition.onend = this.onRecognitionEnd;
     recognition.onresult = this.onRecognitionResult;
     this.recognition = recognition;
+    this.startRecognition();
   }
 
   onRecognitionStart = () => {
@@ -97,13 +98,34 @@ export default class SpeechInput extends Component<
 
   render() {
     return supportsSpeechRecognition() ? (
-      <Button aria-label="Aktivera mikrofon" type="button" id="speech-input" onClick={this.startRecognition}>
+
+<React.Fragment>
         {this.state.isRecognizing ? (
-          <FaCircle className="vertical-center" color="#ed4933" />
+
+             <button  aria-label="Aktivera mikrofon" className="speech-control-container listen" onClick={this.startRecognition}>
+              <div className="speech-control">
+              <FaMicrophone className="microphone-icon" />
+          </div>
+          <div className="speech-control-pulse"></div>
+          <svg x="0px" y="0px" className="speech-control-loader">
+              <circle className="circle" strokeWidth="10" r="101" />
+          </svg>
+      </button>
+      
         ) : (
-          <FaMicrophone className="vertical-center" />
+        
+  <button aria-label="Aktivera mikrofon"  className="speech-control-container" onClick={this.startRecognition}>
+                    <div className="speech-control">
+              <FaMicrophone className="microphone-icon" />
+          </div>
+          <div className="speech-control-pulse"></div>
+          <svg x="0px" y="0px" className="speech-control-loader">
+              <circle className="circle" strokeWidth="10" r="101" />
+          </svg>
+      </button>
         )}
-      </Button>
+        
+      </React.Fragment>
     ) : null;
   }
 }
