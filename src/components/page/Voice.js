@@ -417,6 +417,7 @@ const mapStateToProps = (state) => {
     return {
           messages: state.messages.messages,
           loading: state.messages.loading,
+          user: state.sessionID.sessionID 
         }
   }
   if (state.messages.messages[state.messages.messages.length-1].custom){
@@ -425,25 +426,29 @@ const mapStateToProps = (state) => {
         loading: state.messages.loading,
         text: state.messages.messages[state.messages.messages.length-1].message,
         custom: state.messages.messages[state.messages.messages.length-1].custom.data,
+        user: state.sessionID.sessionID 
     } 
   } else if (state.messages.messages[state.messages.messages.length-1].buttons){
       return {
         messages: state.messages.messages,
         loading: state.messages.loading,
         text: state.messages.messages[state.messages.messages.length-1].message,
-        buttons: state.messages.messages[state.messages.messages.length-1].buttons,      
+        buttons: state.messages.messages[state.messages.messages.length-1].buttons,   
+        user: state.sessionID.sessionID    
     }
   } else if (state.messages.messages[state.messages.messages.length-1].message){
     return {
         messages: state.messages.messages,
         loading: state.messages.loading,
         text: state.messages.messages[state.messages.messages.length-1].message,
+        user: state.sessionID.sessionID 
     }
   }
   else {
     return {
       messages: state.messages.messages,
       loading: state.messages.loading,
+      user: state.sessionID.sessionID 
     }
   }
   
