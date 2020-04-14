@@ -8,7 +8,7 @@ import VoiceInput from '../chat/VoiceInput';
 import Speech from 'speak-tts'
 import PulseLoader from 'react-spinners/PulseLoader';
 import Modal from 'react-bootstrap/Modal';
-import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
+import { FaMicrophone, FaMicrophoneSlash, FaPause  } from "react-icons/fa";
 
 const spinnerCss = "display: table; margin: 20px auto;";
 
@@ -35,11 +35,13 @@ constructor() {
 
 
 handlePause = () => {
-    this.speech.cancel();
-    
-    this.setState({
+   this.setState({
       playing: false
     });
+
+    this.speech.cancel();
+    
+   
   };
 
 handlePlay = () => {
@@ -149,16 +151,6 @@ componentDidUpdate(prevProps, prevState){
   
     } 
     
-    const uA = navigator.userAgent;
-    const vendor = navigator.vendor;
-    if (/Safari/i.test(uA) && /Apple Computer/.test(vendor) && !/Mobi|Android/i.test(uA)) {
-      //Desktop Safari
-      if (prevState.playing !== this.state.playing) {
-              this.setState({
-                  playing: false
-            });
-    }
-}
 
 
 }
@@ -268,6 +260,8 @@ playSound(){
     }
     return (
 
+      
+
         <Modal show={true}
                         size="lg"
                         backdrop='static'
@@ -279,6 +273,12 @@ playSound(){
                         <Modal.Header closeButton></Modal.Header>
 
 <React.Fragment>
+
+  {this.props.loading && 
+
+        <span className="alertLoadingPopup" role="alert" aria-busy="true">{spinner} Laddar</span>
+         
+        }
 
 {this.state.showVoiceStart && !this.supportsMediaDevices() && 
 <Modal onClick={() => this.closePopupForm()} 
@@ -328,11 +328,7 @@ playSound(){
 
 
 
-  {this.props.loading && 
 
-        <span className="alertLoading" role="alert" aria-busy="true">{spinner} Laddar</span>
-         
-        }
      
 
     {!this.props.loading && 
@@ -400,7 +396,18 @@ playSound(){
           
           {!this.state.playing && !this.state.showVoiceStart &&
              <VoiceInput/>
+             
           }
+            {this.state.playing && !this.state.showVoiceStart &&
+             <button  aria-label="Avbryt" className="speech-control-container" onClick={() => this.handlePause()}>
+              <div className="speech-control">
+              <FaPause className="microphone-icon" />
+          </div>
+
+      </button>
+
+          }
+          
             
         
        

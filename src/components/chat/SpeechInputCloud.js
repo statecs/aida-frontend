@@ -92,6 +92,10 @@ constructor() {
 
 
     stopRecord = () => {
+    this.setState({
+      errorMessage: ""
+    })
+
       if (this.state.recording){
       if (this.isIOS()) {
             const { stream, audioContext } = this.state;
@@ -108,9 +112,7 @@ constructor() {
                     .then((data: any) => {
     
             if (data && data['results']) {
-               this.setState({
-                  errorMessage: ""
-                })
+
               const finalTranscript = data['results'][0].alternatives[0].transcript;
 
               this.props.onSpeechInput(finalTranscript);
