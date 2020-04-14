@@ -8,24 +8,13 @@ import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { MdSearch } from "react-icons/md";
-import searchTerms from './searchTerms';
+import searchTerms from '../../actions/searchTerms';
 import { IoIosSearch } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
 
 function supportsMediaDevices() {
   return navigator.mediaDevices;
 }
-
-const values = [{
-    name: "Jag har huvudvärk",
-},
-{
-    name: "Jag har ont i halsen",
-},
-{
-    name: "Jag har hosta och feber",
-
-}];
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
@@ -91,10 +80,48 @@ class Home extends Component {
             value: '',
             suggestions: [],
             active: false,
+            shuffledTerms: []
         };
         this.toggleClass = this.toggleClass.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
+
+        this.shuffledTerms = this.shuffleArray()
+        
     }
+
+ shuffleArray() {
+      let i = searchTerms.length - 1;
+      for (; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = searchTerms[i];
+        searchTerms[i] = searchTerms[j];
+        searchTerms[j] = temp;
+      }
+
+      return searchTerms;
+    }
+
+    componentDidMount() {
+
+     this.setState({
+        shuffledTerms : this.shuffledTerms
+    })
+
+    this.intervalId = setInterval(() => {
+      this.shuffledTerms = this.shuffleArray();
+
+     this.setState({
+        shuffledTerms : this.shuffledTerms
+        })
+
+  }, 7000);
+
+
+  }
+  
+  componentWillUnmount(){
+    clearInterval(this.intervalId);
+  }
 
     onChange = (event, { newValue }) => {
         this.setState({
@@ -166,7 +193,7 @@ class Home extends Component {
          // Autosuggest will pass through all these props to the input.
     
         const inputProps = {
-            placeholder: 'Hej, vad söker du vård för?',
+            placeholder: 'Hej! Vad söker du?',
             value,
             onChange: this.onChange,
             onKeyDown: this.onKeyDown,
@@ -216,11 +243,11 @@ class Home extends Component {
                   <div className="exampleCases">
                     <p className='intro'>Vanliga ärenden</p>
                         <div className='cardDisplay'>
-                            {values.map((value) => (
-                                    <React.Fragment key={value.name}>
-                                        <button className="exampleBtn" onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
-                                    </React.Fragment>
-                                ))}  
+                               {this.state.shuffledTerms.slice(0, 3).map((value) => (
+                               <React.Fragment key={value.name}>
+                                  <button className="exampleBtn" onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
+                                 </React.Fragment>
+                               ))}
                         </div>
                       <Link to="/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
                   </div>

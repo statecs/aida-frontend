@@ -150,9 +150,6 @@ componentDidUpdate(prevProps, prevState){
     }
   
     } 
-    
-
-
 }
 
 componentDidMount (){
