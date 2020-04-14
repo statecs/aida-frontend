@@ -54,7 +54,13 @@ class VoiceInput extends Component {
     render() {  
         return supportsSpeechRecognition() ? (
              <React.Fragment>
-            <div className="userMessage">{this.state.message}</div>
+              <div className="user-messages">
+                                        <div className="user-msg">
+                                            <div className="user-msg-text">
+                                                <p aria-hidden="true" className="display-linebreak">{this.state.message}</p>
+                                            </div>
+                                        </div>
+                                        </div>
              <div className="voicePageIcon">
 
      <SpeechInput

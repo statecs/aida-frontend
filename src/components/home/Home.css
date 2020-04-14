@@ -33,6 +33,11 @@
     margin-left: -42px;
 }
 
+.voiceIcon svg {
+    font-size: 2em;
+    height: 30px;
+    margin-top:-3px;
+}
 
 .hidden{
     clip: rect(1px, 1px, 1px, 1px);

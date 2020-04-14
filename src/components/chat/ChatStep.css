@@ -30,9 +30,9 @@
 }
 
 .bot-msg {
-    display: inline-block;
-    vertical-align: middle;
-    width: 92%;
+  display: inline-block;
+  vertical-align: middle;
+  width: 92%;
 }
 
 .bot-msg-text h3 {
@@ -46,7 +46,6 @@
     float:left;
 }
 .user-messages {
-    display:none;
     opacity:0.6;
     overflow: hidden;
 }

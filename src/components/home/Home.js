@@ -12,6 +12,10 @@ import searchTerms from './searchTerms';
 import { IoIosSearch } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
 
+function supportsMediaDevices() {
+  return navigator.mediaDevices;
+}
+
 const values = [{
     name: "Jag har huvudvärk",
 },
@@ -64,7 +68,7 @@ return(
 
 const renderInputComponent = inputProps => (
   <div className="inputSearchContainer">
-    <IoIosSearch className="searchIcon" /><input {...inputProps} /> <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
+    <IoIosSearch className="searchIcon" /><input {...inputProps} /> {supportsMediaDevices() && <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>}
   </div>
 );
 

@@ -19,12 +19,6 @@ type SpeechInputState = {
   interimTranscript: string
 };
 
-function supportsMediaDevices() {
-  return navigator.mediaDevices;
-}
-
-
-
 export default class SpeechInputCloud extends Component<
   SpeechInputProps,
   SpeechInputState
@@ -51,6 +45,11 @@ constructor() {
     this.stopRecord = this.stopRecord.bind(this)
 
 }
+
+    supportsMediaDevices = () => {
+      return navigator.mediaDevices;
+    }
+
 
     isIOS = () => {
         return /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())
@@ -109,16 +108,21 @@ constructor() {
                     .then((data: any) => {
     
             if (data && data['results']) {
+               this.setState({
+                  errorMessage: ""
+                })
               const finalTranscript = data['results'][0].alternatives[0].transcript;
 
               this.props.onSpeechInput(finalTranscript);
               this.props.onSpeechEnd();
-              if(document.getElementById("log")){
-                  document.getElementById("log").innerHTML="";
-              }
+
             }
             else {
-             document.getElementById("log").innerHTML="Hoppsan! Ett fel uppstod. Försök igen.";
+
+              this.setState({
+                  errorMessage: "Hoppsan! Ett fel uppstod. Försök igen."
+                })
+
             }
           });
                 })
@@ -173,56 +177,56 @@ constructor() {
     
 
   componentDidMount(prevProps, prevState){
-    if (supportsMediaDevices){
+    if (this.supportsMediaDevices){
         this.startRecord();
     }
   }
 
   componentWillUnmount(prevProps, prevState){
-    if (supportsMediaDevices){
+    if (this.supportsMediaDevices){
         this.stopRecord();
     }
   }
     render() {
 
-          return supportsMediaDevices() ? (  
+          return this.supportsMediaDevices() ? (  
           
           <React.Fragment>
 
               <div className="controls">
 
-          <div onClick={this.toggleMicrophone}>
             {this.state.recording ? (
             
-               <div class="speech-control-container listen">
-              <div class="speech-control">
+               <button onClick={this.toggleMicrophone} className="speech-control-container listen">
+              <div className="speech-control">
               <FaMicrophone className="microphone-icon" />
           </div>
-          <div class="speech-control-pulse"></div>
-          <svg x="0px" y="0px" class="speech-control-loader">
-              <circle class="circle" stroke-width="10" r="101" />
+          <div className="speech-control-pulse"></div>
+          <svg x="0px" y="0px" className="speech-control-loader">
+              <circle className="circle" strokeWidth="10" r="101" />
           </svg>
           
-      </div>
+      </button>
       
 
           ) :  (
-             
-                 <div class="speech-control-container ">
-              <div class="speech-control">
+             <React.Fragment>
+        <button onClick={this.toggleMicrophone} className="speech-control-container ">
+              <div className="speech-control">
               <FaMicrophone className="microphone-icon" />
           </div>
-          <div class="speech-control-pulse"></div>
-          <svg x="0px" y="0px" class="speech-control-loader">
-              <circle class="circle" stroke-width="10" r="101" />
+          <div className="speech-control-pulse"></div>
+          <svg x="0px" y="0px" className="speech-control-loader">
+              <circle className="circle" strokeWidth="10" r="101" />
           </svg>
-      </div>
 
-             
+      </button>
+
+      <div className="speech-control-error">{this.state.errorMessage}</div>
+
+               </React.Fragment>
           )}
-          </div>
 
-          <div id="log"></div>
         </div>
 
       </React.Fragment> ) : (  <React.Fragment> <span>Voice is not supported</span></React.Fragment>

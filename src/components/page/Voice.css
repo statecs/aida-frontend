@@ -9,7 +9,7 @@
 .voiceButton {
   margin: 0 auto;
   font-size: 5em;
-  margin-top: 20vh;
+  margin-top: 30vh;
 }
 
 .voiceButton svg{
@@ -17,7 +17,41 @@
 }
 
 .activateMic {
+    background-color:transparent;
     margin:0 auto;
     padding-top:2em;
     font-size:1em;
+}
+
+.speech-control-buttons{
+  position: absolute;
+  bottom: 17vh;
+  right: 0;
+  left: 0;
+  margin: auto;
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+@media (min-width: 576px){
+  .speech-control-buttons{
+    justify-content: center;
+  }
+
+}
+
+.speech-control-buttons .btn {
+  flex: 0 0 auto;
+  border-color: #EDEDED;
+  border-width: 2px;
+  border-radius: 35px;
+  padding: 7px 17px;
+  margin: 0 5px;
+}
+.speech-control-buttons .btn[aria-checked=true]{
+  background-color: white;
+  font-weight: 500;
 }

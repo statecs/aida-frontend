@@ -16,13 +16,19 @@
 }
 
 .speech-control-container {
-    height: 130px;
-    width: 130px;
+    height: 110px;
+    width: 110px;
     position:absolute;
-    bottom: 20vh;
+    bottom: 25vh;
     right: 0;
     left: 0;
     margin:auto;
+    background-color: transparent;
+    padding:0;
+}
+
+.speech-control-error {
+    margin-bottom:40vh;
 }
 
 .speech-control-pulse {
@@ -53,7 +59,7 @@
 
 .speech-control .microphone-icon {
     color: #e74c3c;
-    font-size: 40px;
+    font-size: 30px;
     margin: auto;
     display: block;
     text-align: center;

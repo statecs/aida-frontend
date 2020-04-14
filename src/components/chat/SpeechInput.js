@@ -99,34 +99,33 @@ export default class SpeechInput extends Component<
   render() {
     return supportsSpeechRecognition() ? (
 
-      <div aria-label="Aktivera mikrofon" type="button" id="speech-input" onClick={this.startRecognition}>
-
+<React.Fragment>
         {this.state.isRecognizing ? (
 
-             <div class="speech-control-container listen">
-              <div class="speech-control">
+             <button  aria-label="Aktivera mikrofon" className="speech-control-container listen" onClick={this.startRecognition}>
+              <div className="speech-control">
               <FaMicrophone className="microphone-icon" />
           </div>
-          <div class="speech-control-pulse"></div>
-          <svg x="0px" y="0px" class="speech-control-loader">
-              <circle class="circle" stroke-width="10" r="101" />
+          <div className="speech-control-pulse"></div>
+          <svg x="0px" y="0px" className="speech-control-loader">
+              <circle className="circle" strokeWidth="10" r="101" />
           </svg>
-      </div>
+      </button>
       
         ) : (
         
-  <div class="speech-control-container">
-                    <div class="speech-control">
+  <button aria-label="Aktivera mikrofon"  className="speech-control-container" onClick={this.startRecognition}>
+                    <div className="speech-control">
               <FaMicrophone className="microphone-icon" />
           </div>
-          <div class="speech-control-pulse"></div>
-          <svg x="0px" y="0px" class="speech-control-loader">
-              <circle class="circle" stroke-width="10" r="101" />
+          <div className="speech-control-pulse"></div>
+          <svg x="0px" y="0px" className="speech-control-loader">
+              <circle className="circle" strokeWidth="10" r="101" />
           </svg>
-      </div>
+      </button>
         )}
         
-      </div>
+      </React.Fragment>
     ) : null;
   }
 }

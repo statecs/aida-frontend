@@ -1,13 +1,14 @@
 import React, { Component, useEffect } from 'react';
 import './Voice.css';
 import PropTypes from 'prop-types';
-import {navigate} from "@reach/router"
+import {navigate, Location} from "@reach/router"
+import { sendMessage } from '../../actions/messageActions';
 import { connect } from 'react-redux';
 import VoiceInput from '../chat/VoiceInput';
 import Speech from 'speak-tts'
 import PulseLoader from 'react-spinners/PulseLoader';
 import Modal from 'react-bootstrap/Modal';
-import { FaMicrophone } from "react-icons/fa";
+import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
 
 const spinnerCss = "display: table; margin: 20px auto;";
 
@@ -23,6 +24,10 @@ constructor() {
     
     this.speech = new Speech();
 }
+
+  supportsMediaDevices = () => {
+      return navigator.mediaDevices;
+    }
 
   isIOS = () => {
         return /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())
@@ -167,7 +172,7 @@ componentDidMount (){
 }
 
 componentWillUnmount(){
-    this.handlePause();
+   this.handlePause();
      this.setState({
           playing: false
        });
@@ -177,7 +182,6 @@ componentWillUnmount(){
 playSound(){
   
     this.setState({ showVoiceStart: false});
-
     this.speech.speak({
             queue: false,
         })
@@ -185,8 +189,71 @@ playSound(){
 }
 
   closePopupForm = () => {
-       navigate('/')
+      navigate(-1)
+  }
+
+  sendValues = (payload) => {
+     const chosenVals = this.props.buttons.filter(item => item.checked);
+        let messages = chosenVals.map((item, index) => {
+            return (
+                item.payload
+            
+            );
+        })
+
+        if (messages.length !== 0) {
+            let sender = this.props.user;
+            let receiver = 'bot';
+            let message = messages.join(", ");
+            const rasaMsg = { sender, receiver, message };
+            this.props.sendMessage(rasaMsg);
+        }
     };
+
+  sendFormValues = () => {
+    
+        const chosenVals = this.props.custom.filter(item => item.checked);
+        let messages = chosenVals.map((item, index) => {
+            return (
+                item.payload
+            
+            );
+        })
+         if (messages.length !== 0) {
+          let sender = this.props.user;
+          let receiver = 'bot';
+          let message = messages.join(", ");
+          const rasaMsg = { sender, receiver, message };
+          this.props.sendMessage(rasaMsg);
+         }
+    };
+
+
+    onToggle(index, e, button){
+
+        if (this.props.buttons){
+            let newButtonItems = this.props.buttons.slice();
+            newButtonItems[index].checked = !newButtonItems[index].checked
+
+            this.setState({
+                items: newButtonItems
+            })
+
+            this.sendValues(button.payload)
+
+        } else if (this.props.custom) {
+            let newCustomItems = this.props.custom.slice();
+            newCustomItems[index].checked = !newCustomItems[index].checked
+
+            this.setState({
+                items: newCustomItems, 
+            })
+        }
+
+        
+
+      
+    }
 
 
     render() {
@@ -213,7 +280,27 @@ playSound(){
 
 <React.Fragment>
 
-{this.state.showVoiceStart &&
+{this.state.showVoiceStart && !this.supportsMediaDevices() && 
+<Modal onClick={() => this.closePopupForm()} 
+                        show={true}
+                        size="lg"
+                        backdrop='static'
+                        enforceFocus={true}
+                        dialogClassName="feedback-modal"
+                        centered
+                    > 
+                    
+  <Modal.Body>
+
+                      <div className="voiceButton" id="enableSound"><FaMicrophoneSlash /> </div>
+                      <button className="activateMic">Din webbläsare stöds tyvärr inte.</button>
+
+                    
+                    </Modal.Body>
+                    
+                    </Modal>
+}
+{this.state.showVoiceStart && this.supportsMediaDevices() &&
 
 <Modal onClick={() => this.playSound()}
                         show={true}
@@ -228,7 +315,7 @@ playSound(){
                   <Modal.Body>
 
                       <div className="voiceButton" onClick={() => this.playSound()} id="enableSound"><FaMicrophone /> </div>
-                      <span className="activateMic">Klicka här för att aktivera mikrofonen</span>
+                      <button className="activateMic">Klicka här för att aktivera mikrofonen.</button>
 
                     
                     </Modal.Body>
@@ -243,8 +330,6 @@ playSound(){
 
   {this.props.loading && 
 
-
-
         <span className="alertLoading" role="alert" aria-busy="true">{spinner} Laddar</span>
          
         }
@@ -252,37 +337,35 @@ playSound(){
 
     {!this.props.loading && 
 
-<div className="container">
 
 <div className="container">
                     {this.props.text &&
                       <React.Fragment>
 
         
-       <div onClick={() => this.handlePlay()}>
-       <div className="bot-msg">
+      
+       <div className="bot-msg" onClick={() => this.handlePlay()}>
                             <div className="bot-msg-text">
                                 <h3 aria-label={this.props.text}>{this.props.text}</h3>
                                 
                             </div>
                         </div>
 
-                   
-
+{!this.state.playing &&  !this.state.showVoiceStart &&
+<div className="speech-control-buttons">
               {this.props.buttons && 
               <React.Fragment>       
-              {this.props.buttons.map((msg, i) =>   
-                                  <div key={i}  >
-                             
-                            
-                              {msg.payload}
-                                
-                           
-                       
+              {this.props.buttons.map((msg, i) =>  
+
+              <React.Fragment key={i}>
+               <button className="btn" onClick={this.onToggle.bind(this, i, msg)} aria-checked={msg.checked === true} checked={msg.checked === true} name={msg.payload} value={msg.payload}>
+
+                 {msg.payload}
+
+                 </button>
 
 
-                                  </div>
-                                
+                                 </React.Fragment>   
                                 
                                 )}
                                 </React.Fragment>       
@@ -291,24 +374,25 @@ playSound(){
                   {this.props.custom && 
               <React.Fragment>       
               {this.props.custom.map((msg, i) =>   
-                                  <div key={i} >
-                                
-                         
-                              {msg.payload}
-                                
-                          
-                       
-                                  </div>
-                                
+
+               <React.Fragment key={i}>
+                                        <button className="btn" onClick={this.onToggle.bind(this, i)} role="radio" aria-checked={msg.checked === true} checked={msg.checked === true} name={msg.payload} value={msg.payload}>
+
+                                          {msg.payload}
+
+                                        </button>
+                                    </React.Fragment>
                                 
                                 )}
+                                 <button className="btn" aria-checked="true" onClick={() => {this.sendFormValues()}}>Skicka</button>
                                 </React.Fragment>       
               }
 
-                 
+</div>
 
-                              
-                  </div>  
+                    }
+
+               
                       
 
                   </React.Fragment>           
@@ -319,7 +403,7 @@ playSound(){
           }
             
         
-            </div>    
+       
       </div>  }
             </React.Fragment>
               </Modal >
@@ -365,4 +449,4 @@ const mapStateToProps = (state) => {
   
 }
 
-export default connect(mapStateToProps)(Voice);
+export default connect(mapStateToProps, { sendMessage })(Voice);
