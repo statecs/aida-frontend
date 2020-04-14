@@ -11,6 +11,7 @@ import { MdSearch } from "react-icons/md";
 import searchTerms from '../../actions/searchTerms';
 import { IoIosSearch } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
+import Feedback from './Feedback';
 
 function supportsMediaDevices() {
   return navigator.mediaDevices;
@@ -118,7 +119,7 @@ class Home extends Component {
 
 
   }
-  
+
   componentWillUnmount(){
     clearInterval(this.intervalId);
   }
@@ -201,10 +202,8 @@ class Home extends Component {
             onBlur: this.toggleClass,
         };
 
-        
         return (
             <React.Fragment>
-           
                 <div className="container-home">
                  <h1 className="site-logo"> 
                     <Link to="/" itemProp="url"> 
@@ -252,6 +251,7 @@ class Home extends Component {
                       <Link to="/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
                   </div>
               </div>
+            <Feedback />
             </React.Fragment>
         )
     };
