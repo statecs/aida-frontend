@@ -6,11 +6,27 @@ import Button from 'react-bootstrap/Button';
 
 function Feedback() {
 
-  const [show, setShow] = useState(true);
+  const HidePopup = localStorageKey => {
+  const [show, setShow] = React.useState(
+    localStorage.getItem(localStorageKey) || true
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem(localStorageKey, show);
+  });
+  return [JSON.parse(show), setShow];
+};
+
+
+ const [show, setShow] = HidePopup(
+    'showAlert'
+  );
+
+  var closePopupForm = () => setShow(false);   
 
   if (show) {
     return (
-   <Alert variant="info" onClose={() => setShow(false)} dismissible>
+   <Alert className="msg" variant="light" onClose={() => closePopupForm()} dismissible>
   <Alert.Heading>Välkommen till Symtomguiden!</Alert.Heading>
   <p>
   Detta är en prototyp och kan inte ses som någon medicinteknisk produkt.</p>

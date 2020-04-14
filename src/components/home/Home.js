@@ -204,6 +204,7 @@ class Home extends Component {
 
         return (
             <React.Fragment>
+            <Feedback />
                 <div className="container-home">
                  <h1 className="site-logo"> 
                     <Link to="/" itemProp="url"> 
@@ -251,7 +252,7 @@ class Home extends Component {
                       <Link to="/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
                   </div>
               </div>
-            <Feedback />
+
             </React.Fragment>
         )
     };

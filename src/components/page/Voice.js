@@ -63,10 +63,10 @@ handlePlay = () => {
 
      if (this.props.buttons) {
       let custom = this.props.buttons.map((msg, i) =>  { return msg.payload});
-      let customButtons = custom.join(", ");
+      let customButtons = custom.join(", eller, ");
 
       this.speech.speak({
-        text: this.props.text + customButtons , 
+        text: this.props.text + "<> Säg: <> " + customButtons , 
          queue: false,
          listeners: {
 
@@ -91,7 +91,7 @@ handlePlay = () => {
       let customButtons = custom.join(", ");
 
        this.speech.speak({
-        text: this.props.text + customButtons, 
+        text: this.props.text + "<> Alternativen är: <><> " + customButtons, 
          queue: false,
          listeners: {
 

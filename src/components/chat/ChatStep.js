@@ -182,7 +182,7 @@ class ChatStep extends Component {
                     ? <Modal.Body> <div className="container-feedback"><h5> Tack så mycket för din feedback!</h5> </div> <button className="agreeBtn" variant="secondary" onClick={() => this.closePopupForm()}>Stäng</button></Modal.Body>
                     : <Modal.Body>
                     <form id="feedback-form" onSubmit={this.handleSubmit}>
-                      <h3> Feedback </h3>
+                      <h4> Hur var din upplevelse?</h4>
                         <div className="container-feedback">
 
                             <div className="item">
@@ -257,7 +257,7 @@ class ChatStep extends Component {
                                 
                             </div>
                         </div>
-                         <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Lämna synpunkter</Link>   
+                         <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Har du synpunkter?</Link>   
                     </div>    
 
                     <div className="msgCustom">
