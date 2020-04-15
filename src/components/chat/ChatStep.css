@@ -28,11 +28,14 @@
   align-items: center;
   justify-content: center;
 }
+.bot-messages{
+  width: 90% !important;
+}
 
 .bot-msg {
   display: inline-block;
   vertical-align: middle;
-  width: 100%;
+  width: 90%;
 }
 
 .bot-msg-text h3 {
@@ -79,6 +82,12 @@
     cursor: pointer;
     color:#3c7aae !important;
   
+}
+.voiceOver{
+    float:left;
+    font-size:11px;
+    color:#3c7aae;
+    background-color:transparent;
 }
 
 .container-feedback {

@@ -8,9 +8,10 @@ import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import formUrl from '../../keys/formUrl';
 import ChatInput from './ChatInput';
+import Speech from 'speak-tts'
 import { getSmiley } from './smileys/Smileys';
 import { Range, Direction, getTrackBackground } from 'react-range';
-import { FaRegFrown, FaRegAngry, FaRegMeh, FaRegSmile, FaRegLaughBeam, FaRegFrownOpen, FaRegGrinAlt  } from "react-icons/fa";
+import { FaRegFrown, FaRegAngry, FaRegMeh, FaRegSmile, FaRegLaughBeam, FaRegFrownOpen, FaRegGrinAlt, FaPlay, FaPause, FaVolumeUp  } from "react-icons/fa";
 
 const STEP = 0.1;
 const MIN = 0;
@@ -32,7 +33,8 @@ class ChatStep extends Component {
             valuesRange: [3],
             showPopupForm: false,
             chosenVals: [],
-            submitted: false
+            submitted: false,
+            playing: false,
         };
         
         this.handleChange = this.handleChange.bind(this);
@@ -41,6 +43,110 @@ class ChatStep extends Component {
     }
 
     
+     /**
+   * Plays back the message
+   */
+  speakNow = () => {
+
+if (this.state.playing){
+
+     this.setState({
+        playing: false
+        });
+   this.speech.pause();
+
+} else{
+
+
+    this.setState({
+        playing: true
+        });
+
+
+  this.speech = new Speech();
+        
+    this.speech.setLanguage("sv-SE");
+
+     if (this.props.msg.buttons) {
+      let custom = this.props.msg.buttons.map((msg, i) =>  { return msg.payload});
+      let customButtons = custom.join(", eller, ");
+
+      this.speech.speak({
+        text: this.props.msg.message + " <> " + customButtons , 
+         queue: false,
+         listeners: {
+
+            onend: () => {
+                console.log("End utterance")
+            },
+
+    }
+         
+            }).then(() => {
+            this.speech.cancel();
+              this.setState({
+            playing: false,
+          });
+
+      }).catch(e => {
+          console.error("An error occurred :", e)
+      })
+      
+    }  else if (this.props.msg.custom) {
+        if (this.props.msg.custom.data) {
+
+        let custom = this.props.msg.custom.data.map((msg, i) =>  { return msg.payload});
+      let customButtons = custom.join(", ");
+
+       this.speech.speak({
+        text: this.props.msg.message + "<> Alternativen är: <><> " + customButtons, 
+         queue: false,
+         listeners: {
+
+            onend: () => {
+                console.log("End utterance")
+            },
+
+    }
+      }).then(() => {
+        this.speech.cancel();
+            this.setState({
+            playing: false,
+          });
+
+      }).catch(e => {
+          console.error("An error occurred :", e)
+      })
+        }
+     
+
+    }
+
+      else {
+        this.speech.speak({
+            text: this.props.msg.message, 
+            queue: false,
+            listeners: {
+
+              onend: () => {
+                  console.log("End utterance")
+              },
+
+          }
+        }).then(() => {
+           this.speech.cancel();
+              this.setState({
+              playing: false,
+            });
+        }).catch(e => {
+          console.error("An error occurred :", e)
+        })
+
+      }
+      
+    }
+
+}
 
     closePopupForm = () => {
         this.setState({ showPopupForm: false, submitted: false, rating: "", freeText: "", });
@@ -171,6 +277,14 @@ class ChatStep extends Component {
         }
     };
 
+componentWillUnmount(){
+    if (this.state.playing){
+            this.speech.pause();
+           
+    }
+    
+}
+
     render() {
 
         return (
@@ -262,12 +376,23 @@ class ChatStep extends Component {
                 <React.Fragment>
                    <div className="bot-messages">
                         <div className="bot-msg">
+                        
                             <div className="bot-msg-text">
                                 <h3 aria-label={this.props.msg.message}>{this.props.msg.message}</h3>
                                 
                             </div>
+                           
+
                         </div>
-                         <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Har du synpunkter?</Link>   
+                        
+                         
+                          <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Har du synpunkter?</Link>  
+                           <button className="voiceOver" aria-label="Aktivera textuppläsning" onClick={() => this.speakNow()}>
+                         {this.state.playing ? ( <FaPause/>) : (<FaVolumeUp/>)
+                        
+                         }
+                         
+                         </button> 
                     </div>    
 
                     <div className="msgCustom">
