@@ -7,7 +7,7 @@ import {navigate, Link} from "@reach/router"
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import { MdSearch } from "react-icons/md";
+import { MdArrowBack } from "react-icons/md";
 import searchTerms from '../../actions/searchTerms';
 import { IoIosSearch } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
@@ -43,7 +43,7 @@ const suggestionText = `${suggestion.name}`;
 
 return(
   <div className={'suggestion-content'}>
-      <span className="name"><MdSearch/> 
+      <span className="name"><IoIosSearch  className="searchInputIcon"/> 
         {
           parts.map((part, index) => {
             const className = part.highlight ? null : 'highlight';
@@ -57,6 +57,7 @@ return(
     </div>
 )
 }
+
 
 const renderInputComponent = inputProps => (
   <div className="inputSearchContainer">
@@ -124,8 +125,18 @@ class Home extends Component {
 
    onKeyDown(event) {
        //On Enter submit form
-    if (event.key === 'Enter' && this.state.value) {
-        let sender = this.props.user;
+    if (!event) {
+      if(this.state.value){
+            let sender = this.props.user;
+            let receiver = 'bot';
+            let message = this.state.value;
+            const rasaMsg = { sender, receiver, message};
+            this.props.sendStart(sender, receiver, rasaMsg);
+            navigate('/chat')
+      }
+      
+    } else if (event.key === 'Enter' && this.state.value){
+      let sender = this.props.user;
         let receiver = 'bot';
         let message = this.state.value;
         const rasaMsg = { sender, receiver, message};
@@ -134,6 +145,15 @@ class Home extends Component {
     }
   }
   
+
+renderInputMobileComponent = inputProps => (
+  <React.Fragment>
+  <div className="inputSearchContainer">
+   <input {...inputProps} />
+  </div>
+  </React.Fragment>
+);
+
    // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({
@@ -221,11 +241,10 @@ class Home extends Component {
                   onHide={() => this.togglePopup()}
                   aria-labelledby="example-modal-sizes-title-sm"
           >
-            <Modal.Header closeButton>
+          <Modal.Body>
 
-            </Modal.Header>
-            <Modal.Body> 
-        
+         <button className="backIcon" tabIndex="0" aria-label="Tillbaka" onClick={() => this.togglePopup()}><MdArrowBack className="searchIcon"/></button> 
+   
         <Autosuggest
         autoFocus
                     suggestions={suggestions}
@@ -235,10 +254,13 @@ class Home extends Component {
                     renderSuggestion={renderSuggestion}
                     inputProps={inputProps}
                     onSuggestionSelected={this.onSuggestionSelected}
-                    renderInputComponent={renderInputComponent}
+                    renderInputComponent={this.renderInputMobileComponent}
                     ref={this.storeInputReference}
                     alwaysRenderSuggestions={true}
-                  /></Modal.Body>
+                  />
+                  <button className="searchModalIcon" tabIndex="0" aria-label="Sök" onClick={() => this.onKeyDown()}><IoIosSearch className="searchIcon"/></button> 
+
+</Modal.Body>
       </Modal>
 
             ) : (
@@ -246,13 +268,6 @@ class Home extends Component {
             )
           }
         </Media>
-
-
-
-
-
-
-
             <Feedback />
                 <div className="container-home">
                  <h1 className="site-logo"> 
