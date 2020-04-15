@@ -24,6 +24,7 @@
     "react-dom": "^16.12.0",
     "react-ga": "^2.7.0",
     "react-icons": "^3.9.0",
+    "react-media": "^1.10.0",
     "react-promise-tracker": "^2.0.5",
     "react-range": "^1.5.3",
     "react-redux": "^7.1.3",

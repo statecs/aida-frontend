@@ -1,6 +1,5 @@
-
-
 const searchTerms = [{
+    
     name: "Jag har huvudvärk",
 },
 {

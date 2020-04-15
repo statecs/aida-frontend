@@ -7,25 +7,17 @@ import {navigate, Link} from "@reach/router"
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import { MdSearch } from "react-icons/md";
-import searchTerms from './searchTerms';
+import { MdArrowBack } from "react-icons/md";
+import searchTerms from '../../actions/searchTerms';
 import { IoIosSearch } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
+import Feedback from './Feedback';
+import Modal from 'react-bootstrap/Modal';
+import Media from 'react-media';
 
 function supportsMediaDevices() {
   return navigator.mediaDevices;
 }
-
-const values = [{
-    name: "Jag har huvudvärk",
-},
-{
-    name: "Jag har ont i halsen",
-},
-{
-    name: "Jag har hosta och feber",
-
-}];
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
@@ -51,7 +43,7 @@ const suggestionText = `${suggestion.name}`;
 
 return(
   <div className={'suggestion-content'}>
-      <span className="name"><MdSearch/> 
+      <span className="name"><IoIosSearch  className="searchInputIcon"/> 
         {
           parts.map((part, index) => {
             const className = part.highlight ? null : 'highlight';
@@ -66,20 +58,11 @@ return(
 )
 }
 
+
 const renderInputComponent = inputProps => (
   <div className="inputSearchContainer">
     <IoIosSearch className="searchIcon" /><input {...inputProps} /> {supportsMediaDevices() && <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>}
   </div>
-);
-
-const renderSuggestionsContainer = ({ containerProps, children, query }) => (
-     <div {...containerProps}>
-      <span className="hidden"> Hej, vad söker du vård för?</span>
-      {children}
-         
-   
-     
-    </div>
 );
 
 class Home extends Component {
@@ -91,10 +74,48 @@ class Home extends Component {
             value: '',
             suggestions: [],
             active: false,
+            shuffledTerms: [],
+            searchModal: false
         };
-        this.toggleClass = this.toggleClass.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
+
+        this.shuffledTerms = this.shuffleArray();
+        
     }
+
+ shuffleArray() {
+      let i = searchTerms.length - 1;
+      for (; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = searchTerms[i];
+        searchTerms[i] = searchTerms[j];
+        searchTerms[j] = temp;
+      }
+
+      return searchTerms;
+    }
+
+    componentDidMount() {
+
+     this.setState({
+        shuffledTerms : this.shuffledTerms
+    })
+
+    this.intervalId = setInterval(() => {
+      this.shuffledTerms = this.shuffleArray();
+
+     this.setState({
+        shuffledTerms : this.shuffledTerms
+        })
+
+  }, 7000);
+
+
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.intervalId);
+  }
 
     onChange = (event, { newValue }) => {
         this.setState({
@@ -104,17 +125,35 @@ class Home extends Component {
 
    onKeyDown(event) {
        //On Enter submit form
-    if (event.key === 'Enter' && this.state.value) {
-        let sender = this.props.user;
+    if (!event) {
+      if(this.state.value){
+            let sender = this.props.user;
+            let receiver = 'bot';
+            let message = this.state.value;
+            const rasaMsg = { sender, receiver, message};
+            this.props.sendStart(sender, receiver, rasaMsg);
+            navigate('/chat')
+      }
+      
+    } else if (event.key === 'Enter' && this.state.value){
+      let sender = this.props.user;
         let receiver = 'bot';
         let message = this.state.value;
         const rasaMsg = { sender, receiver, message};
         this.props.sendStart(sender, receiver, rasaMsg);
-        this.toggleClass();
         navigate('/chat')
     }
   }
   
+
+renderInputMobileComponent = inputProps => (
+  <React.Fragment>
+  <div className="inputSearchContainer">
+   <input {...inputProps} />
+  </div>
+  </React.Fragment>
+);
+
    // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({
@@ -135,10 +174,14 @@ class Home extends Component {
         let message = suggestionValue;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        this.toggleClass();
         navigate('/chat')
   };
 
+   storeInputReference = autosuggest => {
+    if (autosuggest !== null) {
+      this.input = autosuggest.input;
+    }
+  };
     sendValues = (el) => {
         let sender = this.props.user;
         let receiver = 'bot';
@@ -149,35 +192,83 @@ class Home extends Component {
         
     };
 
-    toggleClass() {
-            if (this.state.active){
-              document.body.classList.remove('no-scroll');
-              this.setState({ active: false });
+   togglePopup() {
+          if (this.state.searchModal){
+              this.setState({
+                  searchModal : false
+              })
+
+               setTimeout(() => {
+              this.input.blur();
+          }, 1);
+
+          } else{
+            
+            setTimeout(() => {
+              this.input.focus();
+          }, 1);
+    
+              this.setState({
+                  searchModal : true
+              })
+          }
           
-            } else {     
-              document.body.classList.add('no-scroll');
-              const currentState = this.state.active;
-              this.setState({ active: !currentState });
-            }
-        };
+        }
     render() {
         const { value, suggestions } = this.state;
 
          // Autosuggest will pass through all these props to the input.
     
         const inputProps = {
-            placeholder: 'Hej, vad söker du vård för?',
+            placeholder: 'Hej! Vad söker du?',
             value,
             onChange: this.onChange,
             onKeyDown: this.onKeyDown,
-            onFocus: this.toggleClass,
-            onBlur: this.toggleClass,
+            autoFocus: true
         };
 
-        
         return (
             <React.Fragment>
-           
+                
+      <Media query={{ maxWidth: 599 }}>
+              {matches =>
+                matches ? (
+                  <Modal
+                  className="searchModal"
+                  size="lg"
+                  show={this.state.searchModal}
+                  autoFocus={false}
+                  onHide={() => this.togglePopup()}
+                  aria-labelledby="example-modal-sizes-title-sm"
+          >
+          <Modal.Body>
+
+         <button className="backIcon" tabIndex="0" aria-label="Tillbaka" onClick={() => this.togglePopup()}><MdArrowBack className="searchIcon"/></button> 
+   
+        <Autosuggest
+        autoFocus
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    inputProps={inputProps}
+                    onSuggestionSelected={this.onSuggestionSelected}
+                    renderInputComponent={this.renderInputMobileComponent}
+                    ref={this.storeInputReference}
+                    alwaysRenderSuggestions={true}
+                  />
+                  <button className="searchModalIcon" tabIndex="0" aria-label="Sök" onClick={() => this.onKeyDown()}><IoIosSearch className="searchIcon"/></button> 
+
+</Modal.Body>
+      </Modal>
+
+            ) : (
+              <span/>
+            )
+          }
+        </Media>
+            <Feedback />
                 <div className="container-home">
                  <h1 className="site-logo"> 
                     <Link to="/" itemProp="url"> 
@@ -200,31 +291,52 @@ class Home extends Component {
                     </Link>
                 </h1> 
 
-                <Autosuggest
+
+  <Media query={{ maxWidth: 599 }}>
+          {matches =>
+            matches ? (
+
+          <div class="inputSearchContainer">
+           <IoIosSearch className="searchIcon" />
+            <input onChange={() => this.togglePopup()} onClick={() => this.togglePopup()}  type="text" class="react-autosuggest__input" placeholder="Hej! Vad söker du?" value={this.state.value} />
+              
+              {supportsMediaDevices() &&
+              <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/">
+              <MdKeyboardVoice/>
+                  
+                </Link>
+            }
+          </div>
+
+            ) : (
+              <Autosuggest
                     suggestions={suggestions}
                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                     getSuggestionValue={getSuggestionValue}
                     renderSuggestion={renderSuggestion}
                     inputProps={inputProps}
-                    renderSuggestionsContainer={renderSuggestionsContainer}
                     onSuggestionSelected={this.onSuggestionSelected}
                     renderInputComponent={renderInputComponent}
                   />
+            )
+          }
+        </Media>
 
 
                   <div className="exampleCases">
                     <p className='intro'>Vanliga ärenden</p>
                         <div className='cardDisplay'>
-                            {values.map((value) => (
-                                    <React.Fragment key={value.name}>
-                                        <button className="exampleBtn" onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
-                                    </React.Fragment>
-                                ))}  
+                               {this.state.shuffledTerms.slice(0, 3).map((value) => (
+                               <React.Fragment key={value.name}>
+                                  <button className="exampleBtn" onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
+                                 </React.Fragment>
+                               ))}
                         </div>
                       <Link to="/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
                   </div>
               </div>
+
             </React.Fragment>
         )
     };

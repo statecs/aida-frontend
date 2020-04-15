@@ -85,7 +85,7 @@ const App = () => {
       
          <div className="navContainer">
             <Link to="/" className="icons"  aria-label="Start">
-              <IoIosHome />
+              <IoIosHome /><span className="chatText home">Hem</span>
 
             </Link>
 
@@ -102,6 +102,7 @@ const App = () => {
             aria-labelledby="main-heading"
             id="content"
           >
+               
           <SkipNavContent/>
           
           <Router>

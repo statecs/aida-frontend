@@ -13,7 +13,7 @@
     padding: 0.7em 1em;
 }
 .msgCustom {
-    padding-top:20vh;
+    padding-top:10vh;
     margin-bottom: 30px;
 }
 .msgCustom ul{
@@ -32,7 +32,7 @@
 .bot-msg {
   display: inline-block;
   vertical-align: middle;
-  width: 92%;
+  width: 100%;
 }
 
 .bot-msg-text h3 {
@@ -45,6 +45,7 @@
     font-size:18px;
     float:left;
 }
+
 .user-messages {
     opacity:0.6;
     overflow: hidden;
@@ -87,6 +88,9 @@
     padding: 20px 0;
 }
 
+#feedback-form  h4 {
+    text-align:center;
+}
 
 #feedback-form .agreeBtn {
    width:100%;
@@ -173,7 +177,7 @@
     margin-block-start: 19px;
     -webkit-margin-start: 20px;
     margin-inline-start: 20px;
-    fill: #ededed;
+    fill: #dadada;
     inline-size: 22px!important;
     block-size: 22px!important;
   }
@@ -198,7 +202,6 @@
     height: 60px;
     width: 100%;
     border-radius: 500px;
-    margin: 30px 0;
   }
 
   .container-rangeUp{

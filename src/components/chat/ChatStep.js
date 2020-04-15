@@ -84,18 +84,28 @@ class ChatStep extends Component {
         let userMessage = this.props.messages.filter(msg => msg.id === this.props.msg.id - 1).map((msg) => msg.message);
     
 
-        axios({
-            method: 'get',
-            url: `${formUrl}?date=${encodeURIComponent(date)}&userAgent=${encodeURIComponent(userAgent)}&user=${encodeURIComponent(user)}&userMessage=${encodeURIComponent(userMessage)}&message=${encodeURIComponent(message)}&rating=${encodeURIComponent(rating)}&freeText=${encodeURIComponent(freeText)}`
-        })
+        if (this.state.rating || this.state.freeText){
+
+                axios({
+                    method: 'get',
+                    url: `${formUrl}?date=${encodeURIComponent(date)}&userAgent=${encodeURIComponent(userAgent)}&user=${encodeURIComponent(user)}&userMessage=${encodeURIComponent(userMessage)}&message=${encodeURIComponent(message)}&rating=${encodeURIComponent(rating)}&freeText=${encodeURIComponent(freeText)}`
+                })
 
         this.setState({submitted: true})
+        }
+
+       
     }
 
     onToggle(index, e, button){
 
         if (this.props.msg.buttons){
             let newButtonItems = this.props.msg.buttons.slice();
+
+            for(let [i, g] of this.props.msg.buttons.entries()) {
+                g.checked = false;
+            }
+
             newButtonItems[index].checked = !newButtonItems[index].checked
 
             this.setState({
@@ -179,10 +189,10 @@ class ChatStep extends Component {
                     >
                     <Modal.Header closeButton></Modal.Header>
                     {this.state.submitted
-                    ? <Modal.Body> <div className="container-feedback"><h5> Tack så mycket för din feedback!</h5> </div> <button className="agreeBtn" variant="secondary" onClick={() => this.closePopupForm()}>Stäng</button></Modal.Body>
+                    ? <Modal.Body> <div className="container-feedback"><h5> Tack för din feedback!</h5> </div> <button className="agreeBtn" variant="secondary" onClick={() => this.closePopupForm()}>Stäng</button></Modal.Body>
                     : <Modal.Body>
                     <form id="feedback-form" onSubmit={this.handleSubmit}>
-                      <h3> Feedback </h3>
+                      <h4> Hur var din upplevelse?</h4>
                         <div className="container-feedback">
 
                             <div className="item">
@@ -257,7 +267,7 @@ class ChatStep extends Component {
                                 
                             </div>
                         </div>
-                         <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Lämna synpunkter</Link>   
+                         <Link aria-hidden="true" className="feedback-link" onClick={() => this.openPopupForm()}>Har du synpunkter?</Link>   
                     </div>    
 
                     <div className="msgCustom">
@@ -269,6 +279,9 @@ class ChatStep extends Component {
                                                 <div className="label"><span>{button.title}</span></div>
                                                 <div className="detailed-label"></div>
                                             </div>
+                                            {button.checked !== true && 
+                                                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2"><path d="M50.026 99.996c27.448 0 49.967-22.52 49.967-49.967 0-27.449-22.52-50.065-50.064-50.065C22.48-.036-.04 22.58-.04 50.03c0 27.448 22.616 49.967 50.065 49.967zm0-12.854a37 37 0 01-37.114-37.113c0-20.587 16.527-37.21 37.017-37.21 20.586 0 37.21 16.623 37.21 37.21.097 20.586-16.527 37.113-37.113 37.113z" fillRule="nonzero"></path></svg>
+                                            }
                                             {button.checked === true && 
                                                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2"><path d="M50.026 99.996c27.448 0 49.967-22.52 49.967-49.967 0-27.449-22.52-50.065-50.064-50.065C22.48-.036-.04 22.58-.04 50.03c0 27.448 22.616 49.967 50.065 49.967zm-5.22-26.192c-2.126 0-3.866-1.063-5.412-2.9L28.376 57.858c-1.063-1.353-1.546-2.61-1.546-4.06 0-2.899 2.416-5.315 5.412-5.315 1.643 0 2.996.773 4.253 2.223l8.215 9.955 18.267-28.995c1.256-2.03 2.802-3.093 4.735-3.093 2.9 0 5.51 2.223 5.51 5.123 0 1.256-.484 2.513-1.257 3.77L49.929 70.807c-1.257 1.836-3.093 2.996-5.123 2.996z" fillRule="nonzero"></path></svg>
                                             }

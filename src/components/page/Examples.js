@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { sendStart } from '../../actions/messageActions';
 import './Examples.css';
 import {Link, navigate} from "@reach/router"
-import searchTerms from '../home/searchTerms';
+import searchTerms from '../../actions/searchTerms';
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 
