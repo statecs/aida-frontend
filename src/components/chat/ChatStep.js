@@ -96,6 +96,11 @@ class ChatStep extends Component {
 
         if (this.props.msg.buttons){
             let newButtonItems = this.props.msg.buttons.slice();
+
+            for(let [i, g] of this.props.msg.buttons.entries()) {
+                g.checked = false;
+            }
+
             newButtonItems[index].checked = !newButtonItems[index].checked
 
             this.setState({

@@ -34,12 +34,24 @@ class VoiceInput extends Component {
 
     sendMessage = () => {
         if(this.state.message){
-            const { receiver, message } = this.state;
-            let sender = this.props.user;
-            const rasaMsg = { sender, receiver, message };
-            //Send message to rasa and get chatbot response
-            this.props.sendMessage(rasaMsg);
-            this.setState({ message: '' });
+
+            if (this.state.message === ("Tillbaka") || this.state.message === ("Ångra") || this.state.message === ("Bakåt") || this.state.message === ("Gå tillbaka") ){
+                const { receiver } = this.state;
+                let sender = this.props.user;
+                const message = "/back";
+                const rasaMsg = { sender, receiver, message };
+                //Send message to rasa and get chatbot response
+                this.props.sendMessage(rasaMsg);
+                this.setState({ message: '' });
+
+            } else {
+                const { receiver, message } = this.state;
+                let sender = this.props.user;
+                const rasaMsg = { sender, receiver, message };
+                //Send message to rasa and get chatbot response
+                this.props.sendMessage(rasaMsg);
+                this.setState({ message: '' });
+            }
         }
     };
 

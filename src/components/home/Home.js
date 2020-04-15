@@ -12,6 +12,8 @@ import searchTerms from '../../actions/searchTerms';
 import { IoIosSearch } from "react-icons/io";
 import { MdKeyboardVoice } from "react-icons/md";
 import Feedback from './Feedback';
+import Modal from 'react-bootstrap/Modal';
+import Media from 'react-media';
 
 function supportsMediaDevices() {
   return navigator.mediaDevices;
@@ -62,16 +64,6 @@ const renderInputComponent = inputProps => (
   </div>
 );
 
-const renderSuggestionsContainer = ({ containerProps, children, query }) => (
-     <div {...containerProps}>
-      <span className="hidden"> Hej, vad söker du vård för?</span>
-      {children}
-         
-   
-     
-    </div>
-);
-
 class Home extends Component {
     
     constructor(props) {
@@ -81,12 +73,12 @@ class Home extends Component {
             value: '',
             suggestions: [],
             active: false,
-            shuffledTerms: []
+            shuffledTerms: [],
+            searchModal: false
         };
-        this.toggleClass = this.toggleClass.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
 
-        this.shuffledTerms = this.shuffleArray()
+        this.shuffledTerms = this.shuffleArray();
         
     }
 
@@ -138,7 +130,6 @@ class Home extends Component {
         let message = this.state.value;
         const rasaMsg = { sender, receiver, message};
         this.props.sendStart(sender, receiver, rasaMsg);
-        this.toggleClass();
         navigate('/chat')
     }
   }
@@ -163,10 +154,14 @@ class Home extends Component {
         let message = suggestionValue;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        this.toggleClass();
         navigate('/chat')
   };
 
+   storeInputReference = autosuggest => {
+    if (autosuggest !== null) {
+      this.input = autosuggest.input;
+    }
+  };
     sendValues = (el) => {
         let sender = this.props.user;
         let receiver = 'bot';
@@ -177,17 +172,28 @@ class Home extends Component {
         
     };
 
-    toggleClass() {
-            if (this.state.active){
-              document.body.classList.remove('no-scroll');
-              this.setState({ active: false });
+   togglePopup() {
+          if (this.state.searchModal){
+              this.setState({
+                  searchModal : false
+              })
+
+               setTimeout(() => {
+              this.input.blur();
+          }, 1);
+
+          } else{
+            
+            setTimeout(() => {
+              this.input.focus();
+          }, 1);
+    
+              this.setState({
+                  searchModal : true
+              })
+          }
           
-            } else {     
-              document.body.classList.add('no-scroll');
-              const currentState = this.state.active;
-              this.setState({ active: !currentState });
-            }
-        };
+        }
     render() {
         const { value, suggestions } = this.state;
 
@@ -198,12 +204,55 @@ class Home extends Component {
             value,
             onChange: this.onChange,
             onKeyDown: this.onKeyDown,
-            onFocus: this.toggleClass,
-            onBlur: this.toggleClass,
+            autoFocus: true
         };
 
         return (
             <React.Fragment>
+                
+      <Media query={{ maxWidth: 599 }}>
+              {matches =>
+                matches ? (
+                  <Modal
+                  className="searchModal"
+                  size="lg"
+                  show={this.state.searchModal}
+                  autoFocus={false}
+                  onHide={() => this.togglePopup()}
+                  aria-labelledby="example-modal-sizes-title-sm"
+          >
+            <Modal.Header closeButton>
+
+            </Modal.Header>
+            <Modal.Body> 
+        
+        <Autosuggest
+        autoFocus
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                    getSuggestionValue={getSuggestionValue}
+                    renderSuggestion={renderSuggestion}
+                    inputProps={inputProps}
+                    onSuggestionSelected={this.onSuggestionSelected}
+                    renderInputComponent={renderInputComponent}
+                    ref={this.storeInputReference}
+                    alwaysRenderSuggestions={true}
+                  /></Modal.Body>
+      </Modal>
+
+            ) : (
+              <span/>
+            )
+          }
+        </Media>
+
+
+
+
+
+
+
             <Feedback />
                 <div className="container-home">
                  <h1 className="site-logo"> 
@@ -227,17 +276,36 @@ class Home extends Component {
                     </Link>
                 </h1> 
 
-                <Autosuggest
+
+  <Media query={{ maxWidth: 599 }}>
+          {matches =>
+            matches ? (
+
+          <div class="inputSearchContainer">
+            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="searchIcon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M443.5 420.2L336.7 312.4c20.9-26.2 33.5-59.4 33.5-95.5 0-84.5-68.5-153-153.1-153S64 132.5 64 217s68.5 153 153.1 153c36.6 0 70.1-12.8 96.5-34.2l106.1 107.1c3.2 3.4 7.6 5.1 11.9 5.1 4.1 0 8.2-1.5 11.3-4.5 6.6-6.3 6.8-16.7.6-23.3zm-226.4-83.1c-32.1 0-62.3-12.5-85-35.2-22.7-22.7-35.2-52.9-35.2-84.9 0-32.1 12.5-62.3 35.2-84.9 22.7-22.7 52.9-35.2 85-35.2s62.3 12.5 85 35.2c22.7 22.7 35.2 52.9 35.2 84.9 0 32.1-12.5 62.3-35.2 84.9-22.7 22.7-52.9 35.2-85 35.2z"></path></svg>
+              <input onChange={() => this.togglePopup()} onClick={() => this.togglePopup()}  type="text" class="react-autosuggest__input" placeholder="Hej! Vad söker du?" value={this.state.value} />
+              
+              <a class="voiceIcon" aria-label="Röststyrning" href="/assistent/">
+                  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 15c1.66 0 2.99-1.34 2.99-3L15 6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 15 6.7 12H5c0 3.42 2.72 6.23 6 6.72V22h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"></path>
+                  </svg>
+                </a>
+          </div>
+
+            ) : (
+              <Autosuggest
                     suggestions={suggestions}
                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.onSuggestionsClearRequested}
                     getSuggestionValue={getSuggestionValue}
                     renderSuggestion={renderSuggestion}
                     inputProps={inputProps}
-                    renderSuggestionsContainer={renderSuggestionsContainer}
                     onSuggestionSelected={this.onSuggestionSelected}
                     renderInputComponent={renderInputComponent}
                   />
+            )
+          }
+        </Media>
 
 
                   <div className="exampleCases">
