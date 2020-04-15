@@ -20,6 +20,10 @@
 .msgCustom ul{
     list-style:none;
 }
+.padding-top {
+  margin-bottom: 50px !important;
+  position:relative !important;
+}
 
 .msgCustom svg{
   max-width:200px;

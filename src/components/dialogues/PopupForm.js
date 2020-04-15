@@ -37,7 +37,7 @@ const PopupForm = ({ handleClose, show }) => {
                     </svg>
                                             
                     </span> 
-                  
+                   <p className="logoText">Symtomguiden</p>
                 </h1></div>
 
            
