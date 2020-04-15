@@ -6,6 +6,7 @@ import './ChatInput.css';
 import {Link} from "@reach/router"
 import SpeechInput from "./SpeechInput";
 import { MdKeyboardVoice } from "react-icons/md";
+import { IoIosSearch } from "react-icons/io";
 
 class ChatInput extends Component {
     constructor(props) {
@@ -46,13 +47,13 @@ class ChatInput extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="chatInput">
-                    <textarea
-                        className="textArea"
+               <div class="inputSearchContainer">
+                    
+                    <input className="textArea search-input"
                         type="text"
                         name="message"
                         label="Skriv ett svar"
-                        placeholder="Skriv ett svar..."
+                        placeholder="Skriv ett svar..."  
                         onChange={this.onChange}
                         value={this.state.message}
                         onKeyPress={event => {
@@ -60,13 +61,19 @@ class ChatInput extends Component {
                                 event.preventDefault();
                                 this.sendMessage();
                             };
-                        }}
-                    />
+                        }}/>
+                        <div class="voiceIcon">
+                            {this.supportsMediaDevices() && 
+                                <Link aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
+                                }</div>
+                        <button onClick={() =>this.sendMessage()} className="searchIcon" aria-label="Skicka">  <IoIosSearch/></button>
             
-            {this.supportsMediaDevices() &&
-                        <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
-            }
-                </div>
+            </div>
+
+            
+          
+
+             
 
             </React.Fragment>
         );

@@ -69,4 +69,7 @@ html {
   align-items: center;
   height: 20%;
 }
+.msgContainer{
+    padding:15px 10px;
+}
 

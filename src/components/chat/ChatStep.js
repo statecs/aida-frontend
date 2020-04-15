@@ -84,12 +84,17 @@ class ChatStep extends Component {
         let userMessage = this.props.messages.filter(msg => msg.id === this.props.msg.id - 1).map((msg) => msg.message);
     
 
-        axios({
-            method: 'get',
-            url: `${formUrl}?date=${encodeURIComponent(date)}&userAgent=${encodeURIComponent(userAgent)}&user=${encodeURIComponent(user)}&userMessage=${encodeURIComponent(userMessage)}&message=${encodeURIComponent(message)}&rating=${encodeURIComponent(rating)}&freeText=${encodeURIComponent(freeText)}`
-        })
+        if (this.state.rating || this.state.freeText){
+
+                axios({
+                    method: 'get',
+                    url: `${formUrl}?date=${encodeURIComponent(date)}&userAgent=${encodeURIComponent(userAgent)}&user=${encodeURIComponent(user)}&userMessage=${encodeURIComponent(userMessage)}&message=${encodeURIComponent(message)}&rating=${encodeURIComponent(rating)}&freeText=${encodeURIComponent(freeText)}`
+                })
 
         this.setState({submitted: true})
+        }
+
+       
     }
 
     onToggle(index, e, button){
@@ -184,7 +189,7 @@ class ChatStep extends Component {
                     >
                     <Modal.Header closeButton></Modal.Header>
                     {this.state.submitted
-                    ? <Modal.Body> <div className="container-feedback"><h5> Tack så mycket för din feedback!</h5> </div> <button className="agreeBtn" variant="secondary" onClick={() => this.closePopupForm()}>Stäng</button></Modal.Body>
+                    ? <Modal.Body> <div className="container-feedback"><h5> Tack för din feedback!</h5> </div> <button className="agreeBtn" variant="secondary" onClick={() => this.closePopupForm()}>Stäng</button></Modal.Body>
                     : <Modal.Body>
                     <form id="feedback-form" onSubmit={this.handleSubmit}>
                       <h4> Hur var din upplevelse?</h4>
