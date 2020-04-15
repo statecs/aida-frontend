@@ -272,7 +272,7 @@ renderInputMobileComponent = inputProps => (
                 <div className="container-home">
                  <h1 className="site-logo"> 
                     <Link to="/" itemProp="url"> 
-                        <span itemProp="logo" itemType="http://schema.org/ImageObject" aria-label="Symptomkollen"> 
+                        <span itemProp="logo" itemType="http://schema.org/ImageObject"> 
                     <svg width="120px" height="120px" viewBox="0 0 129 129" version="1.1">
                         <g id="Prototype" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                             <g id="Second-screen" transform="translate(-224.000000, -184.000000)">
@@ -286,9 +286,12 @@ renderInputMobileComponent = inputProps => (
                             </g>
                         </g>
                     </svg>
+                    
                                             
                     </span> 
+                    <p className="logoText">Symtomguiden</p>
                     </Link>
+                    
                 </h1> 
 
 

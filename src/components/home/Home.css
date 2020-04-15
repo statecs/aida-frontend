@@ -7,7 +7,14 @@
     font-size: 20px;
 }
 .site-logo{
-    padding: 2em;
+    padding: 1.5em;
+}
+.logoText{
+    font-size: 14px;
+    text-align: center;
+    padding-top: 10px;
+    color: #666;
+    font-weight:400;
 }
 .site-logo-popup{
     padding: 1.5em 2em;

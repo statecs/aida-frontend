@@ -563,12 +563,9 @@ componentWillUnmount(){
 
                                     {getSmiley(this.state.values)}
 
-
- <input type="text" value={this.state.values} onChange={this.handleChange} />
-
  <Range
                                 values={this.state.values}
-                                step="0.1"
+                                step="1"
                                 min="0"
                                 max="100"
                                 onChange={values => this.setState({ values })}
@@ -588,6 +585,7 @@ componentWillUnmount(){
                                         style={{
                                         height: '5px',
                                         width: '100%',
+                                        marginTop: '100px',
                                         borderRadius: '4px',
                                         background: getTrackBackground({
                                             values: this.state.values,
@@ -617,17 +615,36 @@ componentWillUnmount(){
                                         boxShadow: '0px 2px 6px #AAA',
                                     }}
                                     >
+                                     <div
+                                        style={{
+                                        position: 'absolute',
+                                        top: '-28px',
+                                        color: '#fff',
+                                        fontWeight: 'bold',
+                                        fontSize: '14px',
+                                        fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',
+                                        padding: '3px',
+                                        borderRadius: '4px',
+                                        backgroundColor: '#548BF4'
+                                        }}
+                                    >
+                                        <input size="3" style={{  backgroundColor: 'transparent',  border: '0',
+                                        color: 'white',
+                                        fontWeight: 'bold', marginRight: '-5px'}} value={this.state.values} onChange={this.handleChange}/>
+                                    </div>
                                     <div
                                         style={{
                                         height: '16px',
                                         width: '5px',
-                                        backgroundColor: isDragged ? '#3c7aae' : '#CCC'
+                                        backgroundColor: isDragged ? '#548BF4' : '#CCC'
                                         }}
                                     />
                                     </div>
+                                   
                                 )}
                                 />
-                                <output style={{ marginTop: '60px' }} id="output">
+                                <output style={{ margin: '60px 0 30px 0 ', width: '100%' }} id="output">
+                                <div style={{ float: 'left' }}>Värsta tänkbara smärta</div><div style={{ float: 'right' }}>Ingen smärta</div>
                                 </output>    
                                
                                 <Button onClick={() => {this.sendRangeValues(this.state.values[0].toFixed(1))}} className="valSubmitBtn">Skicka</Button>
