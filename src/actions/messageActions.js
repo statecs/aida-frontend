@@ -1,4 +1,4 @@
-import { SEND_MESSAGE, SET_LOADING, BOTURL } from './types';
+import { SEND_MESSAGE, SET_LOADING, CLEAR_MESSAGES, BOTURL } from './types';
 import axios from 'axios';
 
 export const setLoading = () => dispatch => {
@@ -59,7 +59,7 @@ export const sendStart = (sender, receiver, msgData) => dispatch => {
                 botMsg = {sender: 'bot', receiver: msgData.sender, message: msgText};
             }
              dispatch({
-                type: SEND_MESSAGE,
+                type: CLEAR_MESSAGES,
                 userMsg: userMsg,
                 botMsg: botMsg
             });

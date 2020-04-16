@@ -1,4 +1,4 @@
-import { FETCH_MESSAGES, SEND_MESSAGE, SET_LOADING } from '../actions/types';
+import { FETCH_MESSAGES, SEND_MESSAGE, SET_LOADING, CLEAR_MESSAGES } from '../actions/types';
 
 const initialState = {
     messages: [],
@@ -26,6 +26,14 @@ export default function (state = initialState, action) {
                 loading: false,
                 messages: [...state.messages, { ...action.userMsg, id: num + 1 }, { ...action.botMsg, id: num + 2 }]
             };
+        case CLEAR_MESSAGES:
+            localStorage.removeItem("state");
+            return {
+                ...state,
+                numMsgs: 2,
+                loading: false,
+                messages: [{ ...action.userMsg, id: 1 }, { ...action.botMsg, id: 2 }]
+            };    
         default:
             return state;
     }
