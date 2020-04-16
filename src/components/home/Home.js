@@ -125,17 +125,7 @@ class Home extends Component {
 
    onKeyDown(event) {
        //On Enter submit form
-    if (!event) {
-      if(this.state.value){
-            let sender = this.props.user;
-            let receiver = 'bot';
-            let message = this.state.value;
-            const rasaMsg = { sender, receiver, message};
-            this.props.sendStart(sender, receiver, rasaMsg);
-            navigate('/chat')
-      }
-      
-    } else if (event.key === 'Enter' && this.state.value){
+      if (event.key === 'Enter' && this.state.value){
       let sender = this.props.user;
         let receiver = 'bot';
         let message = this.state.value;
@@ -169,12 +159,15 @@ renderInputMobileComponent = inputProps => (
   };
 
     onSuggestionSelected = (event, { suggestionValue }) => {
+      if (!event.key === 'Enter' || !event.key){
         let sender = this.props.user;
         let receiver = 'bot';
         let message = suggestionValue;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
         navigate('/chat')
+      }
+       
   };
 
    storeInputReference = autosuggest => {
@@ -182,6 +175,7 @@ renderInputMobileComponent = inputProps => (
       this.input = autosuggest.input;
     }
   };
+
     sendValues = (el) => {
         let sender = this.props.user;
         let receiver = 'bot';
@@ -258,7 +252,7 @@ renderInputMobileComponent = inputProps => (
                     ref={this.storeInputReference}
                     alwaysRenderSuggestions={true}
                   />
-                  <button className="searchModalIcon" tabIndex="0" aria-label="Sök" onClick={() => this.onKeyDown()}><IoIosSearch className="searchIcon"/></button> 
+                  <button className="searchModalIcon" tabIndex="0" aria-label="Sök"><IoIosSearch className="searchIcon"/></button> 
 
 </Modal.Body>
       </Modal>
@@ -332,7 +326,7 @@ renderInputMobileComponent = inputProps => (
                         <div className='cardDisplay'>
                                {this.state.shuffledTerms.slice(0, 3).map((value) => (
                                <React.Fragment key={value.name}>
-                                  <button className="exampleBtn" onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
+                                  <button className="exampleBtn" onClick={() =>this.sendValues} value={value.name} type="submit">{value.name}</button>
                                  </React.Fragment>
                                ))}
                         </div>

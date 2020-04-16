@@ -728,7 +728,7 @@ componentWillUnmount(){
                                  
                                  <React.Fragment>
     
-                                    <input className="textArea search-input" onKeyDown={this._handleKeyDown} placeholder={unit.unit} key={unit.unit} value={this.state.numberValues} type="number" name={unit.unit} id={unit.unit} min={0} max={200} autocomplete="off" onChange={this.handleNumberChange.bind(this, id)} />
+                                    <input className="textArea search-input" onKeyDown={() => this._handleKeyDown} placeholder={unit.unit} key={unit.unit} value={this.state.numberValues} type="number" name={unit.unit} id={unit.unit} min={0} max={200} autocomplete="off" onChange={this.handleNumberChange.bind(this, id)} />
                                     <span className="unit">({unit.unit})</span>
                                     
                                     </React.Fragment>
