@@ -41,7 +41,8 @@ const PopupForm = ({ handleClose, show }) => {
                 </h1></div>
 
            
-            <h2 role="alertdialog">Är det livshotande eller akuta besvär?</h2>
+            <h2 class="center" role="alertdialog">Är det livshotande eller akuta besvär?</h2>
+            <p class="center" >Tänk på att du endast ska ringa 112 när du är i en nödsituation som kräver omedelbar hjälp.</p>
             <Button className="agreeBtn call-btn" variant="secondary" aria-label="Ring 112" onClick={handleClose}>Ring 112</Button>
             <Button className="agreeBtn" variant="primary" aria-label="Nej, det är inte livshotande" onClick={handleClose}>Nej, det är inte livshotande</Button>
 

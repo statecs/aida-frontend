@@ -687,19 +687,20 @@ componentWillUnmount(){
                                      <div
                                         style={{
                                         position: 'absolute',
-                                        top: '-28px',
+                                        top: '-40px',
                                         color: '#fff',
                                         fontWeight: 'bold',
-                                        fontSize: '14px',
+                                        fontSize: '12px',
                                         fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',
                                         padding: '3px',
                                         borderRadius: '4px',
-                                        backgroundColor: '#548BF4'
+                                        backgroundColor: 'white',
+                                        boxShadow: "rgb(170, 170, 170) 0px 2px 6px"
                                         }}
                                     >
                                         <input size="3" style={{  backgroundColor: 'transparent',  border: '0',
-                                        color: 'white',
-                                        fontWeight: 'bold', marginRight: '-5px'}} value={this.state.values} onChange={this.handleChange}/>
+                                        color: '#3c7aae',
+                                        fontWeight: 'bold', textAlign: "center"}} value={this.state.values} onChange={this.handleChange}/>
                                     </div>
                                     <div
                                         style={{

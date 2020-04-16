@@ -326,7 +326,7 @@ renderInputMobileComponent = inputProps => (
                         <div className='cardDisplay'>
                                {this.state.shuffledTerms.slice(0, 3).map((value) => (
                                <React.Fragment key={value.name}>
-                                  <button className="exampleBtn" onClick={() =>this.sendValues} value={value.name} type="submit">{value.name}</button>
+                                  <button className="exampleBtn" onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
                                  </React.Fragment>
                                ))}
                         </div>

@@ -14,6 +14,7 @@ export const Sad: FunctionComponent<Props> = ({ animationProps }) => (
     data-name="Layer 1"
     viewBox="0 0 50 50"
     x="0px"
+    fill="#FB6B13"
     y="0px"
   >
     <title>Emotions_tnp</title>
