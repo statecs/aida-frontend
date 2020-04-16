@@ -33,6 +33,9 @@
   align-items: center;
   justify-content: center;
 }
+.msgCustom svg.neutral{
+  fill: #FFCB03 !important;
+}
 .bot-messages{
   width: 90% !important;
 }
@@ -126,7 +129,6 @@
   }
   .radio ~ span {
     font-size: 3rem;
-    filter: grayscale(100);
     cursor: pointer;
     transition: 0.3s;
   }

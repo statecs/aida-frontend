@@ -516,36 +516,36 @@ componentWillUnmount(){
                                  <div className="item">
                                  
                             <label htmlFor="1">
-                            <input className="radio" type="radio" name="1" id="1" value="1" checked={this.state.rating === '1'} onChange={this.handleOptionChange}/>
-                            <span><FaRegGrinAlt/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [0.2]})} type="radio" name="1" id="1" value="1" checked={this.state.rating === '1'} onChange={this.handleOptionChange}/>
+                            <span><FaRegGrinAlt fill="#19C733"/></span>
                             </label>
                             </div>
 
                             <div className="item">
                             <label htmlFor="2">
-                            <input className="radio" type="radio" name="2" id="2" value="2" checked={this.state.rating === '2'}  onChange={this.handleOptionChange}/>
-                            <span><FaRegSmile/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [1.4]})} type="radio" name="2" id="2" value="2" checked={this.state.rating === '2'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegSmile fill="#7CC710"/></span>
                             </label>
                             </div>
 
                             <div className="item">
                             <label htmlFor="3">
-                            <input className="radio" type="radio" name="3" id="3" value="3" checked={this.state.rating === '3'}  onChange={this.handleOptionChange}/>
-                            <span><FaRegMeh/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [2.5]})} type="radio" name="3" id="3" value="3" checked={this.state.rating === '3'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegMeh  fill="#FFCB03"/></span>
                             </label>
                             </div>
 
                             <div className="item">
                             <label htmlFor="4">
-                            <input className="radio" type="radio" name="4" id="4" value="4"  checked={this.state.rating === '4'}  onChange={this.handleOptionChange}/>
-                            <span><FaRegFrownOpen/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [3.6]})} type="radio" name="4" id="4" value="4"  checked={this.state.rating === '4'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegFrownOpen fill="#FB6B13"/></span>
                             </label>
                             </div>
 
                             <div className="item">
                             <label htmlFor="5">
-                            <input className="radio" type="radio" name="5" id="5" value="5" checked={this.state.rating === '5'} onChange={this.handleOptionChange}/>
-                            <span><FaRegFrown/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [4.8]})} type="radio" name="5" id="5" value="5" checked={this.state.rating === '5'} onChange={this.handleOptionChange}/>
+                            <span><FaRegFrown fill="#F02A28"/></span>
                             </label>
                             </div></div>
 
@@ -570,7 +570,7 @@ componentWillUnmount(){
                                         ...props.style,
                                         height: '36px',
                                         display: 'flex',
-                                        width: '100%'
+                                        width: '400px'
                                     }}
                                     >
                                     <div
@@ -617,10 +617,16 @@ componentWillUnmount(){
                                     </div>
                                 )}
                                 />
-                                <output style={{ marginTop: '60px' }} id="output">
-                            
-                                </output>
+                                  <output style={{ margin: '10px 0 5px 0 ', width: '100%' }} id="output">
+                               
+                                </output>  
+                                 <output style={{ margin: '0px 0 60px 0 ', width: '400px' }} id="output">
+                                <div style={{ float: 'left' }}>Ingen smärta</div><div style={{ float: 'right' }}>Värsta tänkbara smärta</div>
+
+                                </output>  
+                                
                             </div>
+                                
                             <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.valuesRange[0]))}} className="valSubmitBtn">Skicka</Button>
 
                                 </React.Fragment>
@@ -714,10 +720,10 @@ componentWillUnmount(){
                                 )}
                                 />
                                 <output style={{ margin: '60px 0 30px 0 ', width: '100%' }} id="output">
-                                <div style={{ float: 'left' }}>Värsta tänkbara smärta</div><div style={{ float: 'right' }}>Ingen smärta</div>
+                                <div style={{ float: 'left' }}>Sämsta tänkbara tillstånd</div><div style={{ float: 'right' }}>Bästa tillstånd</div>
                                 </output>    
                                
-                                <Button onClick={() => {this.sendRangeValues(this.state.values[0].toFixed(1))}} className="valSubmitBtn">Skicka</Button>
+                                <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.values[0]))}} className="valSubmitBtn">Skicka</Button>
                                 </React.Fragment>
                                 
                                 }
