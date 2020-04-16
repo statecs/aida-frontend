@@ -29,6 +29,9 @@ class ChatStep extends Component {
             message: this.props.msg.message,
             rating: "",
             freeText: "",
+            kg:"",
+            cm:"",
+            grader:"",
             values: [50],
             valuesRange: [3],
             showPopupForm: false,
@@ -186,6 +189,46 @@ closeFinalForm = () => {
      handleChange(event) {
         this.setState({values: [event.target.value]});
     }
+
+     handleNumberChange(index, e) {
+         const target = e.target;
+         const value = target.value;
+         const name = target.name;
+
+            if (name === "°C"){
+                  this.setState({
+                        grader: value + name
+                });
+            } else {
+            this.setState({
+                [name]: value + name
+            });
+            }
+     
+    }
+
+
+    sendNumberInput(){
+        if (this.state.kg || this.state.cm || this.state.grader){
+            let sender = this.props.user;
+            let receiver = 'bot';
+            let message;
+            if (this.state.grader){
+                message = this.state.grader;
+            } else{
+                message = this.state.kg + ' ' + this.state.cm;
+            }
+            const rasaMsg = { sender, receiver, message };
+            this.props.sendMessage(rasaMsg);
+        }
+       
+    }
+
+    _handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.sendNumberInput();
+    }
+  }
 
 
     handleOptionChange = changeEvent => {
@@ -677,6 +720,27 @@ componentWillUnmount(){
                                 </React.Fragment>
                                 
                                 }
+                                 {this.props.msg.custom.type === "numberInput" && 
+
+                                 <React.Fragment>
+                                 <div className="inputSearchContainer">
+                                 {this.props.msg.custom.units.map((unit, id) => 
+                                 
+                                 <React.Fragment>
+    
+                                    <input className="textArea search-input" onKeyDown={this._handleKeyDown} placeholder={unit.unit} key={unit.unit} value={this.state.numberValues} type="number" name={unit.unit} id={unit.unit} min={0} max={200} autocomplete="off" onChange={this.handleNumberChange.bind(this, id)} />
+                                    <span className="unit">({unit.unit})</span>
+                                    
+                                    </React.Fragment>
+
+                                 )}
+                                    </div> 
+                                 <Button onClick={() => {this.sendNumberInput()}} className="valSubmitBtn top-margin">Skicka</Button>
+                    
+                                </React.Fragment>
+
+                                 }
+
                                 {this.props.msg.custom.type === "finalPage" && 
 
                                    <Modal show={this.state.showFinalForm}
