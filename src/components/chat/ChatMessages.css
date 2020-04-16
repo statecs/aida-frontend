@@ -33,6 +33,7 @@ html {
 
 
 .backNav{
+    padding-bottom: 20px;
     top: 0;
     display: flex;
     align-items: center;
@@ -41,7 +42,7 @@ html {
 }
 .backNav button{
   background-color:transparent;
-  margin-bottom: -2em;
+  margin-bottom: -3.5em;
 }
 .backNav svg{
   color: #3c7aae;

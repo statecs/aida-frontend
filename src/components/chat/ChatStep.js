@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { sendMessage } from '../../actions/messageActions';
+import { sendMessage, sendStart } from '../../actions/messageActions';
 import './ChatStep.css';
 import {Button, Link} from 'cauldron-react'
 import axios from 'axios';
@@ -154,7 +154,7 @@ startCase = () => {
         let receiver = 'bot';
         let message = "Hej";
         const rasaMsg = { sender, receiver, message };
-        this.props.sendMessage(rasaMsg);
+        this.props.sendStart(sender, receiver, rasaMsg);
 
         this.setState({ showFinalForm: false, });
 
@@ -746,4 +746,4 @@ const mapStateToProps = state => ({
     loading: state.messages.loading
 })
 
-export default connect(mapStateToProps, { sendMessage })(ChatStep);
+export default connect(mapStateToProps, { sendMessage, sendStart })(ChatStep);

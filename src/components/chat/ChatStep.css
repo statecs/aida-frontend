@@ -56,6 +56,7 @@
 
 .user-messages {
     margin-top: -30px;
+    margin-bottom: 5px;
     opacity:0.6;
     overflow: hidden;
 }
