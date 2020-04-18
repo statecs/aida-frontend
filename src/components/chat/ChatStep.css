@@ -33,6 +33,11 @@
   align-items: center;
   justify-content: center;
 }
+.item p {
+  font-weight: 500;
+  padding-top:10px;
+  font-size:15px;
+}
 .msgCustom svg.neutral{
   fill: #FFCB03 !important;
 }
@@ -102,7 +107,7 @@
 
 .container-feedback {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 20px 0;
 }
@@ -226,4 +231,34 @@
     float: left;
     margin-right: 20px;
     margin-left: 20vw;
+  }
+
+  .rangeTopContainer{
+    padding-top:1em;
+    padding-bottom:1.3em;
+  }
+  .rangeDecrement{
+    padding:0;
+    background-color: transparent;
+    float:left;
+  }
+
+  .rangeIncrement{
+    padding:0;
+    background-color: transparent;
+    float:right;
+  }
+
+  .rangeDecrement svg{
+    width:30px;
+    height:30px;
+    font-size:3em;
+    color: rgb(60, 122, 174);
+  }
+
+  .rangeIncrement svg{
+    width:30px;
+    height:30px;
+    font-size:3em;
+    color: rgb(60, 122, 174);
   }

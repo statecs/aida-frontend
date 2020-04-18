@@ -118,6 +118,12 @@ body {
   margin-bottom: 10px;
   max-width:800px;
 }
+@media only screen and (min-width: 48em) {
+    .container {
+      width: 100%; 
+  }
+}
+
 .modal-content .container{
   padding:15px;
 }

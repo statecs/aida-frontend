@@ -176,6 +176,16 @@ renderInputMobileComponent = inputProps => (
     }
   };
 
+ sendSearchValues = () => {
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = this.state.value;
+        const rasaMsg = { sender, receiver, message };
+        this.props.sendStart(sender, receiver, rasaMsg);
+        navigate('/chat')
+        
+    };
+
     sendValues = (el) => {
         let sender = this.props.user;
         let receiver = 'bot';
@@ -214,7 +224,7 @@ renderInputMobileComponent = inputProps => (
          // Autosuggest will pass through all these props to the input.
     
         const inputProps = {
-            placeholder: 'Hej! Vad söker du?',
+            placeholder: 'Hej! Vad har du för symtom?',
             value,
             onChange: this.onChange,
             onKeyDown: this.onKeyDown,
@@ -252,7 +262,7 @@ renderInputMobileComponent = inputProps => (
                     ref={this.storeInputReference}
                     alwaysRenderSuggestions={true}
                   />
-                  <button className="searchModalIcon" tabIndex="0" aria-label="Sök"><IoIosSearch className="searchIcon"/></button> 
+                  <button onClick={() => this.sendSearchValues()}className="searchModalIcon" tabIndex="0" aria-label="Sök"><IoIosSearch className="searchIcon"/></button> 
 
 </Modal.Body>
       </Modal>
@@ -295,7 +305,7 @@ renderInputMobileComponent = inputProps => (
 
           <div class="inputSearchContainer">
            <IoIosSearch className="searchIcon" />
-            <input onChange={() => this.togglePopup()} onClick={() => this.togglePopup()}  type="text" class="react-autosuggest__input" placeholder="Hej! Vad söker du?" value={this.state.value} />
+            <input onChange={() => this.togglePopup()} onClick={() => this.togglePopup()}  type="text" class="react-autosuggest__input" placeholder="Hej! Vad har du för symtom?" value={this.state.value} />
               
               {supportsMediaDevices() &&
               <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/">

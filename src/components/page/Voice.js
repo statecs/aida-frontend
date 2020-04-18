@@ -377,7 +377,7 @@ playSound(){
                                     </React.Fragment>
                                 
                                 )}
-                                 <button className="btn" aria-checked="true" onClick={() => {this.sendFormValues()}}>Skicka</button>
+                                 <button className="btn" aria-checked="true" onClick={() => {this.sendFormValues()}}>Nästa</button>
                                 </React.Fragment>       
               }
 
@@ -398,7 +398,7 @@ playSound(){
             {this.state.playing && !this.state.showVoiceStart &&
              <button  aria-label="Avbryt" className="speech-control-container" onClick={() => this.handlePause()}>
               <div className="speech-control">
-              <FaPause className="microphone-icon" />
+              <FaMicrophone className="microphone-icon" />
           </div>
 
       </button>

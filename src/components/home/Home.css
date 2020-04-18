@@ -42,6 +42,9 @@
     margin-left: -42px;
 }
 
+.voiceIcon a{
+    width:25px;
+}
 .voiceIcon svg {
     font-size: 2em;
     height: 30px;

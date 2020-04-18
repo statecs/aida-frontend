@@ -34,6 +34,9 @@
     font-size: 25px;
     margin-left:-5px;
 }
+.inputContainer .searchIcon.disabled{
+    background-color: #b3b3b3;
+}
 
 .textArea {
     background-color: #ffffff;

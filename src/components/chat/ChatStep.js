@@ -9,13 +9,12 @@ import Modal from 'react-bootstrap/Modal';
 import formUrl from '../../keys/formUrl';
 import ChatInput from './ChatInput';
 import Speech from 'speak-tts'
+import {navigate} from "@reach/router"
 import { getSmiley } from './smileys/Smileys';
 import { Range, Direction, getTrackBackground } from 'react-range';
 import { FaRegFrown, FaRegAngry, FaRegMeh, FaRegSmile, FaRegLaughBeam, FaRegFrownOpen, FaRegGrinAlt, FaPlay, FaPause, FaVolumeUp  } from "react-icons/fa";
+import { AiOutlineMinusCircle, AiOutlinePlusCircle  } from "react-icons/ai";
 
-const STEP = 0.1;
-const MIN = 0;
-const MAX = 100;
 
 
 class ChatStep extends Component {
@@ -28,10 +27,8 @@ class ChatStep extends Component {
             user: this.props.user,
             message: this.props.msg.message,
             rating: "",
+            option: "",
             freeText: "",
-            kg:"",
-            cm:"",
-            grader:"",
             values: [50],
             valuesRange: [3],
             showPopupForm: false,
@@ -44,6 +41,26 @@ class ChatStep extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        if (this.props.msg.custom ){
+            if (this.props.msg.custom.type === "numberInput" ){
+            let data = this.props.msg.custom.units.map((unit, id) => {
+                return (unit.unit);
+             })
+
+            let keys = this.props.msg.custom.units.map((unit, id) => {
+                return unit.step.values;
+            })
+
+            var result = {};
+                data.forEach((key, i) => 
+                    [result[key]] = [[keys[i]]],
+            );
+            this.state = result;
+
+            }
+        }
+       
     }
 
     
@@ -55,16 +72,16 @@ class ChatStep extends Component {
 if (this.state.playing){
 
      this.setState({
-        playing: false
+            playing: false
         });
-   this.speech.pause();
+        this.speech.pause();
 
 } else{
 
 
     this.setState({
         playing: true
-        });
+    });
 
 
   this.speech = new Speech();
@@ -152,7 +169,13 @@ if (this.state.playing){
 
 }
 
-startCase = () => {      
+    closeCase = () => {
+        localStorage.removeItem("state");
+        navigate('/')
+        window.location.reload();
+    }
+
+    startCase = () => {  
         let sender = this.props.user;
         let receiver = 'bot';
         let message = "Hej";
@@ -161,10 +184,8 @@ startCase = () => {
 
         this.setState({ showFinalForm: false, });
 
-
-
     };
-closeFinalForm = () => {        
+    closeFinalForm = () => {    
         this.setState({ showFinalForm: false, });
     };
 
@@ -186,56 +207,55 @@ closeFinalForm = () => {
             });
     }
 
-     handleChange(event) {
+    handleChange(event) {
         this.setState({values: [event.target.value]});
     }
 
-     handleNumberChange(index, e) {
-         const target = e.target;
-         const value = target.value;
-         const name = target.name;
+    handleRangeInputChange(values, index, e, state) {
+        const name = e.unit;
+        this.setState({[name]: [values]});
 
-            if (name === "°C"){
-                  this.setState({
-                        grader: value + name
-                });
-            } else {
-            this.setState({
-                [name]: value + name
-            });
-            }
-     
     }
 
-
-    sendNumberInput(){
-        if (this.state.kg || this.state.cm || this.state.grader){
-            let sender = this.props.user;
-            let receiver = 'bot';
-            let message;
-            if (this.state.grader){
-                message = this.state.grader;
-            } else{
-                message = this.state.kg + ' ' + this.state.cm;
-            }
-            const rasaMsg = { sender, receiver, message };
-            this.props.sendMessage(rasaMsg);
-        }
-       
+    handleRangeChange(values, index, e, state) {
+        const name = e.unit;
+        this.setState({[name]: values});
+        
     }
 
-    _handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      this.sendNumberInput();
+    incrementInput(id, unit) {
+        this.setState({[unit.unit]: [+this.state[unit.unit] +1] });
     }
-  }
+
+    decrementInput(id, unit) {
+        this.setState({[unit.unit]: [+this.state[unit.unit] - 1 ]});
+    }
+
+    sendRangeChange(e){
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = JSON.stringify(e).replace(/[\[\]"]+/g,"").replace(/[{()}]/g, '').replace(/:/g,'');;
+
+        const rasaMsg = { sender, receiver, message };
+        this.props.sendMessage(rasaMsg);
+
+    }
 
 
     handleOptionChange = changeEvent => {
         this.setState({
+            option: changeEvent.target.value
+        });
+    };
+
+
+ handleRatingChange = changeEvent => {
+        this.setState({
             rating: changeEvent.target.value
         });
     };
+
+    
 
 
     handleSubmit(event) {
@@ -337,7 +357,7 @@ closeFinalForm = () => {
         }
     };
 
-componentWillUnmount(){
+    componentWillUnmount(){
     if (this.state.playing){
             this.speech.pause();
            
@@ -370,36 +390,36 @@ componentWillUnmount(){
                         <div className="container-feedback">
 
                             <div className="item">
-                            <label htmlFor="1">
-                            <input className="radio" type="radio" name="1" id="1" value="1" checked={this.state.rating === '1'} onChange={this.handleOptionChange}/>
+                            <label htmlFor="1-rating">
+                            <input className="radio" type="radio" name="1-rating" id="1-rating" value="1" checked={this.state.rating === '1'} onChange={this.handleRatingChange}/>
                             <span><FaRegAngry/></span>
                             </label>
                             </div>
 
                             <div className="item">
-                            <label htmlFor="2">
-                            <input className="radio" type="radio" name="2" id="2" value="2" checked={this.state.rating === '2'}  onChange={this.handleOptionChange}/>
+                            <label htmlFor="2-rating">
+                            <input className="radio" type="radio" name="2-rating" id="2-rating" value="2" checked={this.state.rating === '2'}  onChange={this.handleRatingChange}/>
                             <span><FaRegFrown/></span>
                             </label>
                             </div>
 
                             <div className="item">
-                            <label htmlFor="3">
-                            <input className="radio" type="radio" name="3" id="3" value="3" checked={this.state.rating === '3'}  onChange={this.handleOptionChange}/>
+                            <label htmlFor="3-rating">
+                            <input className="radio" type="radio" name="3-rating" id="3-rating" value="3" checked={this.state.rating === '3'}  onChange={this.handleRatingChange}/>
                             <span><FaRegMeh/></span>
                             </label>
                             </div>
 
                             <div className="item">
-                            <label htmlFor="4">
-                            <input className="radio" type="radio" name="4" id="4" value="4"  checked={this.state.rating === '4'}  onChange={this.handleOptionChange}/>
+                            <label htmlFor="4-rating">
+                            <input className="radio" type="radio" name="4-rating" id="4-rating" value="4"  checked={this.state.rating === '4'}  onChange={this.handleRatingChange}/>
                             <span><FaRegSmile/></span>
                             </label>
                             </div>
 
                             <div className="item">
-                            <label htmlFor="5">
-                            <input className="radio" type="radio" name="5" id="5" value="5" checked={this.state.rating === '5'} onChange={this.handleOptionChange}/>
+                            <label htmlFor="5-rating">
+                            <input className="radio" type="radio" name="5-rating" id="5-rating" value="5" checked={this.state.rating === '5'} onChange={this.handleRatingChange}/>
                             <span><FaRegLaughBeam/></span>
                             </label>
                             </div>
@@ -502,50 +522,54 @@ componentWillUnmount(){
                                             </div>
                                         </React.Fragment>
                                             }
+                                         {(id === this.props.msg.custom.data.length - 1) && (custom.payload === "Annat" && custom.checked !== true )  &&
+                                             <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Nästa</Button>
+                                        } 
+                                         {(id === this.props.msg.custom.data.length - 1) && (custom.payload !== "Annat" )  &&
+                                             <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Nästa</Button>
+                                        }
                                     </React.Fragment>
                                 )}
-                                <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Skicka</Button>
-                                
                                 </React.Fragment>
                                 
                                 }
 
-                                {this.props.msg.custom.type === "reactRange" && 
+                                {this.props.msg.custom.type === "range5" && 
                                 <React.Fragment>
                                 <div className="container-feedback">
                                  <div className="item">
                                  
                             <label htmlFor="1">
-                            <input className="radio" onClick={() => this.setState({valuesRange: [0.2]})} type="radio" name="1" id="1" value="1" checked={this.state.rating === '1'} onChange={this.handleOptionChange}/>
-                            <span><FaRegGrinAlt fill="#19C733"/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [0.2]})} type="radio" name="1" id="1" value="1" checked={this.state.option === '1'} onChange={this.handleOptionChange}/>
+                            <span><FaRegGrinAlt fill="#19C733"/><p>1</p></span>
                             </label>
                             </div>
 
                             <div className="item">
                             <label htmlFor="2">
-                            <input className="radio" onClick={() => this.setState({valuesRange: [1.4]})} type="radio" name="2" id="2" value="2" checked={this.state.rating === '2'}  onChange={this.handleOptionChange}/>
-                            <span><FaRegSmile fill="#7CC710"/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [1.4]})} type="radio" name="2" id="2" value="2" checked={this.state.option === '2'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegSmile fill="#7CC710"/><p>2</p></span>
                             </label>
                             </div>
 
                             <div className="item">
                             <label htmlFor="3">
-                            <input className="radio" onClick={() => this.setState({valuesRange: [2.5]})} type="radio" name="3" id="3" value="3" checked={this.state.rating === '3'}  onChange={this.handleOptionChange}/>
-                            <span><FaRegMeh  fill="#FFCB03"/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [2.5]})} type="radio" name="3" id="3" value="3" checked={this.state.option === '3'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegMeh  fill="#FFCB03"/><p>3</p></span>
                             </label>
                             </div>
 
                             <div className="item">
                             <label htmlFor="4">
-                            <input className="radio" onClick={() => this.setState({valuesRange: [3.6]})} type="radio" name="4" id="4" value="4"  checked={this.state.rating === '4'}  onChange={this.handleOptionChange}/>
-                            <span><FaRegFrownOpen fill="#FB6B13"/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [3.6]})} type="radio" name="4" id="4" value="4"  checked={this.state.option === '4'}  onChange={this.handleOptionChange}/>
+                            <span><FaRegFrownOpen fill="#FB6B13"/><p>4</p></span>
                             </label>
                             </div>
 
                             <div className="item">
                             <label htmlFor="5">
-                            <input className="radio" onClick={() => this.setState({valuesRange: [4.8]})} type="radio" name="5" id="5" value="5" checked={this.state.rating === '5'} onChange={this.handleOptionChange}/>
-                            <span><FaRegFrown fill="#F02A28"/></span>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [4.8]})} type="radio" name="5" id="5" value="5" checked={this.state.option === '5'} onChange={this.handleOptionChange}/>
+                            <span><FaRegFrown fill="#F02A28"/><p>5</p></span>
                             </label>
                             </div></div>
 
@@ -570,7 +594,7 @@ componentWillUnmount(){
                                         ...props.style,
                                         height: '36px',
                                         display: 'flex',
-                                        width: '400px'
+                                        width: '100%'
                                     }}
                                     >
                                     <div
@@ -620,20 +644,20 @@ componentWillUnmount(){
                                   <output style={{ margin: '10px 0 5px 0 ', width: '100%' }} id="output">
                                
                                 </output>  
-                                 <output style={{ margin: '0px 0 60px 0 ', width: '400px' }} id="output">
-                                <div style={{ float: 'left' }}>Ingen smärta</div><div style={{ float: 'right' }}>Värsta tänkbara smärta</div>
+                                 <output style={{ margin: '0px 0 60px 0 ', width: '100%' }} id="output">
+                                <div style={{ float: 'left' }}>{this.props.msg.custom.alt.firstItem}</div><div style={{ float: 'right' }}>{this.props.msg.custom.alt.lastItem}</div>
 
                                 </output>  
                                 
                             </div>
                                 
-                            <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.valuesRange[0]))}} className="valSubmitBtn">Skicka</Button>
+                            <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.valuesRange[0]))}} className="valSubmitBtn">Nästa</Button>
 
                                 </React.Fragment>
                                 
                                 }
 
-                                {this.props.msg.custom.type === "reactRangeUp" && 
+                                {this.props.msg.custom.type === "range100" && 
                                 <React.Fragment>
 
                                     {getSmiley(this.state.values)}
@@ -720,29 +744,111 @@ componentWillUnmount(){
                                 )}
                                 />
                                 <output style={{ margin: '60px 0 30px 0 ', width: '100%' }} id="output">
-                                <div style={{ float: 'left' }}>Sämsta tänkbara tillstånd</div><div style={{ float: 'right' }}>Bästa tillstånd</div>
+                                <div style={{ float: 'left' }}>{this.props.msg.custom.alt.firstItem}</div><div style={{ float: 'right' }}>{this.props.msg.custom.alt.lastItem}</div>
                                 </output>    
                                
-                                <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.values[0]))}} className="valSubmitBtn">Skicka</Button>
+                                <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.values[0]))}} className="valSubmitBtn">Nästa</Button>
                                 </React.Fragment>
                                 
                                 }
                                  {this.props.msg.custom.type === "numberInput" && 
 
                                  <React.Fragment>
-                                 <div className="inputSearchContainer">
+
+                                 <div className="inputRangeContainer">
+
                                  {this.props.msg.custom.units.map((unit, id) => 
                                  
-                                 <React.Fragment>
-    
-                                    <input className="textArea search-input" onKeyDown={() => this._handleKeyDown} placeholder={unit.unit} key={unit.unit} value={this.state.numberValues} type="number" name={unit.unit} id={unit.unit} min={0} max={200} autocomplete="off" onChange={this.handleNumberChange.bind(this, id)} />
-                                    <span className="unit">({unit.unit})</span>
+                          <React.Fragment>
+                          <div class="rangeTopContainer">
+                            <button class="rangeDecrement" onClick={() => {this.decrementInput(id, unit)}}> <AiOutlineMinusCircle/> </button>
+                         
+                            <input size="3" style={{
+                                        color: '#3c7aae', backgroundColor: "transparent", border: "0", borderBottom: "1px solid #ccc", height: "30px", width:"55px",
+                                        fontWeight: 'bold', fontSize: "20px", textAlign: "center"}} value={this.state[unit.unit]} onChange={e => this.handleRangeInputChange(e.target.value, id, unit, this.state[unit.unit])}/>
+                                        ({unit.unit})
+                            <button class="rangeIncrement" onClick={() => {this.incrementInput(id, unit)}} > <AiOutlinePlusCircle/></button>
+                      </div>
+
+                        <Range
+                                values={this.state[unit.unit]}
+                                step={unit.step.number}
+                                min={parseInt(unit.range.firstItem)}
+                                max={parseInt(unit.range.lastItem)}
+                                onChange={values => this.handleRangeChange(values, id, unit)}
+                                renderTrack={({ props, children }) => (
+                                <div
+                                    onMouseDown={props.onMouseDown}
+                                    onTouchStart={props.onTouchStart}
+                                    {...props}
+                                    style={{
+                                    ...props.style,
+                                    height: '6px',
+                                    width: '100%',
+                                    display: 'flex',
+                                    backgroundColor: '#3c7aae'
+                                    }}
+                                >
+                            {children}
+                            
+                                <div
+                ref={props.ref}
+                style={{
+                  height: '6px',
+                  width: '100%',
+                  borderRadius: '4px',
+                  background: getTrackBackground({
+                    values: this.state[unit.unit],
+                    colors: ['#3c7aae', '#ccc'],
+                    min: parseInt(unit.range.firstItem),
+                    max: parseInt(unit.range.lastItem)
+                  }),
+                  alignSelf: 'center'
+                }}
+              >
                                     
-                                    </React.Fragment>
+                                   </div>
+                                </div>
+                                )}
+                                
+                                renderThumb={({ props, isDragged }) => (
+                                    <div
+                                    {...props}
+                                    style={{
+                                        ...props.style,
+                                        height: '42px',
+                                        width: '42px',
+                                        borderRadius: '4px',
+                                        backgroundColor: '#FFF',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        boxShadow: '0px 2px 6px #AAA',
+                                    }}
+                                    >
+                      
+                                     
+                                    <div
+                                        style={{
+                                        height: '16px',
+                                        width: '5px',
+                                        backgroundColor: isDragged ? '#548BF4' : '#CCC'
+                                        }}
+                                    />
+                                    </div>
+                                   
+                                )}
+                                />
+                                <output style={{ margin: '20px 0 30px 0 ', width: '100%' }} id="output">
+                                <div style={{ float: 'left' }}>{unit.range.firstItem}</div><div style={{ float: 'right' }}>{unit.range.lastItem}</div>
+                                </output>    
+                             
+                    
+                                </React.Fragment>
 
                                  )}
                                     </div> 
-                                 <Button onClick={() => {this.sendNumberInput()}} className="valSubmitBtn top-margin">Skicka</Button>
+                                 <Button onClick={() => {this.sendRangeChange(this.state)}} className="valSubmitBtn top-margin">Nästa</Button>
                     
                                 </React.Fragment>
 
@@ -757,7 +863,7 @@ componentWillUnmount(){
                                         enforceFocus={true}
                                         dialogClassName="feedback-modal"
                                         centered>
-                                        <Modal.Header closeButton></Modal.Header>
+                                        <Modal.Header></Modal.Header>
                                         
                                         <div className="container">
                                         
@@ -775,6 +881,7 @@ componentWillUnmount(){
                                           )}
                                            
             <Button className="agreeBtn" onClick={()=>this.startCase()} variant="primary">Starta nytt ärende</Button>
+             <Button className="agreeBtn" onClick={()=>this.closeCase()} variant="primary">Avsluta</Button>
 </div>
                                     </Modal>
                                 
@@ -790,7 +897,7 @@ componentWillUnmount(){
                              </div>
                        </React.Fragment>
 
-                       { ((!this.props.msg.custom) && (!this.props.msg.buttons)) &&
+                       { ((!this.props.msg.custom)) &&
                        <React.Fragment>
                         <div className="flexible-space"></div>
                         <div className="inputContainer">
