@@ -1,0 +1,42 @@
+
+
+.inputSearchContainer .react-autosuggest__suggestions-container--open {
+  width: 100%;
+  background-color: transparent;
+  font-weight: 400;
+  padding:5px 0px;
+  border-radius: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 2;
+  text-align:left;
+  cursor: pointer;
+}
+
+.inputSearchContainer .react-autosuggest__suggestions-list{
+  padding-top:10px;
+}
+.inputSearchContainer .react-autosuggest__suggestions-list li{
+  padding:10px 5px;
+  display: flex;
+  font-size: 17px;
+  border-bottom: 1px solid #ccc;
+
+}
+
+.inputSearchContainer  .react-autosuggest__container{
+  left: 0;
+  position: absolute;
+}
+.inputSearchContainer .react-autosuggest__suggestions-container{
+  position: absolute;
+  top: 15px;
+  left:0;
+  width: 100%;
+  box-shadow: none;
+  background:transparent;
+}
+
+.inputSearchContainer .react-autosuggest__container {
+  width:100%;
+}

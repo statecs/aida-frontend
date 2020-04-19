@@ -15,19 +15,25 @@ import Feedback from './Feedback';
 import Modal from 'react-bootstrap/Modal';
 import Media from 'react-media';
 
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+function escapeRegexCharacters(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function shouldRenderSuggestions() {
+  return true;
+}
+
 function supportsMediaDevices() {
   return navigator.mediaDevices;
 }
 
-// Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
+  const escapedValue = escapeRegexCharacters(value.trim());
+  const regex = new RegExp('^' + escapedValue, 'i');
 
-  return inputLength === 0 ? [] : searchTerms.filter(lang =>
-    lang.name.toLowerCase().slice(0, inputLength) === inputValue
-  );
-};
+  return searchTerms.filter(language => regex.test(language.name));
+}
 
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
@@ -266,7 +272,7 @@ renderInputMobileComponent = inputProps => (
                     renderInputComponent={this.renderInputMobileComponent}
                     ref={this.storeInputReference}
                     ariaLabel="Hej! Vad har du för symtom?"
-                    alwaysRenderSuggestions={true}
+                    shouldRenderSuggestions={shouldRenderSuggestions}
                   />
                   <button onClick={() => this.sendSearchValues()}className="searchModalIcon" tabIndex="0" aria-label="Sök"><IoIosSearch className="searchIcon"/></button> 
 

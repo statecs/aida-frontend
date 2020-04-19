@@ -14,6 +14,7 @@ import { getSmiley } from './smileys/Smileys';
 import { Range, getTrackBackground } from 'react-range';
 import { FaRegFrown, FaRegAngry, FaRegMeh, FaRegSmile, FaRegLaughBeam, FaRegFrownOpen, FaRegGrinAlt, FaPause, FaVolumeUp  } from "react-icons/fa";
 import { AiOutlineMinusCircle, AiOutlinePlusCircle  } from "react-icons/ai";
+import SearchSelect from './customTypes/SearchSelect';
 
 
 
@@ -28,6 +29,7 @@ class ChatStep extends Component {
             message: this.props.msg.message,
             rating: "",
             option: "",
+            selectedOption: '',
             freeText: "",
             values: [50],
             valuesRange: [3],
@@ -40,7 +42,6 @@ class ChatStep extends Component {
         
         this.handleChange = this.handleChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-       // this.handleSubmit = this.handleSubmit.bind(this);
 
         if (this.props.msg.custom ){
             if (this.props.msg.custom.type === "numberInput" ){
@@ -1033,13 +1034,22 @@ if (this.state.playing){
                                 }
 
 
-
-
-                               
+  
                             </React.Fragment>
                             }
 
                              </div>
+
+              {this.props.msg.custom && this.props.msg.custom.type === "searchSelect" && 
+
+                        <React.Fragment>
+                        <div className="flexible-space"></div>
+                            <div className="inputContainer">
+                            <SearchSelect msg={this.props.msg} />
+
+                        </div>
+                        </React.Fragment>
+}
                        </React.Fragment>
 
                        { ((!this.props.msg.custom)) &&

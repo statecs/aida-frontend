@@ -124,6 +124,7 @@
     overflow: hidden;
     margin-top: 10px;
     padding-top: 20px;
+    cursor: pointer;
 }
 
 .alertText{
