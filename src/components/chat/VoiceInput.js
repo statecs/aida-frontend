@@ -44,6 +44,9 @@ class VoiceInput extends Component {
                 this.props.sendMessage(rasaMsg);
                 this.setState({ message: '' });
 
+            } else if ((this.state.message === ("Avsluta")) || (this.state.message === ("Avbryt")) || (this.state.message === ("Stäng av"))  || (this.state.message === ("Paus"))) {
+                return
+
             } else {
                 const { receiver, message } = this.state;
                 let sender = this.props.user;

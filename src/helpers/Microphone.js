@@ -63,6 +63,8 @@ class Microphone {
           case 'clear':
             clear();
             break;
+          default:
+
         }
       };
 

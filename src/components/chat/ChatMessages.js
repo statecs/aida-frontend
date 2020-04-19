@@ -27,7 +27,7 @@ class ChatMessages extends Component {
     }
         let spinner;
     if (this.props.loading) {
-      spinner = <PulseLoader css={spinnerCss} color={"#2177D2"} />;
+      spinner = <PulseLoader css={spinnerCss} color={"#3875A8"} />;
     } else {
       spinner = null;
     }
@@ -46,7 +46,7 @@ class ChatMessages extends Component {
             <StepWizard className="msg-display" isHashEnabled={true} nav={<Nav />} isLazyMount={true} transitions={animations} instance={this.setInstance}>
                                     {this.props.messages
                                         .filter(msg => msg.sender === "bot" )
-                                        .map((msg, idx) => <div key={idx} className="msgContainer" role="region" aria-live="assertive" aria-atomic="true"><ChatStep msg={msg}></ChatStep></div> )}
+                                        .map((msg, idx) => <div key={idx} className="msgContainer" role="region"><ChatStep msg={msg}></ChatStep></div> )}
 
                                     </StepWizard> 
       </React.Fragment>

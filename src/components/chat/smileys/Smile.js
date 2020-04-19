@@ -14,6 +14,7 @@ export const Smile: FunctionComponent<Props> = ({ animationProps }) => (
     data-name="Layer 1"
     viewBox="0 0 50 50"
     x="0px"
+    fill="#7CC710"
     y="0px"
   >
     <title>Emotions_tnp</title>

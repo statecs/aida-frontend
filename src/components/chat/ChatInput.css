@@ -26,13 +26,16 @@
     border-radius: 0 40px 40px 0;
     padding: 15px;
     height: 55px;
-    background-color: #3c7aae;
+    background-color: #3875A8;
     margin-top: -5px;
 }
 .inputContainer .searchIcon svg{
     color:white;
     font-size: 25px;
     margin-left:-5px;
+}
+.inputContainer .searchIcon.disabled{
+    background-color: #b3b3b3;
 }
 
 .textArea {

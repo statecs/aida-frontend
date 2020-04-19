@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { sendMessage } from '../../actions/messageActions';
 import './ChatInput.css';
 import {Link} from "@reach/router"
-import SpeechInput from "./SpeechInput";
 import { MdKeyboardVoice } from "react-icons/md";
-import { IoIosSearch } from "react-icons/io";
+import { AiOutlineEnter } from "react-icons/ai";
 
 class ChatInput extends Component {
     constructor(props) {
@@ -47,12 +46,11 @@ class ChatInput extends Component {
     render() {
         return (
             <React.Fragment>
-               <div class="inputSearchContainer">
+               <div className="inputSearchContainer">
                     
                     <input className="textArea search-input"
                         type="text"
                         name="message"
-                        label="Skriv ett svar"
                         placeholder="Skriv ett svar..."  
                         onChange={this.onChange}
                         value={this.state.message}
@@ -62,11 +60,17 @@ class ChatInput extends Component {
                                 this.sendMessage();
                             };
                         }}/>
-                        <div class="voiceIcon">
+                        <div className="voiceIcon">
                             {this.supportsMediaDevices() && 
                                 <Link aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
                                 }</div>
-                        <button onClick={() =>this.sendMessage()} className="searchIcon" aria-label="Skicka">  <IoIosSearch/></button>
+                                {this.state.message &&
+                                 <button onClick={() =>this.sendMessage()} className="searchIcon" aria-label="Nästa">  <AiOutlineEnter/></button>
+                                }
+                                {!this.state.message &&
+                                 <button className="searchIcon disabled" aria-label="Nästa" disabled>  <AiOutlineEnter/></button>
+                                }
+                       
             
             </div>
 

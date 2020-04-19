@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { FaMicrophone, FaCircle } from "react-icons/fa";
-import {Button} from 'cauldron-react'
+import { FaMicrophone } from "react-icons/fa";
 
 type SpeechInputProps = {
   onSpeechInput: (message: string) => Promise<void>,

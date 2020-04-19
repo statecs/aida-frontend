@@ -1,14 +1,13 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import './Voice.css';
-import PropTypes from 'prop-types';
-import {navigate, Location} from "@reach/router"
+import {navigate} from "@reach/router"
 import { sendMessage } from '../../actions/messageActions';
 import { connect } from 'react-redux';
 import VoiceInput from '../chat/VoiceInput';
 import Speech from 'speak-tts'
 import PulseLoader from 'react-spinners/PulseLoader';
 import Modal from 'react-bootstrap/Modal';
-import { FaMicrophone, FaMicrophoneSlash, FaPause  } from "react-icons/fa";
+import { FaMicrophone, FaMicrophoneSlash  } from "react-icons/fa";
 
 const spinnerCss = "display: table; margin: 20px auto;";
 
@@ -251,7 +250,7 @@ playSound(){
      
   let spinner;
     if (this.props.loading) {
-      spinner = <PulseLoader css={spinnerCss} color={"#2177D2"} />;
+      spinner = <PulseLoader css={spinnerCss} color={"#3875A8"} />;
     } else {
       spinner = null;
     }
@@ -339,7 +338,7 @@ playSound(){
       
        <div className="bot-msg" onClick={() => this.handlePlay()}>
                             <div className="bot-msg-text">
-                                <h3 aria-label={this.props.text}>{this.props.text}</h3>
+                                <h1 aria-label={this.props.text}>{this.props.text}</h1>
                                 
                             </div>
                         </div>
@@ -351,7 +350,7 @@ playSound(){
               {this.props.buttons.map((msg, i) =>  
 
               <React.Fragment key={i}>
-               <button className="btn" onClick={this.onToggle.bind(this, i, msg)} aria-checked={msg.checked === true} checked={msg.checked === true} name={msg.payload} value={msg.payload}>
+               <button role="radio" className="btn" onClick={this.onToggle.bind(this, i, msg)} aria-checked={msg.checked === true} checked={msg.checked === true} name={msg.payload} value={msg.payload}>
 
                  {msg.payload}
 
@@ -377,7 +376,7 @@ playSound(){
                                     </React.Fragment>
                                 
                                 )}
-                                 <button className="btn" aria-checked="true" onClick={() => {this.sendFormValues()}}>Skicka</button>
+                                 <button role="radio" className="btn" aria-checked="true" onClick={() => {this.sendFormValues()}}>Nästa</button>
                                 </React.Fragment>       
               }
 
@@ -398,7 +397,7 @@ playSound(){
             {this.state.playing && !this.state.showVoiceStart &&
              <button  aria-label="Avbryt" className="speech-control-container" onClick={() => this.handlePause()}>
               <div className="speech-control">
-              <FaPause className="microphone-icon" />
+              <FaMicrophone className="microphone-icon" />
           </div>
 
       </button>

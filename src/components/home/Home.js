@@ -59,12 +59,6 @@ return(
 }
 
 
-const renderInputComponent = inputProps => (
-  <div className="inputSearchContainer">
-    <IoIosSearch className="searchIcon" /><input {...inputProps} /> {supportsMediaDevices() && <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>}
-  </div>
-);
-
 class Home extends Component {
     
     constructor(props) {
@@ -125,17 +119,7 @@ class Home extends Component {
 
    onKeyDown(event) {
        //On Enter submit form
-    if (!event) {
-      if(this.state.value){
-            let sender = this.props.user;
-            let receiver = 'bot';
-            let message = this.state.value;
-            const rasaMsg = { sender, receiver, message};
-            this.props.sendStart(sender, receiver, rasaMsg);
-            navigate('/chat')
-      }
-      
-    } else if (event.key === 'Enter' && this.state.value){
+      if (event.key === 'Enter' && this.state.value){
       let sender = this.props.user;
         let receiver = 'bot';
         let message = this.state.value;
@@ -145,6 +129,13 @@ class Home extends Component {
     }
   }
   
+
+renderInputComponent = inputProps => (
+  <div className="inputSearchContainer">
+    <IoIosSearch onClick={() => this.sendSearchValues()}className="searchIcon" /><input {...inputProps} /> {supportsMediaDevices() && <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>}
+  </div>
+);
+
 
 renderInputMobileComponent = inputProps => (
   <React.Fragment>
@@ -169,12 +160,15 @@ renderInputMobileComponent = inputProps => (
   };
 
     onSuggestionSelected = (event, { suggestionValue }) => {
+      if (!event.key === 'Enter' || !event.key){
         let sender = this.props.user;
         let receiver = 'bot';
         let message = suggestionValue;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
         navigate('/chat')
+      }
+       
   };
 
    storeInputReference = autosuggest => {
@@ -182,6 +176,20 @@ renderInputMobileComponent = inputProps => (
       this.input = autosuggest.input;
     }
   };
+
+ sendSearchValues = () => {
+   if (this.state.value){
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = this.state.value;
+        const rasaMsg = { sender, receiver, message };
+        this.props.sendStart(sender, receiver, rasaMsg);
+        navigate('/chat')
+   }
+       
+        
+    };
+
     sendValues = (el) => {
         let sender = this.props.user;
         let receiver = 'bot';
@@ -220,8 +228,9 @@ renderInputMobileComponent = inputProps => (
          // Autosuggest will pass through all these props to the input.
     
         const inputProps = {
-            placeholder: 'Hej! Vad söker du?',
+            placeholder: 'Hej! Vad har du för symtom?',
             value,
+            'aria-label': 'Hej! Vad har du för symtom?',
             onChange: this.onChange,
             onKeyDown: this.onKeyDown,
             autoFocus: true
@@ -256,9 +265,10 @@ renderInputMobileComponent = inputProps => (
                     onSuggestionSelected={this.onSuggestionSelected}
                     renderInputComponent={this.renderInputMobileComponent}
                     ref={this.storeInputReference}
+                    ariaLabel="Hej! Vad har du för symtom?"
                     alwaysRenderSuggestions={true}
                   />
-                  <button className="searchModalIcon" tabIndex="0" aria-label="Sök" onClick={() => this.onKeyDown()}><IoIosSearch className="searchIcon"/></button> 
+                  <button onClick={() => this.sendSearchValues()}className="searchModalIcon" tabIndex="0" aria-label="Sök"><IoIosSearch className="searchIcon"/></button> 
 
 </Modal.Body>
       </Modal>
@@ -272,23 +282,26 @@ renderInputMobileComponent = inputProps => (
                 <div className="container-home">
                  <h1 className="site-logo"> 
                     <Link to="/" itemProp="url"> 
-                        <span itemProp="logo" itemType="http://schema.org/ImageObject" aria-label="Symptomkollen"> 
+                        <span itemProp="logo" itemType="http://schema.org/ImageObject"> 
                     <svg width="120px" height="120px" viewBox="0 0 129 129" version="1.1">
                         <g id="Prototype" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                             <g id="Second-screen" transform="translate(-224.000000, -184.000000)">
                                 <g id="Group-5" transform="translate(226.000000, 186.000000)">
-                                    <circle id="Oval" stroke="#979797" strokeWidth="4" cx="62.5" cy="62.5" r="62.5"></circle>
-                                    <circle id="Oval" fill="#979797" cx="47.5" cy="67.5" r="5.5"></circle>
-                                    <circle id="Oval" fill="#979797" cx="61.5" cy="67.5" r="5.5"></circle>
-                                    <circle id="Oval" fill="#979797" cx="75.5" cy="67.5" r="5.5"></circle>
+                                    <circle  stroke="#979797" strokeWidth="4" cx="62.5" cy="62.5" r="62.5"></circle>
+                                    <circle  fill="#979797" cx="47.5" cy="67.5" r="5.5"></circle>
+                                    <circle  fill="#979797" cx="61.5" cy="67.5" r="5.5"></circle>
+                                    <circle  fill="#979797" cx="75.5" cy="67.5" r="5.5"></circle>
                                     <path d="M25,96.0416306 L25,47.0416306 C25.24856,33.722196 36.1221285,23 49.5,23 C62.8778715,23 73.75144,33.722196 73.995799,47.0416817 L74,47.0416306 C87.3199008,47.2906634 98.0416306,58.1640499 98.0416306,71.5416306 C98.0416306,84.9192112 87.3199008,95.7925977 74.0008177,96.0374136 L74,96.0416306 L25,96.0416306 Z" id="Combined-Shape" stroke="#979797" strokeWidth="4" transform="translate(61.520815, 59.520815) rotate(315.000000) translate(-61.520815, -59.520815) "></path>
                                 </g>
                             </g>
                         </g>
                     </svg>
+                    
                                             
                     </span> 
+                    <p className="logoText">Symtomguiden</p>
                     </Link>
+                    
                 </h1> 
 
 
@@ -296,9 +309,9 @@ renderInputMobileComponent = inputProps => (
           {matches =>
             matches ? (
 
-          <div class="inputSearchContainer">
+          <div className="inputSearchContainer">
            <IoIosSearch className="searchIcon" />
-            <input onChange={() => this.togglePopup()} onClick={() => this.togglePopup()}  type="text" class="react-autosuggest__input" placeholder="Hej! Vad söker du?" value={this.state.value} />
+            <input onChange={() => this.togglePopup()} onClick={() => this.togglePopup()} type="text" className="react-autosuggest__input" placeholder="Hej! Vad har du för symtom?" value={this.state.value} />
               
               {supportsMediaDevices() &&
               <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/">
@@ -317,7 +330,7 @@ renderInputMobileComponent = inputProps => (
                     renderSuggestion={renderSuggestion}
                     inputProps={inputProps}
                     onSuggestionSelected={this.onSuggestionSelected}
-                    renderInputComponent={renderInputComponent}
+                    renderInputComponent={this.renderInputComponent}
                   />
             )
           }

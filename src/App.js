@@ -78,14 +78,14 @@ const App = () => {
       <Provider store={store}>
       <PopupForm show={show} handleClose={closePopupForm}/>
 
-        <nav className="skip-nav-container">
+        <div className="skip-nav-container">
           <SkipNavLink>Hoppa till sidans innehåll</SkipNavLink>
-      </nav>
+        </div>
       
       
-         <div className="navContainer">
-            <Link to="/" className="icons"  aria-label="Start">
-              <IoIosHome /><span className="chatText home">Hem</span>
+         <nav className="navContainer">
+            <Link to="/" className="icons" aria-label="Start">
+              <IoIosHome /><span className="chatText home">Start</span>
 
             </Link>
 
@@ -96,10 +96,9 @@ const App = () => {
               <IoIosChatbubbles/> <span className="chatText">Mina ärenden</span>
             </Link>
       
-      </div>
+      </nav>
         <Layout>
           <Main
-            aria-labelledby="main-heading"
             id="content"
           >
                
