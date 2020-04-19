@@ -34,24 +34,40 @@
   justify-content: center;
 }
 .item p {
-  font-weight: 500;
-  padding-top:10px;
+  font-weight: 600;
+  padding-top:5px;
   font-size:15px;
+}
+#feedback-form  .item p {
+  font-size:9px;
+  text-align: center;
+}
+button.item{
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  opacity: 0.6;
+  background-color:transparent;
+}
+.container-feedback button[aria-checked=true] span{
+  font-size:4rem;
 }
 .msgCustom svg.neutral{
   fill: #FFCB03 !important;
 }
 .bot-messages{
   width: 90% !important;
+  max-width:600px;
 }
 
 .bot-msg {
   display: inline-block;
   vertical-align: middle;
   width: 90%;
+  padding-bottom:5px;
 }
 
-.bot-msg-text h3 {
+.bot-msg-text h1 {
     background-color: #ffffff;
     color: black;
     border-color: #EDEDED;
@@ -65,7 +81,6 @@
 .user-messages {
     margin-top: -30px;
     margin-bottom: 5px;
-    opacity:0.6;
     overflow: hidden;
 }
 
@@ -80,6 +95,7 @@
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
+    color:#707070;
 }
 
 .user-msg-text {
@@ -95,13 +111,13 @@
     float:left;
     font-size:12px;
     cursor: pointer;
-    color:#3c7aae !important;
+    color:#3875A8 !important;
   
 }
 .voiceOver{
     float:left;
     font-size:11px;
-    color:#3c7aae;
+    color:#3875A8;
     background-color:transparent;
 }
 
@@ -109,11 +125,26 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    padding: 10px 0px 40px;
+    width:100%;
+}
+.msgCustom .container-feedback {
+  padding: 10px 0px 10px;
 }
 
-#feedback-form  h4 {
-    text-align:center;
+.container-feedback-number {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width:100%;
+}
+.container-feedback-number p {
+  height:0;
+  font-weight: 600;
+}
+#feedback-form  h1 {
+    text-align:left;
+    font-size:25px;
 }
 
 #feedback-form .agreeBtn {
@@ -137,7 +168,8 @@
     cursor: pointer;
     transition: 0.3s;
   }
-  
+
+
   .radio:checked ~ span {
     filter: grayscale(0);
     font-size: 4rem;
@@ -206,10 +238,10 @@
   }
 
 .choice[aria-checked=true] svg {
-    fill: #3c7aae;
+    fill: #3875A8;
 }
 .choice[aria-checked=true] {
-  border: 3px solid #3c7aae;
+  border: 3px solid #3875A8;
 }
 
 .detailed-label{

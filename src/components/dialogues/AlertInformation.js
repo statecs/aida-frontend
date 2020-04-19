@@ -13,7 +13,7 @@ function AlertInformation() {
     <Alert variant="light">
   <Alert.Heading>Välkommen till Symtomguiden!</Alert.Heading>
   <p>
-  Detta är en prototyp och kan inte ses som någon medicinteknisk produkt.</p>
+  Detta är en prototyp och är under utveckling. Den ska inte ses som någon medicintekniskt produkt.</p>
 </Alert>
     );
   }

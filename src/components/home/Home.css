@@ -28,7 +28,7 @@
 }
 
 .inputSearchContainer svg{
-    color:#3c7aae;
+    color:#3875A8;
 }
 
 .searchIcon{
@@ -125,6 +125,10 @@
     margin-top: 10px;
     padding-top: 20px;
 }
+
+.alertText{
+    color:#666;
+}
 @media only screen and (max-width: 600px) {
 
     .searchModal .react-autosuggest__input{
@@ -156,7 +160,7 @@
 
 
     .inputSearchContainer svg {
-        color: #3c7aae;
+        color: #3875A8;
     }
 
     .backIcon{
@@ -171,7 +175,7 @@
     .backIcon svg{
         margin-left: -40px;
         width: 25px;
-        color: #3c7aae;
+        color: #3875A8;
 
     }
 

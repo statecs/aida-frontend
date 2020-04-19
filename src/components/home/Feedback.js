@@ -1,8 +1,7 @@
 
 
-import React, {useState} from 'react';
+import React from 'react';
 import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
 
 function Feedback() {
 
@@ -28,11 +27,11 @@ function Feedback() {
     return (
    <Alert className="msg" variant="light" onClose={() => closePopupForm()} dismissible>
   <Alert.Heading>Välkommen till Symtomguiden!</Alert.Heading>
-  <p>
-  Detta är en prototyp och kan inte ses som någon medicinteknisk produkt.</p>
+  <p className="alertText">
+   Detta är en prototyp och är under utveckling. Den ska inte ses som någon medicintekniskt produkt. </p>
   <hr />
   <p className="mb-0">
-   <a target="_blank" href="https://forms.gle/zePVFDn9ZWH8cq7S9">Vill du lämna synpunkter?</a>
+   <a target="_blank" rel="noopener noreferrer" href="https://forms.gle/zePVFDn9ZWH8cq7S9">Vill du lämna synpunkter?</a>
   </p>
 </Alert>
     );

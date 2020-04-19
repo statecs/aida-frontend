@@ -25,7 +25,7 @@ class Examples extends Component {
             <React.Fragment>
                 <div className="container top-margin">
                     <h3 className='intro'>Vanliga ärenden</h3>
-                     <Link to="/kategorier">Visa kategorier  <MdKeyboardArrowRight/></Link>
+                     <Link className="introHeading" to="/kategorier">Visa kategorier  <MdKeyboardArrowRight/></Link>
                
                         <div className='exampleDisplay'>
                             {searchTerms.map((value) => (

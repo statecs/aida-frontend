@@ -1,9 +1,6 @@
-import React, { Component, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FaMicrophone, FaCircle } from "react-icons/fa";
+import React, { Component } from 'react';
+import { FaMicrophone } from "react-icons/fa";
 import CloudSpeechAPI from '../../helpers/SpeechApi';
-import Speech from 'speak-tts'
 
 import Recorder from '../../helpers/Recorder';
 

@@ -36,7 +36,7 @@ class Categories extends Component {
                 <div className="container top-margin">
                     <h3 className='intro'>Kategorier</h3>
                    
-                     <Link to="/exempel" >Visa vanliga ärenden  <MdKeyboardArrowRight/></Link>
+                     <Link className="introHeading" to="/exempel" >Visa vanliga ärenden  <MdKeyboardArrowRight/></Link>
                    
                    <div className='catDisplay'>
                             {values.map((value) => (
