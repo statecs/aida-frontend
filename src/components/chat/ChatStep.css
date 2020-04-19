@@ -78,6 +78,10 @@ button.item{
     float:left;
 }
 
+.bot-msg-text h1:focus {
+  outline:none;
+}
+
 .user-messages {
     margin-top: -30px;
     margin-bottom: 5px;
@@ -267,7 +271,7 @@ button.item{
 
   .rangeTopContainer{
     padding-top:1em;
-    padding-bottom:1.3em;
+    padding-bottom:1em;
   }
   .rangeDecrement{
     padding:0;
