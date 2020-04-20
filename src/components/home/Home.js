@@ -131,7 +131,7 @@ class Home extends Component {
         let message = this.state.value;
         const rasaMsg = { sender, receiver, message};
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/chat')
+        navigate('/chat#1')
     }
   }
   
@@ -172,7 +172,7 @@ renderInputMobileComponent = inputProps => (
         let message = suggestionValue;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/chat')
+        navigate('/chat#step1')
       }
        
   };
@@ -190,7 +190,7 @@ renderInputMobileComponent = inputProps => (
         let message = this.state.value;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/chat')
+        navigate('/chat#step1')
    }
        
         
@@ -202,7 +202,7 @@ renderInputMobileComponent = inputProps => (
         let message = el.target.value;
         const rasaMsg = { sender, receiver, message };
         this.props.sendStart(sender, receiver, rasaMsg);
-        navigate('/chat')
+        navigate('/chat#step1')
         
     };
 
