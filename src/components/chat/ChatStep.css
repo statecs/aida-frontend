@@ -298,3 +298,20 @@ button.item{
     font-size:3em;
     color: rgb(60, 122, 174);
   }
+
+  .scroll{
+    overflow:scroll;
+  }
+  .titleModal {
+    font-size:30px;
+  }
+
+  .btnContainer {
+    display:grid;
+    margin-bottom: 20%;
+    padding-top:10px;
+  }
+  
+  .modal-open .modal {
+    overflow-y: hidden; 
+  }

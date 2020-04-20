@@ -907,11 +907,11 @@ if (this.state.playing){
                                         
                                         <div className="container">
                                         
-                                        
+                                         <div class="scroll">
 
                                         {this.props.msg.custom.text.map((title, id) =>
                                         <React.Fragment key={id}>
-                                                <h1>{title.title}</h1>
+                                                <h1 class="titleModal">{title.title}</h1>
                                                    <p>{title.content}</p>
                                                    <a rel="noopener noreferrer" target="_blank" href={title.link}>{title.linkText}</a>
 
@@ -919,22 +919,24 @@ if (this.state.playing){
 
                                         )}
                                
-                                             <br/><h3>Dina svar</h3>
+                                             <br/><br /><h4>Se dina svar nedan</h4>
+                                            
                                           {this.props.msg.custom.data.map((custom, id) =>
 
                                     <React.Fragment key={id}>
 
-                                            <span>{custom.title}</span>
-                                            <span><strong>{custom.answer}</strong></span>
+                                            <p>{custom.title}</p>
+                                            <p><strong>{custom.answer}</strong></p>
 
 
 
                                     </React.Fragment>
                                           
-                                          )}
-                                           
-            <Button className="agreeBtn" onClick={()=>this.startCase()} variant="primary">Starta nytt ärende</Button>
-             <Button className="agreeBtn" onClick={()=>this.closeCase()} variant="primary">Avsluta</Button>
+                                          )}</div>
+<div className="btnContainer">
+            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
+             <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
+    </div>
 </div>
                                     </Modal>
                                 
@@ -955,31 +957,36 @@ if (this.state.playing){
                                         
                                         <div className="container">
                                         
-                                       
+                                         <div class="scroll">
+
                                         {this.props.msg.custom.text.map((title, id) =>
                                         <React.Fragment key={id}>
-                                                <h1>{title.title}</h1>
+                                                <h1 class="titleModal">{title.title}</h1>
                                                    <p>{title.content}</p>
                                                    <a rel="noopener noreferrer" target="_blank" href={title.link}>{title.linkText}</a>
 
                                           </React.Fragment>
 
                                         )}
-                                              <br/><h3>Dina svar</h3>
+                               
+                                             <br/><br /><h4>Se dina svar nedan</h4>
+                                            
                                           {this.props.msg.custom.data.map((custom, id) =>
 
                                     <React.Fragment key={id}>
-                                            <span>{custom.title}</span>
-                                            <span><strong>{custom.answer}</strong></span>
+
+                                            <p>{custom.title}</p>
+                                            <p><strong>{custom.answer}</strong></p>
 
 
 
                                     </React.Fragment>
                                           
-                                          )}
-                                           
-            <Button className="agreeBtn" onClick={()=>this.startCase()} variant="primary">Starta nytt ärende</Button>
-             <Button className="agreeBtn" onClick={()=>this.closeCase()} variant="primary">Avsluta</Button>
+                                          )}</div>
+<div className="btnContainer">
+            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
+             <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
+             </div>
 </div>
                                     </Modal>
                                 
@@ -998,34 +1005,40 @@ if (this.state.playing){
                                         centered>
                                         <Modal.Header></Modal.Header>
                                         
-                                        <div className="container">
+                                  <div className="container">
                                         
-                                         {this.props.msg.custom.text.map((title, id) =>
+                                         <div class="scroll">
+
+                                        {this.props.msg.custom.text.map((title, id) =>
                                         <React.Fragment key={id}>
-                                                <h1>{title.title}</h1>
+                                                <h1 class="titleModal">{title.title}</h1>
                                                    <p>{title.content}</p>
                                                    <a rel="noopener noreferrer" target="_blank" href={title.link}>{title.linkText}</a>
 
                                           </React.Fragment>
 
                                         )}
-
-                                        <br/> <h3>Dina svar</h3>
+                               
+                                             <br/><br /><h4>Se dina svar nedan</h4>
+                                            
                                           {this.props.msg.custom.data.map((custom, id) =>
 
                                     <React.Fragment key={id}>
-                                            <span>{custom.title}</span>
-                                            <span><strong>{custom.answer}</strong></span>
+
+                                            <p>{custom.title}</p>
+                                            <p><strong>{custom.answer}</strong></p>
 
 
 
                                     </React.Fragment>
                                           
-                                          )}
-                                           
-            <Button className="agreeBtn" onClick={()=>this.startCase()} variant="primary">Starta nytt ärende</Button>
-             <Button className="agreeBtn" onClick={()=>this.closeCase()} variant="primary">Avsluta</Button>
+                                          )}</div>
+<div className="btnContainer">
+            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
+             <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
+             </div>
 </div>
+
                                     </Modal>
                                 
                                 
