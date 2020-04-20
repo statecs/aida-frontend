@@ -26,6 +26,22 @@ class Nav extends Component {
         
     };
 
+componentDidUpdate(prevProps, prevState) {
+
+const oldHash = window.location.hash;
+const numberHash = oldHash.replace( /^\D+/g, '');
+
+if ((numberHash > 1) && (numberHash < prevProps.currentStep)){
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = "/back";
+        const rasaMsg = { sender, receiver, message };
+        //Send message to rasa and get chatbot response
+        this.props.sendBack(rasaMsg);
+}
+
+}
+
       render() {
         return (
 

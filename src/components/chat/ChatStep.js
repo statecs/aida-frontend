@@ -14,6 +14,7 @@ import { getSmiley } from './smileys/Smileys';
 import { Range, getTrackBackground } from 'react-range';
 import { FaRegFrown, FaRegAngry, FaRegMeh, FaRegSmile, FaRegLaughBeam, FaRegFrownOpen, FaRegGrinAlt, FaPause, FaVolumeUp  } from "react-icons/fa";
 import { AiOutlineMinusCircle, AiOutlinePlusCircle  } from "react-icons/ai";
+import SearchSelect from './customTypes/SearchSelect';
 
 
 
@@ -28,6 +29,7 @@ class ChatStep extends Component {
             message: this.props.msg.message,
             rating: "",
             option: "",
+            selectedOption: '',
             freeText: "",
             values: [50],
             valuesRange: [3],
@@ -40,7 +42,6 @@ class ChatStep extends Component {
         
         this.handleChange = this.handleChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-       // this.handleSubmit = this.handleSubmit.bind(this);
 
         if (this.props.msg.custom ){
             if (this.props.msg.custom.type === "numberInput" ){
@@ -217,6 +218,11 @@ if (this.state.playing){
 
     }
 
+    handleRangeInput100Change(e, index){
+         const value = e.target.value;
+        this.setState({values: [value]});
+    }
+
     handleRangeChange(values, index, e, state) {
         const name = e.unit;
         this.setState({[name]: values});
@@ -230,6 +236,15 @@ if (this.state.playing){
     decrementInput(id, unit) {
         this.setState({[unit.unit]: [+this.state[unit.unit] - 1 ]});
     }
+
+    decrement100Input () {
+         this.setState({values: [+this.state.values - 1 ]});
+    }
+
+    increment100Input () {
+         this.setState({values: [+this.state.values + 1 ]});
+    }
+
 
     sendRangeChange(e){
         let sender = this.props.user;
@@ -689,7 +704,17 @@ if (this.state.playing){
 
                                     {getSmiley(this.state.values)}
 
- <Range
+                        <div style={{ marginTop: '20px'}}className="rangeTopContainer">
+                            <button aria-label={"Minska värdet med 1. Aktuellt värde är:" + this.state.values} className="rangeDecrement" onClick={() => {this.decrement100Input(this.state.values)}}> <AiOutlineMinusCircle/> </button>
+                         
+                            <input size="3" aria-label="Ändra värde" style={{
+                                        color: '#3875A8', backgroundColor: "transparent", border: "0", borderBottom: "1px solid #ccc", height: "30px", width:"55px",
+                                        fontWeight: 'bold', fontSize: "20px", textAlign: "center"}} value={this.state.values} onChange={e => this.handleRangeInput100Change(e, this.state.values)}/>
+                                        
+                            <button aria-label={"Öka värdet med 1. Aktuellt värde är:" + this.state.values} className="rangeIncrement" onClick={() => {this.increment100Input(this.state.values)}} > <AiOutlinePlusCircle/></button>
+                      </div>
+
+                             <Range
                                 values={this.state.values}
                                 step="1"
                                 min="0"
@@ -711,7 +736,7 @@ if (this.state.playing){
                                         style={{
                                         height: '5px',
                                         width: '100%',
-                                        marginTop: '100px',
+                                        marginTop: '-10px',
                                         borderRadius: '4px',
                                         background: getTrackBackground({
                                             values: this.state.values,
@@ -741,24 +766,6 @@ if (this.state.playing){
                                         boxShadow: '0px 2px 6px #AAA',
                                     }}
                                     >
-                                     <div
-                                        style={{
-                                        position: 'absolute',
-                                        top: '-40px',
-                                        color: '#fff',
-                                        fontWeight: 'bold',
-                                        fontSize: '12px',
-                                        fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',
-                                        padding: '3px',
-                                        borderRadius: '4px',
-                                        backgroundColor: 'white',
-                                        boxShadow: "rgb(170, 170, 170) 0px 2px 6px"
-                                        }}
-                                    >
-                                        <input size="3" aria-label="Ändra värde" style={{  backgroundColor: 'transparent',  border: '0',
-                                        color: '#3875A8',
-                                        fontWeight: 'bold', textAlign: "center"}} value={this.state.values} onChange={this.handleChange}/>
-                                    </div>
                                     <div
                                         style={{
                                         height: '16px',
@@ -770,7 +777,7 @@ if (this.state.playing){
                                    
                                 )}
                                 />
-                                <output style={{ margin: '60px 0 30px 0 ', width: '100%' }}>
+                                <output style={{ margin: '10px 0 50px 0 ', width: '100%' }}>
                                 <div style={{ float: 'left' }}>{this.props.msg.custom.alt.firstItem}</div><div style={{ float: 'right' }}>{this.props.msg.custom.alt.lastItem}</div>
                                 </output>    
                                
@@ -819,20 +826,20 @@ if (this.state.playing){
                             {children}
                             
                                 <div
-                ref={props.ref}
-                style={{
-                  height: '6px',
-                  width: '100%',
-                  borderRadius: '4px',
-                  background: getTrackBackground({
-                    values: this.state[unit.unit],
-                    colors: ['#3875A8', '#ccc'],
-                    min: parseInt(unit.range.firstItem),
-                    max: parseInt(unit.range.lastItem)
-                  }),
-                  alignSelf: 'center'
-                }}
-              >
+                                    ref={props.ref}
+                                    style={{
+                                    height: '6px',
+                                    width: '100%',
+                                    borderRadius: '4px',
+                                    background: getTrackBackground({
+                                        values: this.state[unit.unit],
+                                        colors: ['#3875A8', '#ccc'],
+                                        min: parseInt(unit.range.firstItem),
+                                        max: parseInt(unit.range.lastItem)
+                                    }),
+                                    alignSelf: 'center'
+                                    }}
+                                    >
                                     
                                    </div>
                                 </div>
@@ -883,6 +890,11 @@ if (this.state.playing){
 
                                 {this.props.msg.custom.type === "finalPage" && 
 
+
+                                <React.Fragment>
+
+                                {this.props.msg.custom.severity === "low" && 
+
                                    <Modal show={this.state.showFinalForm}
                                         size="lg"
                                         backdrop='static'
@@ -895,34 +907,162 @@ if (this.state.playing){
                                         
                                         <div className="container">
                                         
-                                        <h1>Tack för dina svar!</h1>
+                                         <div class="scroll">
+
+                                        {this.props.msg.custom.text.map((title, id) =>
+                                        <React.Fragment key={id}>
+                                                <h1 class="titleModal">{title.title}</h1>
+                                                   <p>{title.content}</p>
+                                                   <a rel="noopener noreferrer" target="_blank" href={title.link}>{title.linkText}</a>
+
+                                          </React.Fragment>
+
+                                        )}
+                               
+                                             <br/><br /><h4>Se dina svar nedan</h4>
+                                            
                                           {this.props.msg.custom.data.map((custom, id) =>
 
                                     <React.Fragment key={id}>
-                                            <span>{custom.title}</span>
-                                            <span><strong>{custom.answer}</strong></span>
+
+                                            <p>{custom.title}</p>
+                                            <p><strong>{custom.answer}</strong></p>
 
 
 
                                     </React.Fragment>
                                           
-                                          )}
-                                           
-            <Button className="agreeBtn" onClick={()=>this.startCase()} variant="primary">Starta nytt ärende</Button>
-             <Button className="agreeBtn" onClick={()=>this.closeCase()} variant="primary">Avsluta</Button>
+                                          )}</div>
+<div className="btnContainer">
+            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
+             <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
+    </div>
 </div>
                                     </Modal>
                                 
+                                
+                                }
+
+                                {this.props.msg.custom.severity === "medium" && 
+
+                                   <Modal show={this.state.showFinalForm}
+                                        size="lg"
+                                        backdrop='static'
+                                        onHide={this.closeFinalForm}
+                                        enforceFocus={true}
+                                        dialogClassName="feedback-modal"
+                                        role="main"
+                                        centered>
+                                        <Modal.Header></Modal.Header>
+                                        
+                                        <div className="container">
+                                        
+                                         <div class="scroll">
+
+                                        {this.props.msg.custom.text.map((title, id) =>
+                                        <React.Fragment key={id}>
+                                                <h1 class="titleModal">{title.title}</h1>
+                                                   <p>{title.content}</p>
+                                                   <a rel="noopener noreferrer" target="_blank" href={title.link}>{title.linkText}</a>
+
+                                          </React.Fragment>
+
+                                        )}
+                               
+                                             <br/><br /><h4>Se dina svar nedan</h4>
+                                            
+                                          {this.props.msg.custom.data.map((custom, id) =>
+
+                                    <React.Fragment key={id}>
+
+                                            <p>{custom.title}</p>
+                                            <p><strong>{custom.answer}</strong></p>
+
+
+
+                                    </React.Fragment>
+                                          
+                                          )}</div>
+<div className="btnContainer">
+            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
+             <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
+             </div>
+</div>
+                                    </Modal>
+                                
+                                
+                                }
+
+                                {this.props.msg.custom.severity === "high" && 
+
+                                   <Modal show={this.state.showFinalForm}
+                                        size="lg"
+                                        backdrop='static'
+                                        onHide={this.closeFinalForm}
+                                        enforceFocus={true}
+                                        dialogClassName="feedback-modal"
+                                        role="main"
+                                        centered>
+                                        <Modal.Header></Modal.Header>
+                                        
+                                  <div className="container">
+                                        
+                                         <div class="scroll">
+
+                                        {this.props.msg.custom.text.map((title, id) =>
+                                        <React.Fragment key={id}>
+                                                <h1 class="titleModal">{title.title}</h1>
+                                                   <p>{title.content}</p>
+                                                   <a rel="noopener noreferrer" target="_blank" href={title.link}>{title.linkText}</a>
+
+                                          </React.Fragment>
+
+                                        )}
+                               
+                                             <br/><br /><h4>Se dina svar nedan</h4>
+                                            
+                                          {this.props.msg.custom.data.map((custom, id) =>
+
+                                    <React.Fragment key={id}>
+
+                                            <p>{custom.title}</p>
+                                            <p><strong>{custom.answer}</strong></p>
+
+
+
+                                    </React.Fragment>
+                                          
+                                          )}</div>
+<div className="btnContainer">
+            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
+             <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
+             </div>
+</div>
+
+                                    </Modal>
+                                
+                                
+                                }
+                                    </React.Fragment>
                                 }
 
 
-
-
-                               
+  
                             </React.Fragment>
                             }
 
                              </div>
+
+              {this.props.msg.custom && this.props.msg.custom.type === "searchSelect" && 
+
+                        <React.Fragment>
+                        <div className="flexible-space"></div>
+                            <div className="inputContainer">
+                            <SearchSelect msg={this.props.msg} />
+
+                        </div>
+                        </React.Fragment>
+}
                        </React.Fragment>
 
                        { ((!this.props.msg.custom)) &&
