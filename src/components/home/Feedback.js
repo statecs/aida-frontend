@@ -28,7 +28,7 @@ function Feedback() {
    <Alert className="msg" variant="light" onClose={() => closePopupForm()} dismissible>
   <Alert.Heading>Välkommen till Symtomguiden!</Alert.Heading>
   <p className="alertText">
-   Detta är en prototyp och är under utveckling. Den ska inte ses som någon medicintekniskt produkt. </p>
+     Detta är en prototyp och kan idag svara på frågor kring huvudvärk, halsont och hosta och feber. Den ska inte ses som någon medicintekniskt produkt.</p>
   <hr />
   <p className="mb-0">
    <a target="_blank" rel="noopener noreferrer" href="https://forms.gle/zePVFDn9ZWH8cq7S9">Vill du lämna synpunkter?</a>
