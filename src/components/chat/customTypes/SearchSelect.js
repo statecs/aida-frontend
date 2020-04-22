@@ -84,7 +84,7 @@ renderInputComponent = inputProps => (
                                 <Link aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
                                 }</div> 
     {this.state.value &&
-                                 <button onClick={() =>this.sendMessage()} className="searchIcon" aria-label="Nästa">  <AiOutlineEnter/></button>
+                                 <button onClick={() => this.sendSearch()} className="searchIcon" aria-label="Nästa">  <AiOutlineEnter/></button>
                                 }
                                 {!this.state.value &&
                                  <button className="searchIcon disabled" aria-label="Nästa" disabled>  <AiOutlineEnter/></button>
@@ -133,6 +133,16 @@ renderInputComponent = inputProps => (
         this.props.sendMessage(rasaMsg);
    }
  }
+
+    sendSearch = () => {
+    if (this.state.value){
+            let sender = this.props.user;
+            let receiver = 'bot';
+            let message = this.state.value;
+            const rasaMsg = { sender, receiver, message };
+            this.props.sendMessage(rasaMsg);
+      }
+    }
 
      onChange = (event, { newValue }) => {
         this.setState({
