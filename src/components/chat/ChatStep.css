@@ -26,12 +26,20 @@
 }
 
 .msgCustom svg{
-  max-width:200px;
+  max-width:210px;
   width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media (max-width: 576px){
+  .msgCustom{
+    padding-top: 50px;
+  }
+  .msgCustom svg{
+    max-width:170px;
+  }
 }
 .item p {
   font-weight: 600;
@@ -77,6 +85,11 @@ button.item{
     font-size:18px;
     float:left;
 }
+@media (max-width: 600px) {
+  .bot-msg-text h1 {
+    font-size:16px;
+  }
+}
 
 .bot-msg-text h1:focus {
   outline:none;
@@ -93,7 +106,7 @@ button.item{
     padding: 5px 10px 5px 12px;
     width: 100%;
     border-radius: 49.5px;
-    border: 1px solid #EEEEEE;
+    border: 1px solid #ccc;
     display: inline-block;
     max-width: 200px;
     white-space: nowrap;

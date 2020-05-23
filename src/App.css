@@ -136,6 +136,20 @@ body a{
   -ms-flex: 1;
   flex: 1;
 }
+@media only screen and (min-width: 600px) {
+  .chatText{
+    display: flex;
+    color: #666;
+    font-size: 14px;
+    margin: -15px 15px 0px 3px;
+  }
+  .chatText.home{
+    margin: -15px 15px 0px 20px;
+  }
+  .chatText.arenden{
+    margin: -15px 15px 0px -10px;
+  }
+}
 
 
 @media only screen and (min-width: 600px) {

@@ -93,7 +93,7 @@ const App = () => {
     
         
             <Link to="/arenden" className="icons chatIcon" aria-label="Mina ärenden">
-              <IoIosChatbubbles/> <span className="chatText">Mina ärenden</span>
+              <IoIosChatbubbles/> <span className="chatText arenden">Mina ärenden</span>
             </Link>
       
       </nav>

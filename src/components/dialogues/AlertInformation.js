@@ -13,7 +13,7 @@ function AlertInformation() {
     <Alert variant="light">
   <Alert.Heading>Välkommen till Symtomguiden!</Alert.Heading>
   <p>
-  Detta är en prototyp och kan idag svara på frågor kring huvudvärk, halsont och hosta och feber. Den ska inte ses som någon medicintekniskt produkt.</p>
+  Detta är en prototyp och kan idag svara på frågor kring huvudvärk, halsont och hosta och feber. Det ska inte ses som någon färdig produkt.</p>
 </Alert>
     );
   }

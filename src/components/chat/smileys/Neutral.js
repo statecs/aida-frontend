@@ -14,7 +14,7 @@ export const Neutral: FunctionComponent<Props> = ({ animationProps }) => (
     data-name="Layer 1"
     viewBox="0 0 50 50"
     x="0px"
-    fill="#FFCB03"
+    fill="#3c7aae"
     y="0px"
   >
     <title>Emotions_tnp</title>
