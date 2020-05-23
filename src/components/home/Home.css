@@ -52,8 +52,10 @@
 }
 
 
+
+
 /* initially label is below input */
-label {
+.inputSearchContainer label {
     display: inline-block;
     position: absolute;
     margin-top: -6px;
@@ -63,6 +65,18 @@ label {
     display:none;
 
    }
+
+   .inputContainer label {
+        top:13px;
+        margin-top: 0;
+
+   }
+
+   .inputContainer .error label {
+    top:unset;
+    margin-top: 0;
+
+}
   /* when the label is activated, it jumps up (using translateY) */
           /* you could add animation here as well */
    label.field-active {

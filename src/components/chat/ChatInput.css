@@ -13,7 +13,22 @@
     position: absolute;
 }
 
+.error-msg{
+    border:solid 2px #B12F13;
+}
 
+.form__field--page-error{
+    background: #B12F13;
+    border-color: #B12F13;
+    color: #fff;
+    font-weight: bold;
+    font-style: italic;
+}
+.form__field--boxed{
+    padding: 1.6rem;
+    border-color: rgba(32,84,113,0.2);
+    border-radius: 8px;
+}
 .inputContainer .voiceIcon{
     margin-left: -90px;
 }
@@ -33,6 +48,7 @@
     color:white;
     font-size: 25px;
     margin-left:-5px;
+    margin-top: 5px;
 }
 .inputContainer .searchIcon.disabled{
     background-color: #b3b3b3;

@@ -83,12 +83,10 @@ renderInputComponent = inputProps => (
                             {this.supportsMediaDevices() && 
                                 <Link aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
                                 }</div> 
-    {this.state.value &&
-                                 <button onClick={() => this.sendSearch()} className="searchIcon" aria-label="Nästa fråga">  <AiOutlineEnter/></button>
-                                }
-                                {!this.state.value &&
-                                 <button className="searchIcon disabled" aria-label="Nästa fråga" disabled>  <AiOutlineEnter/></button>
-                                }
+   
+                                 <button onClick={() => this.sendSearch()} className="searchIcon" aria-label="Nästa fråga">  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+                                
+                               
   </div>
 );
 

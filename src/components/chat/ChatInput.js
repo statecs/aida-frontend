@@ -12,7 +12,8 @@ class ChatInput extends Component {
         super(props);
         this.state = {
             receiver: 'Bot',
-            message: ''
+            message: '',
+            error: false
         };
     }
 
@@ -41,14 +42,31 @@ class ChatInput extends Component {
             this.props.sendMessage(rasaMsg);
             this.setState({ message: '' });
         }
+        else{
+            this.setState({ error: true });
+        }
     };
 
     render() {
         return (
             <React.Fragment>
-               <div className="inputSearchContainer">
-                    
-                    <input className="textArea search-input"
+            {this.state.error &&
+
+            <div class="form__field form__field--page-error form__field--boxed" tabindex="-1" role="alert" id="page-error-message">
+            <p>Du har missat att svara på 1 obligatorisk fråga.</p>
+
+       
+            </div>
+    }
+
+               <div className={this.state.error ? "inputSearchContainer error" : "inputSearchContainer"}>
+                     <label
+                                    className={this.state.message ? "field-active" : ""}
+                                    >
+                                    Skriv ett svar
+                                    </label>
+                    <input className={this.state.error ? "textArea search-input error-msg": "textArea search-input" }
+                
                         type="text"
                         name="message"
                         placeholder="Skriv ett svar..."  
@@ -64,12 +82,12 @@ class ChatInput extends Component {
                             {this.supportsMediaDevices() && 
                                 <Link aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
                                 }</div>
-                                {this.state.message &&
-                                 <button onClick={() =>this.sendMessage()} className="searchIcon" aria-label="Nästa fråga">  <AiOutlineEnter/></button>
-                                }
-                                {!this.state.message &&
-                                 <button className="searchIcon disabled" aria-label="Nästa fråga" disabled>  <AiOutlineEnter/></button>
-                                }
+                                
+
+                                 <button onClick={() =>this.sendMessage()} className="searchIcon" aria-label="Nästa fråga">  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+
+                       
+                              
                        
             
             </div>
