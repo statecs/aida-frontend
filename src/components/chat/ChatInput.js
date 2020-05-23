@@ -32,7 +32,15 @@ class ChatInput extends Component {
         message
     });
   };
-
+    skipQuestion = () => {
+                let receiver = this.state.receiver;
+                let message = "Hoppa över frågan"
+                let sender = this.props.user;
+                const rasaMsg = { sender, receiver, message };
+                //Send message to rasa and get chatbot response
+                this.props.sendMessage(rasaMsg);
+                this.setState({ message: '' });
+    }
     sendMessage = () => {
         if(this.state.message){
             const { receiver, message } = this.state;
@@ -52,8 +60,8 @@ class ChatInput extends Component {
             <React.Fragment>
             {this.state.error &&
 
-            <div class="form__field form__field--page-error form__field--boxed" tabindex="-1" role="alert" id="page-error-message">
-            <p>Du har missat att svara på 1 obligatorisk fråga.</p>
+            <div className="form__field form__field--page-error form__field--boxed" tabindex="-1" role="alert" id="page-error-message">
+            <p>Du har missat att svara på frågan.</p>
 
        
             </div>

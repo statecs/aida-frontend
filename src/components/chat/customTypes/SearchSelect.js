@@ -55,6 +55,7 @@ class SearchSelect extends Component {
         super(props);
         this.state = {
             value: '',
+            error: false, 
             suggestions: [],
         };
 
@@ -140,6 +141,9 @@ renderInputComponent = inputProps => (
             const rasaMsg = { sender, receiver, message };
             this.props.sendMessage(rasaMsg);
       }
+      else {
+          this.setState({ error: true });
+      }
     }
 
      onChange = (event, { newValue }) => {
@@ -181,7 +185,17 @@ renderInputComponent = inputProps => (
         return (
          <React.Fragment>
 
+{this.state.error &&
+
+            <div className="form__field form__field--page-error form__field--boxed" tabindex="-1" role="alert" id="page-error-message">
+            <p>Du har missat att svara på frågan.</p>
+
+       
+            </div>
+    }
+    
   <div className="inputSearchContainer">
+
 
 
    <Autosuggest
@@ -195,7 +209,6 @@ renderInputComponent = inputProps => (
                     onSuggestionSelected={this.onSuggestionSelected}
                     renderInputComponent={this.renderInputComponent}
                     ref={this.storeInputReference}
-                    ariaLabel="Hej! Vad har du för symtom?"
                     shouldRenderSuggestions={shouldRenderSuggestions}
                   />
 

@@ -32,6 +32,7 @@ class ChatStep extends Component {
             selectedOption: '',
             freeText: "",
             values: [50],
+            error: false,
             valuesRange: [3],
             showPopupForm: false,
             chosenVals: [],
@@ -246,6 +247,16 @@ if (this.state.playing){
     }
 
 
+    skipQuestion = () => {
+                let receiver = this.state.receiver;
+                let message = "Hoppa över frågan"
+                let sender = this.props.user;
+                const rasaMsg = { sender, receiver, message };
+                //Send message to rasa and get chatbot response
+                this.props.sendMessage(rasaMsg);
+                this.setState({ message: '' });
+    }
+
     sendRangeChange(e){
         let sender = this.props.user;
         let receiver = 'bot';
@@ -300,6 +311,8 @@ if (this.state.playing){
     }
 
     onToggle(index, e, button){
+
+         this.setState({ error: false });
 
         if (this.props.msg.buttons){
             let newButtonItems = this.props.msg.buttons.slice();
@@ -362,6 +375,9 @@ if (this.state.playing){
             let message = messages.join(", ");
             const rasaMsg = { sender, receiver, message };
             this.props.sendMessage(rasaMsg);
+         }
+         else{
+            this.setState({ error: true });
          }
     };
 
@@ -520,9 +536,20 @@ if (this.state.playing){
                                             {button.checked === true && 
                                                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd" strokeLinejoin="round" strokeMiterlimit="2"><path d="M50.026 99.996c27.448 0 49.967-22.52 49.967-49.967 0-27.449-22.52-50.065-50.064-50.065C22.48-.036-.04 22.58-.04 50.03c0 27.448 22.616 49.967 50.065 49.967zm-5.22-26.192c-2.126 0-3.866-1.063-5.412-2.9L28.376 57.858c-1.063-1.353-1.546-2.61-1.546-4.06 0-2.899 2.416-5.315 5.412-5.315 1.643 0 2.996.773 4.253 2.223l8.215 9.955 18.267-28.995c1.256-2.03 2.802-3.093 4.735-3.093 2.9 0 5.51 2.223 5.51 5.123 0 1.256-.484 2.513-1.257 3.77L49.929 70.807c-1.257 1.836-3.093 2.996-5.123 2.996z" fillRule="nonzero"></path></svg>
                                             }
-                                        </button>
-                                    </React.Fragment>
-                            )}
+                                        </button>  
+                                        </React.Fragment> 
+                                    )}
+                    {this.props.msg.buttons &&
+                    <React.Fragment>
+                                     <div className="skip-question">
+                                <button onClick={() => this.skipQuestion()}>
+                                    Hoppa över frågan
+                                    </button>
+                            </div>
+                              </React.Fragment>
+    }
+                           
+                           
                         
                         {this.props.msg.custom && 
                             <React.Fragment>
@@ -552,12 +579,28 @@ if (this.state.playing){
                                             </div>
                                         </React.Fragment>
                                             }
-                                         {(id === this.props.msg.custom.data.length - 1) && (custom.payload === "Annat" && custom.checked !== true )  &&
-                                             <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Nästa fråga</Button>
-                                        } 
-                                         {(id === this.props.msg.custom.data.length - 1) && (custom.payload !== "Annat" )  &&
-                                             <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Nästa fråga</Button>
+                                        
+                                         
+                                         {(id === this.props.msg.custom.data.length - 1) &&
+                                         <div className="skip-question-btn">
+                                        <button onClick={() => this.skipQuestion()}>
+                                            Hoppa över frågan
+                                            </button>
+                                        </div>
                                         }
+                                        {(id === this.props.msg.custom.data.length - 1) && this.state.error &&
+                                                <div class="form__field form__field--page-error form__field--boxed" tabindex="-1" role="alert" id="page-error-message">
+                                                <p>Du har missat att svara på frågan.</p>
+                                                </div>
+                                        }
+                                         {(id === this.props.msg.custom.data.length - 1) && (custom.payload === "Annat" && custom.checked !== true )  &&
+                                             <Button onClick={() => {this.sendFormValues()}}className={this.state.error ? "valSubmitBtn error-btn" : "valSubmitBtn"}>Nästa fråga</Button>
+                                        } 
+                                          {(id === this.props.msg.custom.data.length - 1) && (custom.payload !== "Annat" )  &&
+                                             <Button onClick={() => {this.sendFormValues()}} className={this.state.error ? "valSubmitBtn error-btn" : "valSubmitBtn"}>Nästa fråga</Button>
+                                        }
+                                        
+                                       
                                     </React.Fragment>
                                 )}
                                 </React.Fragment>

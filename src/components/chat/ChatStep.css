@@ -315,3 +315,7 @@ button.item{
   .modal-open .modal {
     overflow-y: hidden; 
   }
+
+  .error-btn{
+    margin-top:-20px;
+  }

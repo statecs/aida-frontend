@@ -13,6 +13,10 @@
     position: absolute;
 }
 
+.inputContainer .inputSearchContainer{
+    margin-bottom: 20px;
+}
+
 .error-msg{
     border:solid 2px #B12F13;
 }
@@ -25,9 +29,33 @@
     font-style: italic;
 }
 .form__field--boxed{
-    padding: 1.6rem;
+    padding: 1rem;
     border-color: rgba(32,84,113,0.2);
     border-radius: 8px;
+    text-align:left;
+}
+.skip-question {
+    margin-bottom:-40px;
+    padding: 1rem 0 2rem 0;
+    border-radius: 8px;
+    color: #3875A8;
+    text-align:center;
+}
+.skip-question-btn {
+    padding: 0.5rem 0 1.5rem 0;
+    border-radius: 8px;
+    color: #3875A8;
+    text-align:center;
+}
+.skip-question button {
+    color: #3875A8;
+    background-color:transparent;
+    -webkit-appearance: none;
+}
+.skip-question-btn button {
+    color: #3875A8;
+    background-color:transparent;
+    -webkit-appearance: none;
 }
 .inputContainer .voiceIcon{
     margin-left: -90px;
