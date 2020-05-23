@@ -65,10 +65,10 @@ class ChatInput extends Component {
                                 <Link aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>
                                 }</div>
                                 {this.state.message &&
-                                 <button onClick={() =>this.sendMessage()} className="searchIcon" aria-label="Nästa">  <AiOutlineEnter/></button>
+                                 <button onClick={() =>this.sendMessage()} className="searchIcon" aria-label="Nästa fråga">  <AiOutlineEnter/></button>
                                 }
                                 {!this.state.message &&
-                                 <button className="searchIcon disabled" aria-label="Nästa" disabled>  <AiOutlineEnter/></button>
+                                 <button className="searchIcon disabled" aria-label="Nästa fråga" disabled>  <AiOutlineEnter/></button>
                                 }
                        
             

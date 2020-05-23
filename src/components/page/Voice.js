@@ -376,7 +376,7 @@ playSound(){
                                     </React.Fragment>
                                 
                                 )}
-                                 <button role="radio" className="btn" aria-checked="true" onClick={() => {this.sendFormValues()}}>Nästa</button>
+                                 <button role="radio" className="btn" aria-checked="true" onClick={() => {this.sendFormValues()}}>Nästa fråga</button>
                                 </React.Fragment>       
               }
 

@@ -138,7 +138,14 @@ class Home extends Component {
 
 renderInputComponent = inputProps => (
   <div className="inputSearchContainer">
-    <IoIosSearch onClick={() => this.sendSearchValues()}className="searchIcon" /><input {...inputProps} /> {supportsMediaDevices() && <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>}
+
+ <label
+     className={this.state.value ? "field-active" : ""}
+     >
+       Hej! Vad har du för symtom?
+     </label>
+
+    <IoIosSearch onClick={() => this.sendSearchValues()} className="searchIcon" /><input {...inputProps} /> {supportsMediaDevices() && <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>}
   </div>
 );
 
@@ -236,7 +243,6 @@ renderInputMobileComponent = inputProps => (
         const inputProps = {
             placeholder: 'Hej! Vad har du för symtom?',
             value,
-            'aria-label': 'Hej! Vad har du för symtom?',
             onChange: this.onChange,
             onKeyDown: this.onKeyDown,
             autoFocus: true

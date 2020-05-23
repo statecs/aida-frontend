@@ -553,10 +553,10 @@ if (this.state.playing){
                                         </React.Fragment>
                                             }
                                          {(id === this.props.msg.custom.data.length - 1) && (custom.payload === "Annat" && custom.checked !== true )  &&
-                                             <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Nästa</Button>
+                                             <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Nästa fråga</Button>
                                         } 
                                          {(id === this.props.msg.custom.data.length - 1) && (custom.payload !== "Annat" )  &&
-                                             <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Nästa</Button>
+                                             <Button onClick={() => {this.sendFormValues()}} className="valSubmitBtn">Nästa fråga</Button>
                                         }
                                     </React.Fragment>
                                 )}
@@ -693,7 +693,7 @@ if (this.state.playing){
                                 
                             </div>
                                 
-                            <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.valuesRange[0]))}} className="valSubmitBtn">Nästa</Button>
+                            <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.valuesRange[0]))}} className="valSubmitBtn">Nästa fråga</Button>
 
                                 </React.Fragment>
                                 
@@ -781,7 +781,7 @@ if (this.state.playing){
                                 <div style={{ float: 'left' }}>{this.props.msg.custom.alt.firstItem}</div><div style={{ float: 'right' }}>{this.props.msg.custom.alt.lastItem}</div>
                                 </output>    
                                
-                                <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.values[0]))}} className="valSubmitBtn">Nästa</Button>
+                                <Button onClick={() => {this.sendRangeValues(JSON.stringify(this.state.values[0]))}} className="valSubmitBtn">Nästa fråga</Button>
                                 </React.Fragment>
                                 
                                 }
@@ -882,7 +882,7 @@ if (this.state.playing){
 
                                  )}
                                     </div> 
-                                 <Button onClick={() => {this.sendRangeChange(this.state)}} className="valSubmitBtn">Nästa</Button>
+                                 <Button onClick={() => {this.sendRangeChange(this.state)}} className="valSubmitBtn">Nästa fråga</Button>
                     
                                 </React.Fragment>
 
@@ -918,7 +918,8 @@ if (this.state.playing){
                                           </React.Fragment>
 
                                         )}
-                               
+                               {this.props.msg.custom.data &&
+                               <React.Fragment>
                                              <br/><br /><h4>Se dina svar nedan</h4>
                                             
                                           {this.props.msg.custom.data.map((custom, id) =>
@@ -932,7 +933,9 @@ if (this.state.playing){
 
                                     </React.Fragment>
                                           
-                                          )}</div>
+                                          )}
+                                      </React.Fragment>    
+                               }</div>
 <div className="btnContainer">
             < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
              <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
@@ -968,7 +971,10 @@ if (this.state.playing){
                                           </React.Fragment>
 
                                         )}
-                               
+
+
+                               {this.props.msg.custom.data &&
+                               <React.Fragment>
                                              <br/><br /><h4>Se dina svar nedan</h4>
                                             
                                           {this.props.msg.custom.data.map((custom, id) =>
@@ -982,7 +988,8 @@ if (this.state.playing){
 
                                     </React.Fragment>
                                           
-                                          )}</div>
+                                          )} </React.Fragment>
+                                          }}</div>
 <div className="btnContainer">
             < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
              <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
@@ -1018,7 +1025,9 @@ if (this.state.playing){
                                           </React.Fragment>
 
                                         )}
-                               
+                               {this.props.msg.custom.data &&
+                                <React.Fragment>
+
                                              <br/><br /><h4>Se dina svar nedan</h4>
                                             
                                           {this.props.msg.custom.data.map((custom, id) =>
@@ -1032,7 +1041,9 @@ if (this.state.playing){
 
                                     </React.Fragment>
                                           
-                                          )}</div>
+                                          )}
+                                        </React.Fragment>   
+                               }</div>
 <div className="btnContainer">
             < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
              <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
