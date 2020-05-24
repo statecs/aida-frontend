@@ -11,7 +11,6 @@ const PopupForm = ({ handleClose, show }) => {
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             onHide={handleClose}
-            backdrop='static'
             enforceFocus={true}
             dialogClassName="alert-modal"
             centered

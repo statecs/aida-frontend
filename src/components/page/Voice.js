@@ -85,8 +85,32 @@ handlePlay = () => {
           console.error("An error occurred :", e)
       })
       
-    }  else if (this.props.custom) {
-      let custom = this.props.custom.map((msg, i) =>  { return msg.payload});
+    }  else if (this.props.type === "finalPage"){
+      this.speech.speak({
+            text: this.props.text, 
+            queue: false,
+            listeners: {
+
+              onend: () => {
+                  console.log("End utterance")
+              },
+
+          }
+        }).then(() => {
+           this.speech.cancel();
+              this.setState({
+              playing: false,
+            });
+        }).catch(e => {
+          console.error("An error occurred :", e)
+        })
+
+
+    } 
+    
+   else if (this.props.custom){
+      
+    let custom = this.props.custom.map((msg, i) =>  { return msg.payload});
       let customButtons = custom.join(", ");
 
        this.speech.speak({
@@ -108,7 +132,6 @@ handlePlay = () => {
       }).catch(e => {
           console.error("An error occurred :", e)
       })
-
     }
 
       else {
@@ -156,6 +179,20 @@ componentDidMount (){
     if (this.isIOS()) {
       this.setState({ showVoiceStart: true});
     }
+
+ let audio = new Audio("/sound.mp3")
+
+var promise = audio.play()
+
+if( typeof promise !== 'undefined' ) {
+    promise.then(function() {
+        // auto-play started!
+        audio.play()
+    }).catch(function(error) {
+        // auto-play failed
+       // audio.play()
+    });
+}
   
 }
 
@@ -177,7 +214,14 @@ playSound(){
 }
 
   closePopupForm = () => {
-      navigate(-1)
+
+     if (this.props.text) {
+        navigate('/chat')
+     } else{
+        navigate(-1)    
+     }
+   
+
   }
 
   sendValues = (payload) => {
@@ -218,6 +262,8 @@ playSound(){
 
 
     onToggle(index, e, button){
+
+      this.handlePause()
 
         if (this.props.buttons){
             let newButtonItems = this.props.buttons.slice();
@@ -260,7 +306,6 @@ playSound(){
 
         <Modal show={true}
                         size="lg"
-                        backdrop='static'
                         onHide={this.closePopupForm}
                         enforceFocus={true}
                         dialogClassName="feedback-modal"
@@ -280,7 +325,6 @@ playSound(){
 <Modal onClick={() => this.closePopupForm()} 
                         show={true}
                         size="lg"
-                        backdrop='static'
                         enforceFocus={true}
                         dialogClassName="feedback-modal"
                         centered
@@ -293,7 +337,6 @@ playSound(){
 
                     
                     </Modal.Body>
-                    
                     </Modal>
 }
 {this.state.showVoiceStart && this.supportsMediaDevices() &&
@@ -301,7 +344,6 @@ playSound(){
 <Modal onClick={() => this.playSound()}
                         show={true}
                         size="lg"
-                        backdrop='static'
                         enforceFocus={true}
                         dialogClassName="feedback-modal"
                         centered
@@ -343,20 +385,17 @@ playSound(){
                             </div>
                         </div>
 
-{!this.state.playing &&  !this.state.showVoiceStart &&
 <div className="speech-control-buttons">
               {this.props.buttons && 
-              <React.Fragment>       
+              <React.Fragment>      
               {this.props.buttons.map((msg, i) =>  
 
               <React.Fragment key={i}>
-               <button role="radio" className="btn" onClick={this.onToggle.bind(this, i, msg)} aria-checked={msg.checked === true} checked={msg.checked === true} name={msg.payload} value={msg.payload}>
+               <button role="radio" className="btn" onClick={this.onToggle.bind(this, i, msg) } aria-checked={msg.checked === true} checked={msg.checked === true} name={msg.payload} value={msg.payload}>
 
                  {msg.payload}
 
                  </button>
-
-
                                  </React.Fragment>   
                                 
                                 )}
@@ -376,13 +415,11 @@ playSound(){
                                     </React.Fragment>
                                 
                                 )}
-                                 <button role="radio" className="btn" aria-checked="true" onClick={() => {this.sendFormValues()}}>Nästa fråga</button>
+                                 <button role="radio" className="btn" aria-checked="true" onClick={() => {this.sendFormValues()}}>Nästa fråga</button>                     
                                 </React.Fragment>       
               }
 
 </div>
-
-                    }
 
                
                       
@@ -391,6 +428,7 @@ playSound(){
                   }
           
           {!this.state.playing && !this.state.showVoiceStart &&
+
              <VoiceInput/>
              
           }
@@ -409,6 +447,7 @@ playSound(){
        
       </div>  }
             </React.Fragment>
+
               </Modal >
         )
     };
@@ -424,13 +463,24 @@ const mapStateToProps = (state) => {
         }
   }
   if (state.messages.messages[state.messages.messages.length-1].custom){
+      if (state.messages.messages[state.messages.messages.length-1].custom.type){
+        return {
+            messages: state.messages.messages,
+            loading: state.messages.loading,
+            text: state.messages.messages[state.messages.messages.length-1].message,
+            custom: state.messages.messages[state.messages.messages.length-1].custom.data,
+            type: state.messages.messages[state.messages.messages.length-1].custom.type,
+            user: state.sessionID.sessionID 
+        } 
+  } else {
     return {
-        messages: state.messages.messages,
-        loading: state.messages.loading,
-        text: state.messages.messages[state.messages.messages.length-1].message,
-        custom: state.messages.messages[state.messages.messages.length-1].custom.data,
-        user: state.sessionID.sessionID 
-    } 
+            messages: state.messages.messages,
+            loading: state.messages.loading,
+            text: state.messages.messages[state.messages.messages.length-1].message,
+            custom: state.messages.messages[state.messages.messages.length-1].custom.data,
+            user: state.sessionID.sessionID 
+        }
+  }
   } else if (state.messages.messages[state.messages.messages.length-1].buttons){
       return {
         messages: state.messages.messages,

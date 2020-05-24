@@ -21,6 +21,7 @@ function Feedback() {
     'showAlert'
   );
 
+  var showPopupForm = () => setShow(true);
   var closePopupForm = () => setShow(false);   
 
   if (show) {
@@ -35,8 +36,14 @@ function Feedback() {
   </p>
 </Alert>
     );
+  } else
+  {
+      return (
+        <div className="msg-closed">
+          <button onClick={() => showPopupForm()}>Vill du lämna synpunkter?</button>
+        </div>
+      )
   }
-  return <span></span>;
 }
 
 

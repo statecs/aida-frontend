@@ -421,7 +421,6 @@ if (this.state.playing){
                         show={true}
                         size="lg"
                         aria-labelledby="contained-modal-title-vcenter"
-                        backdrop='static'
                         onHide={this.closePopupForm}
                         enforceFocus={true}
                         dialogClassName="feedback-modal"
@@ -946,9 +945,8 @@ if (this.state.playing){
 
                                    <Modal show={this.state.showFinalForm}
                                         size="lg"
-                                        backdrop='static'
-                                        onHide={this.closeFinalForm}
                                         enforceFocus={true}
+                                        backdrop="static"
                                         dialogClassName="feedback-modal"
                                         role="main"
                                         centered>
@@ -986,7 +984,7 @@ if (this.state.playing){
                                       </React.Fragment>    
                                }</div>
 <div className="btnContainer">
-            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
+            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Läs mer på 1177.se</button>
              <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
     </div>
 </div>
@@ -999,8 +997,7 @@ if (this.state.playing){
 
                                    <Modal show={this.state.showFinalForm}
                                         size="lg"
-                                        backdrop='static'
-                                        onHide={this.closeFinalForm}
+                                        backdrop="static"
                                         enforceFocus={true}
                                         dialogClassName="feedback-modal"
                                         role="main"
@@ -1040,7 +1037,7 @@ if (this.state.playing){
                                           )} </React.Fragment>
                                           }}</div>
 <div className="btnContainer">
-            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
+            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Kontaka läkare</button>
              <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
              </div>
 </div>
@@ -1053,8 +1050,7 @@ if (this.state.playing){
 
                                    <Modal show={this.state.showFinalForm}
                                         size="lg"
-                                        backdrop='static'
-                                        onHide={this.closeFinalForm}
+                                        backdrop="static"
                                         enforceFocus={true}
                                         dialogClassName="feedback-modal"
                                         role="main"
@@ -1094,7 +1090,7 @@ if (this.state.playing){
                                         </React.Fragment>   
                                }</div>
 <div className="btnContainer">
-            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Starta nytt ärende</button>
+            < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Ring 112</button>
              <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>
              </div>
 </div>

@@ -301,6 +301,16 @@
 .msg{
     margin-top:100px;
 }
+.msg-closed{
+    text-align:center;
+    padding:1.5rem;
+    font-size:0.7rem;
+    
+}
+.msg-closed button {
+    color: #3875A8;
+    background-color: transparent;
+}
 
 .exampleBtn{
         color: black;

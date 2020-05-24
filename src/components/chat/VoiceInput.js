@@ -42,7 +42,6 @@ class VoiceInput extends Component {
                 const rasaMsg = { sender, receiver, message };
                 //Send message to rasa and get chatbot response
                 this.props.sendMessage(rasaMsg);
-                this.setState({ message: '' });
 
             } else if ((this.state.message === ("Avsluta")) || (this.state.message === ("Avbryt")) || (this.state.message === ("Stäng av"))  || (this.state.message === ("Paus"))) {
                 return

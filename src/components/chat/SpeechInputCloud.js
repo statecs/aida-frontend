@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FaMicrophone } from "react-icons/fa";
 import CloudSpeechAPI from '../../helpers/SpeechApi';
+import Speech from 'speak-tts'
 
 import Recorder from '../../helpers/Recorder';
 
@@ -36,6 +37,7 @@ constructor() {
       audioContext: null,
     };
     
+    this.speech = new Speech();
     this.toggleMicrophone = this.toggleMicrophone.bind(this);
 
     this.startRecord = this.startRecord.bind(this)
@@ -118,6 +120,26 @@ constructor() {
             }
             else {
 
+            this.speech.speak({
+            text: "Hoppsan! Ett fel uppstod. Försök igen.", 
+            queue: false,
+            listeners: {
+
+              onend: () => {
+                  console.log("End utterance")
+              },
+
+          }
+              }).then(() => {
+                this.speech.cancel();
+                    this.setState({
+                    playing: false,
+                  });
+              }).catch(e => {
+                console.error("An error occurred :", e)
+              })
+
+
               this.setState({
                   errorMessage: "Hoppsan! Ett fel uppstod. Försök igen."
                 })
@@ -170,6 +192,8 @@ constructor() {
       this.stopRecord();
 
     } else {
+        let audio = new Audio("/sound.mp3")
+        audio.play()
       this.startRecord();
     }
   }

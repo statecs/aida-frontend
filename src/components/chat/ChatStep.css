@@ -108,7 +108,7 @@ button.item{
     border-radius: 49.5px;
     border: 1px solid #ccc;
     display: inline-block;
-    max-width: 200px;
+    max-width: 250px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;

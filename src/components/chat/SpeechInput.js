@@ -48,7 +48,14 @@ export default class SpeechInput extends Component<
     recognition.onend = this.onRecognitionEnd;
     recognition.onresult = this.onRecognitionResult;
     this.recognition = recognition;
+    this.audio = new Audio("/sound.mp3")
     this.startRecognition();
+  }
+
+  componentDidUpdate() {
+      if (!this.state.isRecognizing){
+        this.audio.play()
+    }
   }
 
   onRecognitionStart = () => {

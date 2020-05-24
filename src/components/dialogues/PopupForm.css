@@ -8,6 +8,7 @@
     margin: 0.5em;
 }
 .modal-body{
+    padding:40px;
     display: flex;
     flex-direction: column;
 }
