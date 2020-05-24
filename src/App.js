@@ -13,7 +13,7 @@ import { IoIosChatbubbles, IoIosHome } from "react-icons/io";
 import { SkipNavLink, SkipNavContent } from "@reach/skip-nav";
 
 import store from './store';
-import { Router, Link } from "@reach/router"
+import { Router, Link, Match } from "@reach/router"
 import {Layout, Main} from 'cauldron-react'
 
 let hasTransitioned = false // avoid focusing on the first render
@@ -83,11 +83,20 @@ const App = () => {
         </div>
       
       
+
          <nav className="navContainer">
-            <Link to="/" className="icons" aria-label="Start">
+         <Match path="/">
+          {props =>
+            props.match ? (
+             <span/>
+            ) : (
+              <Link to="/" className="icons" aria-label="Start">
               <IoIosHome /><span className="chatText home">Start</span>
 
             </Link>
+            )
+          }
+        </Match>    
 
             <div className="flexible-space"></div>
     

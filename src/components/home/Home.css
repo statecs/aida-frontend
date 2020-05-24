@@ -10,11 +10,11 @@
     padding: 1.5em;
 }
 .logoText{
-    font-size: 16px;
+    font-size: 20px;
     text-align: center;
-    padding-top: 10px;
-    color: #666;
-    font-weight:500;
+    padding-top: 5px;
+    color:#3875A8;
+    font-family: 'Barlow Semi Condensed', sans-serif;
 }
 .site-logo-popup{
     padding: 1em 2em;
@@ -87,7 +87,8 @@
    }
    
    input:focus {
-        box-shadow: none;
+    box-shadow: 0 1px 5px 0 rgba(33,33,36,0.20);
+    background-color: #ffffff;
         border:1px solid #3c7aae;
    }
 
