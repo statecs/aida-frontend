@@ -141,6 +141,27 @@ if (this.state.playing){
           console.error("An error occurred :", e)
       })
         }
+        else {
+             this.speech.speak({
+            text: this.props.msg.message, 
+            queue: false,
+            listeners: {
+
+              onend: () => {
+                  console.log("End utterance")
+              },
+
+          }
+        }).then(() => {
+           this.speech.cancel();
+              this.setState({
+              playing: false,
+            });
+        }).catch(e => {
+          console.error("An error occurred :", e)
+        })
+
+        }
      
 
     }

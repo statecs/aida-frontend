@@ -130,6 +130,9 @@ body a{
   margin-bottom: 10px;
   max-width:800px;
 }
+.modal-content .container {
+  overflow:scroll;
+}
 @media only screen and (min-width: 48em) {
     .container {
       width: 100%; 
