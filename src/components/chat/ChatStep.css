@@ -60,9 +60,7 @@ button.item{
 .container-feedback button[aria-checked=true] span{
   font-size:4rem;
 }
-.msgCustom svg.neutral{
-  fill: #FFCB03 !important;
-}
+
 .bot-messages{
   width: 90% !important;
   max-width:600px;
@@ -128,7 +126,7 @@ button.item{
     float:left;
     font-size:12px;
     cursor: pointer;
-    color:#3875A8 !important;
+    color:#3875A8;
   
 }
 .voiceOver{

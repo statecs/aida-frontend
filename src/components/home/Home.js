@@ -77,9 +77,11 @@ class Home extends Component {
             shuffledTerms: [],
             searchModal: false,
             itemsToShow: 3,
-            expanded: false
+            expanded: false,
+            activated: false
         };
         this.showMore = this.showMore.bind(this);
+        this.darkMode = this.darkMode.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
         this.isHovered = this.isHovered.bind(this);
         this.shuffledTerms = this.shuffleArray();
@@ -222,6 +224,19 @@ renderInputMobileComponent = inputProps => (
     };
 
 
+darkMode(){
+  if (this.state.activated){
+    this.setState({ activated: false })
+    document.body.classList.remove('dark')
+
+  } else{
+    this.setState({ activated: true })
+     document.body.classList.add('dark')
+
+  }
+}
+
+
       showMore() {
           this.state.itemsToShow === 3 ? (
             this.setState({ itemsToShow: this.state.shuffledTerms.length, expanded: true })
@@ -319,7 +334,7 @@ renderInputMobileComponent = inputProps => (
         </Media>
             <Feedback />
                 <div className="container-home">
-                 <h1 className="site-logo"> 
+                 <h1 onClick={() =>this.darkMode()} className="site-logo"> 
                     <Link to="/" itemProp="url"> 
                         <span itemProp="logo" itemType="http://schema.org/ImageObject"> 
 <svg width="129px" height="129px" viewBox="0 0 129 129" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -375,7 +390,6 @@ renderInputMobileComponent = inputProps => (
 
 
                   <div className="exampleCases">
-                    <p className='intro'>Vanliga ärenden</p>
                         <div className='cardDisplay'>
                                {this.state.shuffledTerms.slice(0, this.state.itemsToShow).map((value) => (
                                <React.Fragment key={value.name}>

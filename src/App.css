@@ -2,6 +2,118 @@ body {
   overflow:hidden;
   background-color: #f5f5f7;
 }
+body.dark {
+  background-color: #383838;
+  color: #c5c5c5 !important;
+}
+.dark a {
+  color:#c5c5c5;
+}
+.dark a:hover{
+  color:#c5c5c5;
+}
+.dark .modal-content{
+  background-color: #383838;
+}
+.dark .dqpl-layout{ 
+  background-color: #383838;
+}
+.dark .site-logo circle  {
+ fill:#c5c5c5 !important;
+}
+.dark .site-logo path  {
+  stroke:#c5c5c5 !important;
+ }
+.dark .react-autosuggest__input{
+  background-color: #383838;
+  color:#c5c5c5;
+  border: 2px solid #c5c5c5;
+}
+.dark label.field-active{
+  color:#c5c5c5;
+  text-shadow: 1px 0 0 #383838, -1px 0 0 #383838, 2px 0 0 #383838, -2px 0 0 #383838, 0 1px 0 #383838, 0 -1px 0 #383838, 0 2px 0 #383838, 0 -2px 0 #383838;
+}
+.dark .logoText{
+  color:#c5c5c5;
+}
+.dark .exampleBtn{
+  border: 2px solid #c5c5c5;
+  background-color: #383838;
+  color: #c5c5c5;
+}
+.dark .inputSearchContainer svg{
+  color:#c5c5c5;
+}
+.dark .dqpl-button-primary{
+  background-color: #383838;
+  border: 2px solid #c5c5c5;
+}
+.dark .exampleCases .link {
+  color:#c5c5c5;
+}
+.dark .chatText{
+  color:#c5c5c5;
+}
+.dark .voiceOver{
+  color:#c5c5c5;
+}
+.dark .skip-question button{
+  color:#c5c5c5
+}
+.dark .inputContainer .searchIcon{
+  background-color: #383838;
+}
+.dark .skip-question-btn button{
+  color:#c5c5c5
+}
+.dark .backNav span{
+  color:#c5c5c5
+}
+.dark .backNav svg{
+  color:#c5c5c5
+}
+.dark .speech-control-buttons .btn{
+  color:#c5c5c5
+}
+.dark .modal-header .close{
+  background-color:transparent;
+  color: #c5c5c5;
+}
+.dark .user-msg-text p{
+  color: #c5c5c5;
+}
+.dark .searchModal .modal-content{
+  background-color: #383838;
+}
+.dark .backIcon svg{
+  color: #c5c5c5;
+}
+.dark .searchModalIcon svg{
+  color: #c5c5c5;
+}
+.dark .react-autosuggest__suggestions-container--open{
+  background-color: #383838;
+  color: #c5c5c5;
+  box-shadow: 0 3px 8px 0 rgba(255,255,255,0.2), 0 0 0 1px rgba(255,255,255,0.08);
+}
+.dark .msgCustom svg.neutral{
+  fill:#c5c5c5;
+}
+.dark .rangeDecrement svg {
+  color: #c5c5c5;
+}
+.dark .rangeIncrement svg {
+  color: #c5c5c5;
+}
+.dark .css-7ph4zq{
+  background-color: #c5c5c5;
+}
+.dark .css-dtai3n{
+  background-color: #c5c5c5;
+}
+.dark .css-1kpm4c7{
+  background-color: #c5c5c5;
+}
 body a{
   color:#3875A8;
 }

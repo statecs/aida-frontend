@@ -10,8 +10,9 @@ export const Neutral: FunctionComponent<Props> = ({ animationProps }) => (
   <motion.svg
     {...animationProps}
     key="neutral"
+    class="neutral"
     xmlns="http://www.w3.org/2000/svg"
-    data-name="Layer 1"
+    data-name="neutral"
     viewBox="0 0 50 50"
     x="0px"
     fill="#3c7aae"
