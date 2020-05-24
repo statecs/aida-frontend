@@ -292,12 +292,19 @@
     align-items: center;
     margin: 100px 0;
     text-align: center;
+    max-width:500px;
 }
 
 .exampleCases .intro{
     margin-top: 10px;
     font-size: 0.6em;
     font-weight: bold;
+}
+.exampleCases .link{
+    margin-top: 10px;
+    font-size: 0.6em;
+    font-weight: bold;
+    color:#3875A8;
 }
 .msg{
     margin-top:100px;

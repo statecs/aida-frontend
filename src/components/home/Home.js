@@ -75,10 +75,13 @@ class Home extends Component {
             suggestions: [],
             active: false,
             shuffledTerms: [],
-            searchModal: false
+            searchModal: false,
+            itemsToShow: 3,
+            expanded: false
         };
+        this.showMore = this.showMore.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
-
+        this.isHovered = this.isHovered.bind(this);
         this.shuffledTerms = this.shuffleArray();
         
     }
@@ -110,7 +113,23 @@ class Home extends Component {
 
   }, 7000);
 
+    }
 
+
+  isHovered(event) {
+    clearInterval(this.intervalId);
+  }
+
+  isNotHovered(event){
+
+     this.intervalId = setInterval(() => {
+      this.shuffledTerms = this.shuffleArray();
+
+     this.setState({
+        shuffledTerms : this.shuffledTerms
+        })
+
+  }, 7000);
   }
 
   componentWillUnmount(){
@@ -200,8 +219,16 @@ renderInputMobileComponent = inputProps => (
         navigate('/chat#step1')
    }
        
-        
     };
+
+
+      showMore() {
+          this.state.itemsToShow === 3 ? (
+            this.setState({ itemsToShow: this.state.shuffledTerms.length, expanded: true })
+          ) : (
+            this.setState({ itemsToShow: 3, expanded: false })
+          )
+  }
 
     sendValues = (el) => {
         let sender = this.props.user;
@@ -350,13 +377,24 @@ renderInputMobileComponent = inputProps => (
                   <div className="exampleCases">
                     <p className='intro'>Vanliga ärenden</p>
                         <div className='cardDisplay'>
-                               {this.state.shuffledTerms.slice(0, 3).map((value) => (
+                               {this.state.shuffledTerms.slice(0, this.state.itemsToShow).map((value) => (
                                <React.Fragment key={value.name}>
-                                  <button className="exampleBtn" onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
+                                  <button className="exampleBtn"  onMouseEnter={() => this.isHovered(true)} onMouseLeave={() => this.isNotHovered(false)} onClick={this.sendValues} value={value.name} type="submit">{value.name}</button>
                                  </React.Fragment>
                                ))}
                         </div>
-                      <Link to="/exempel" className="intro"  aria-label="Visa fler"><p>Visa fler..</p></Link>
+
+                        <p>
+                    <button className="btn link" onClick={this.showMore}>
+                      {this.state.expanded ? (
+                        <span>Visa färre</span>
+                      ) : (
+                        <span>Visa fler</span>
+                      )
+                      }
+                    </button>
+      </p>
+
                   </div>
               </div>
 

@@ -39,9 +39,7 @@ function Feedback() {
   } else
   {
       return (
-        <div className="msg-closed">
-          <button onClick={() => showPopupForm()}>Vill du lämna synpunkter?</button>
-        </div>
+        <span/>
       )
   }
 }

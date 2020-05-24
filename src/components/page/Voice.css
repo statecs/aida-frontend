@@ -34,14 +34,11 @@
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  margin: 0 auto;
+  max-width: 600px;
 }
 
-@media (min-width: 576px){
-  .speech-control-buttons{
-    justify-content: center;
-  }
 
-}
 
 .speech-control-buttons .btn {
   flex: 0 0 auto;
