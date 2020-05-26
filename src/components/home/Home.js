@@ -166,7 +166,7 @@ renderInputComponent = inputProps => (
        Hej! Vad har du för symtom?
      </label>
 
-    <IoIosSearch onClick={() => this.sendSearchValues()} className="searchIcon" /><input {...inputProps} /> {supportsMediaDevices() && <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>}
+    <IoIosSearch onClick={() => this.sendSearchValues()} className="searchIcon" /><input {...inputProps} /> {supportsMediaDevices() && <Link onClick={this.sendRestartVoice} className="voiceIcon" aria-label="Röststyrning" to="/assistent/"><MdKeyboardVoice/></Link>}
   </div>
 );
 
@@ -244,6 +244,14 @@ darkMode(){
             this.setState({ itemsToShow: 3, expanded: false })
           )
   }
+
+  sendRestartVoice = (el) => {
+        let sender = this.props.user;
+        let receiver = 'bot';
+        let message = "Hej";
+        const rasaMsg = { sender, receiver, message };
+        this.props.sendStart(sender, receiver, rasaMsg); 
+    };
 
     sendValues = (el) => {
         let sender = this.props.user;
@@ -366,7 +374,7 @@ darkMode(){
             <input onChange={() => this.togglePopup()} onClick={() => this.togglePopup()} type="text" className="react-autosuggest__input" placeholder="Hej! Vad har du för symtom?" value={this.state.value} />
               
               {supportsMediaDevices() &&
-              <Link className="voiceIcon" aria-label="Röststyrning" to="/assistent/">
+             <Link onClick={this.sendRestartVoice} className="voiceIcon" aria-label="Röststyrning" to="/assistent/">
               <MdKeyboardVoice/>
                   
                 </Link>

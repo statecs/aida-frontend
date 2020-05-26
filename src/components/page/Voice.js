@@ -19,6 +19,7 @@ constructor() {
       message: '',
       record: false,
       playing: false,
+      playingOnLoad: false,
     };
     
     this.speech = new Speech();
@@ -45,6 +46,12 @@ handlePause = () => {
     }
   };
 
+activateMic = () => {
+    this.setState({
+         playing: false
+    });
+     this.speech.pause();
+} 
 handlePlay = () => {
     if (this.state.playing){
       this.setState({
@@ -168,7 +175,7 @@ handlePlay = () => {
   
 componentDidUpdate(prevProps, prevState){
 
-  if (prevProps.loading && !this.state.playing){
+  if (prevProps.loading && !this.state.playing && prevState.playingOnLoad){
  
       this.setState({
                 playing: true
@@ -181,10 +188,45 @@ componentDidUpdate(prevProps, prevState){
       }
 
     this.speakNow();
-  } 
+  } else if (prevProps.loading && !this.state.playing && !prevState.playingOnLoad) {
+     this.setState({
+                playing: true
+          });
+
+        if (prevState.playing !== this.state.playing) {
+            this.setState({
+                playing: false
+          });
+      }
+
+      let audio = new Audio("/sound.mp3")
+      var promise = audio.play()
+
+      if( typeof promise !== 'undefined' ) {
+          promise.then(function() {
+              audio.play()
+          }).catch(function(error) {
+
+          });
+}
+
+  if (navigator.userAgent.indexOf("Firefox") > 0) {
+          setTimeout(() =>this.activateMic(), 500);
+                  this.setState({
+              playing: false,
+            });
+                  this.speech.cancel();
+            } else {
+                setTimeout(() =>this.activateMic(), 2000);
+            }
+           
+  }
 }
 
 componentDidMount (){
+   this.setState({
+      playingOnLoad: true
+  });
 
     if (this.isIOS()) {
       this.setState({ showVoiceStart: true});
@@ -302,8 +344,6 @@ playSound(){
 
     render() {
 
-    
-     
   let spinner;
     if (this.props.loading) {
       spinner = <PulseLoader css={spinnerCss} color={"#3875A8"} />;
