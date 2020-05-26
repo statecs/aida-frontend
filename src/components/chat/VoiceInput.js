@@ -70,7 +70,7 @@ class VoiceInput extends Component {
              <React.Fragment>
               <div className="user-messages">
                                         <div className="user-msg">
-                                            <div className="user-msg-text">
+                                            <div className="user-msg-text-voice">
                                                 <p aria-hidden="true" className="display-linebreak">{this.state.message}</p>
                                             </div>
                                         </div>

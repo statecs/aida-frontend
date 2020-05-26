@@ -33,7 +33,7 @@ class ChatStep extends Component {
             freeText: "",
             values: [50],
             error: false,
-            valuesRange: [2.5],
+            valuesRange: [5],
             showPopupForm: false,
             chosenVals: [],
             submitted: false,
@@ -43,6 +43,7 @@ class ChatStep extends Component {
         
         this.handleChange = this.handleChange.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.speech = new Speech();
 
         if (this.props.msg.custom ){
             if (this.props.msg.custom.type === "numberInput" ){
@@ -85,9 +86,6 @@ if (this.state.playing){
         playing: true
     });
 
-
-  this.speech = new Speech();
-        
     this.speech.setLanguage("sv-SE");
 
      if (this.props.msg.buttons) {
@@ -653,49 +651,44 @@ if (this.state.playing){
                             
                      
                             
-                            <button aria-label="5" role="radio" className="item" aria-checked={this.state.option === "5"} onClick={() => this.setState({valuesRange: [4.8], option: "5" })}>
+                            <button aria-label="10" role="radio" className="item" aria-checked={this.state.option === "10"} onClick={() => this.setState({valuesRange: [9.5], option: "10" })}>
                                  
                                  
-                            <label htmlFor="5">
-                            <input className="radio" onClick={() => this.setState({valuesRange: [4.8]})} type="radio" name="5" id="5" value="5" checked={this.state.option === '5'} onChange={this.handleOptionChange}/>
+                            <label htmlFor="10">
+                            <input className="radio" onClick={() => this.setState({valuesRange: [9.5]})} type="radio" name="10" id="10" value="10" checked={this.state.option === '10'} onChange={this.handleOptionChange}/>
                             <span><FaRegFrown fill="#F02A28 "/></span>
                             </label>
                             </button>
 
-                            <button aria-label="4" role="radio" className="item" aria-checked={this.state.option === "4"} onClick={() => this.setState({valuesRange: [3.6], option: "4" })}>
-                            <label htmlFor="4">
-                            <input  className="radio" onClick={() => this.setState({valuesRange: [3.6]})} type="radio" name="4" id="4" value="4" checked={this.state.option === '4'}  onChange={this.handleOptionChange}/>
+                            <button aria-label="8" role="radio" className="item" aria-checked={this.state.option === "8"} onClick={() => this.setState({valuesRange: [7.2], option: "8" })}>
+                            <label htmlFor="8">
+                            <input  className="radio" onClick={() => this.setState({valuesRange: [7.2]})} type="radio" name="8" id="8" value="8" checked={this.state.option === '8'}  onChange={this.handleOptionChange}/>
                             <span><FaRegFrownOpen fill="#FB6B13"/></span>
                             </label>
                             </button>
 
-                            <button aria-label="3" role="radio" className="item" aria-checked={this.state.option === "3"} onClick={() => this.setState({valuesRange: [2.5], option: "3" })}>
-                            <label htmlFor="3">
-                            <input  className="radio" onClick={() => this.setState({valuesRange: [2.5]})} type="radio" name="3" id="3" value="3" checked={this.state.option === '3'}  onChange={this.handleOptionChange}/>
+                            <button aria-label="5" role="radio" className="item" aria-checked={this.state.option === "5"} onClick={() => this.setState({valuesRange: [5], option: "5" })}>
+                            <label htmlFor="5">
+                            <input  className="radio" onClick={() => this.setState({valuesRange: [5]})} type="radio" name="5" id="5" value="5" checked={this.state.option === '5'}  onChange={this.handleOptionChange}/>
                             <span><FaRegMeh  fill="#FFCB03"/></span>
                             </label>
                             </button>
 
-                            <button  aria-label="2" role="radio" className="item" aria-checked={this.state.option === "2"} onClick={() => this.setState({valuesRange: [1.4], option: "2" })}>
+                            <button  aria-label="2" role="radio" className="item" aria-checked={this.state.option === "2"} onClick={() => this.setState({valuesRange: [2.8], option: "2" })}>
                             <label htmlFor="2">
-                            <input className="radio" onClick={() => this.setState({valuesRange: [1.4]})} type="radio" name="2" id="2" value="2"  checked={this.state.option === '2'}  onChange={this.handleOptionChange}/>
+                            <input className="radio" onClick={() => this.setState({valuesRange: [2.8]})} type="radio" name="2" id="2" value="2"  checked={this.state.option === '2'}  onChange={this.handleOptionChange}/>
                             <span><FaRegSmile fill="#7CC710"/></span>
                             </label>
                             </button>
 
-                           <button  aria-label="1" role="radio" className="item" aria-checked={this.state.option === "1"} onClick={() => this.setState({valuesRange: [0.2], option: "1" })}>
-                            <label htmlFor="1">
-                            <input className="radio" onClick={() => this.setState({valuesRange: [0.2]})} type="radio" name="1" id="1" value="1" checked={this.state.option === '1'} onChange={this.handleOptionChange}/>
+                           <button  aria-label="0" role="radio" className="item" aria-checked={this.state.option === "0"} onClick={() => this.setState({valuesRange: [0.6], option: "0" })}>
+                            <label htmlFor="0">
+                            <input className="radio" onClick={() => this.setState({valuesRange: [0.6]})} type="radio" name="0" id="0" value="0" checked={this.state.option === '0'} onChange={this.handleOptionChange}/>
                             <span><FaRegGrinAlt fill="#19C733"/></span>
                             </label>
                             </button></div>
-                            <div className="container-feedback-number" aria-hidden="true">
-                                    <p className="item">5</p>
-                                    <p className="item">4</p>
-                                    <p className="item">3</p>
-                                    <p className="item">2</p>
-                                    <p className="item">1</p>
-                            </div>
+                  
+
 
                                 <div
                                 style={{
@@ -712,7 +705,7 @@ if (this.state.playing){
                                 values={this.state.valuesRange}
                                 step="0.1"
                                 min="0"
-                                max="5"
+                                max="10"
                                 onChange={valuesRange => this.setState({ valuesRange })}
                                 renderTrack={({ props, children }) => (
                                     <div
@@ -734,7 +727,7 @@ if (this.state.playing){
                                         background: getTrackBackground({
                                             values: this.state.valuesRange,
                                             colors: ['#3875A8', '#ffffff'],
-                                            min: "5",
+                                            min: "10",
                                             max: "0",
                                             
                                             direction: Direction.Right
@@ -743,7 +736,7 @@ if (this.state.playing){
                                         }}
                                     >
                                         {children}
-                                    </div>
+                                    </div> 
                                     </div>
                                 )}
                                 renderThumb={({ props, isDragged }) => (
@@ -1075,7 +1068,7 @@ if (this.state.playing){
                                     </React.Fragment>
                                           
                                           )} </React.Fragment>
-                                          }}</div>
+                                          }</div>
 <div className="btnContainer">
             < button className="agreeBtn btn btn-primary" onClick={()=>this.startCase()} >Kontaka läkare</button>
              <button className="agreeBtn btn btn-primary" onClick={()=>this.closeCase()}>Avsluta</button>

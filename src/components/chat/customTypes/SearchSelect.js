@@ -7,7 +7,6 @@ import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { MdKeyboardVoice } from "react-icons/md";
-import { AiOutlineEnter } from "react-icons/ai";
 import './SearchSelect.css';
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters

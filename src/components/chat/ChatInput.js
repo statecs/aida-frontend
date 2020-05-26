@@ -5,7 +5,6 @@ import { sendMessage } from '../../actions/messageActions';
 import './ChatInput.css';
 import {Link} from "@reach/router"
 import { MdKeyboardVoice } from "react-icons/md";
-import { AiOutlineEnter } from "react-icons/ai";
 
 class ChatInput extends Component {
     constructor(props) {

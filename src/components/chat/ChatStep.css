@@ -113,6 +113,23 @@ button.item{
     color:#707070;
 }
 
+.user-msg-text-voice p {
+  margin: 0;
+  padding: 5px 10px 5px 12px;
+  width: 100%;
+  border-radius: 49.5px;
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 800px;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  color:#707070;
+}
+
+.user-msg-text-voice {
+  float: right;
+}
+
 .user-msg-text {
     float: right;
 }

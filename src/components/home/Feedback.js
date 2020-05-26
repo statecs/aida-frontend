@@ -21,7 +21,6 @@ function Feedback() {
     'showAlert'
   );
 
-  var showPopupForm = () => setShow(true);
   var closePopupForm = () => setShow(false);   
 
   if (show) {

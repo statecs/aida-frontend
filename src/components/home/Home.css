@@ -16,6 +16,13 @@
     color:#3875A8;
     font-family: 'Barlow Semi Condensed', sans-serif;
 }
+.logoTextFront{
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    color:#666;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+}
 .site-logo-popup{
     padding: 1em 2em;
 }
@@ -83,7 +90,7 @@
     font-size: 12px;
     color:black;
     display:block;
-    text-shadow: 1px 0 0 #f5f5f7, -1px 0 0 #f5f5f7, 2px 0 0 #f5f5f7, -2px 0 0 #f5f5f7, 0 1px 0 #f5f5f7, 0 -1px 0 #f5f5f7, 0 2px 0 #f5f5f7, 0 -2px 0 #f5f5f7;
+    text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 2px 0 0 #fff, -2px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff;
    }
    
    input:focus {

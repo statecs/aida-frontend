@@ -36,6 +36,9 @@ body.dark {
 .dark .logoText{
   color:#c5c5c5;
 }
+.dark .logoTextFront{
+  color:#c5c5c5;
+}
 .dark .exampleBtn{
   border: 2px solid #c5c5c5;
   background-color: #383838;

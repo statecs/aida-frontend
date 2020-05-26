@@ -22,6 +22,7 @@ constructor() {
     };
     
     this.speech = new Speech();
+    this.audio = new Audio("/sound.mp3")
 }
 
   supportsMediaDevices = () => {
@@ -34,23 +35,30 @@ constructor() {
 
 
 handlePause = () => {
-   this.setState({
+    if (this.state.playing){
+           this.setState({
       playing: false
     });
 
     this.speech.cancel();
-    
-   
+
+    }
   };
 
 handlePlay = () => {
-  this.setState({
-      playing: true
+    if (this.state.playing){
+      this.setState({
+         playing: false
     });
+     this.speech.pause();
 
-    this.speakNow();
-  
- 
+    } else {
+      this.setState({
+        playing: true
+      });
+
+      this.speakNow();
+    }
   };
 
    /**
@@ -58,7 +66,7 @@ handlePlay = () => {
    */
   speakNow = () => {
 
-    this.speech.setLanguage("sv-SE");
+  this.speech.setLanguage("sv-SE");
 
      if (this.props.buttons) {
       let custom = this.props.buttons.map((msg, i) =>  { return msg.payload});
@@ -70,7 +78,7 @@ handlePlay = () => {
          listeners: {
 
             onend: () => {
-                console.log("End utterance")
+                this.audio.play()
             },
 
     }
@@ -92,7 +100,7 @@ handlePlay = () => {
             listeners: {
 
               onend: () => {
-                  console.log("End utterance")
+                  this.audio.play()
               },
 
           }
@@ -119,7 +127,7 @@ handlePlay = () => {
          listeners: {
 
             onend: () => {
-                console.log("End utterance")
+                this.audio.play()
             },
 
     }
@@ -141,7 +149,7 @@ handlePlay = () => {
             listeners: {
 
               onend: () => {
-                  console.log("End utterance")
+                  this.audio.play()
               },
 
           }
@@ -155,23 +163,25 @@ handlePlay = () => {
         })
 
       }
-      
     }
 
   
 componentDidUpdate(prevProps, prevState){
 
-  if (prevProps.loading){
+  if (prevProps.loading && !this.state.playing){
+ 
+      this.setState({
+                playing: true
+          });
 
-    this.handlePlay();
-    
-      if (prevState.playing !== this.state.playing) {
-          this.setState({
-              playing: false
-        });
-    }
-  
-    } 
+        if (prevState.playing !== this.state.playing) {
+            this.setState({
+                playing: false
+          });
+      }
+
+    this.speakNow();
+  } 
 }
 
 componentDidMount (){
@@ -263,7 +273,7 @@ playSound(){
 
     onToggle(index, e, button){
 
-      this.handlePause()
+      this.handlePause();
 
         if (this.props.buttons){
             let newButtonItems = this.props.buttons.slice();

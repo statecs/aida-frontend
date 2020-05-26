@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { FaMicrophone } from "react-icons/fa";
+import Speech from 'speak-tts'
 
 type SpeechInputProps = {
   onSpeechInput: (message: string) => Promise<void>,
@@ -49,13 +50,8 @@ export default class SpeechInput extends Component<
     recognition.onresult = this.onRecognitionResult;
     this.recognition = recognition;
     this.audio = new Audio("/sound.mp3")
+    this.speech = new Speech();
     this.startRecognition();
-  }
-
-  componentDidUpdate() {
-      if (!this.state.isRecognizing){
-        this.audio.play()
-    }
   }
 
   onRecognitionStart = () => {
@@ -97,10 +93,23 @@ export default class SpeechInput extends Component<
     if (this.state.isRecognizing) {
       this.recognition.stop();
       return;
+    } else {
+      this.recognition.start();
     }
 
-    this.recognition.start();
   };
+
+  startClickRecognition = () => {
+    if (this.state.isRecognizing) {
+        this.recognition.stop();
+        return;
+    } else {
+      this.audio = new Audio("/sound.mp3")
+     this.audio.play()
+      this.recognition.start();
+    }
+
+  }
 
   render() {
     return supportsSpeechRecognition() ? (
@@ -108,7 +117,7 @@ export default class SpeechInput extends Component<
 <React.Fragment>
         {this.state.isRecognizing ? (
 
-             <button  aria-label="Aktivera mikrofon" className="speech-control-container listen" onClick={this.startRecognition}>
+             <button  aria-label="Aktivera mikrofon" className="speech-control-container listen" onClick={this.startClickRecognition}>
               <div className="speech-control">
               <FaMicrophone className="microphone-icon" />
           </div>
@@ -120,7 +129,7 @@ export default class SpeechInput extends Component<
       
         ) : (
         
-  <button aria-label="Aktivera mikrofon"  className="speech-control-container" onClick={this.startRecognition}>
+  <button aria-label="Aktivera mikrofon"  className="speech-control-container" onClick={this.startClickRecognition}>
                     <div className="speech-control">
               <FaMicrophone className="microphone-icon" />
           </div>

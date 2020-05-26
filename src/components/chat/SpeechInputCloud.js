@@ -35,6 +35,7 @@ constructor() {
       recording: false,
       recorder: null,
       audioContext: null,
+      triggered: false
     };
     
     this.speech = new Speech();
@@ -42,6 +43,9 @@ constructor() {
 
     this.startRecord = this.startRecord.bind(this)
     this.stopRecord = this.stopRecord.bind(this)
+    this.audio = new Audio("/sound.mp3")
+    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    this.recorder = new Recorder(this.audioContext);
 
 }
 
@@ -55,6 +59,10 @@ constructor() {
     }
 
     startRecord = async () => {
+        this.setState({
+            errorMessage: ""
+          })
+
      try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             this.setState({ stream });
@@ -69,19 +77,17 @@ constructor() {
             this.setState({ stream })
         }
         const { stream } = this.state;
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        const recorder = new Recorder(audioContext);
-        recorder.init(stream)
+        this.recorder.init(stream)
             .then(
                 this.setState(
                     {
-                        audioContext,
-                        recorder,
+                      audioContext: this.audioContext,
+                        recorder: this.recorder,
                         recording: true
                     },
                     () => {
-                        recorder.start();
-                          this.detectSilence(stream, audioContext, recorder, this.stopRecord, this.onSpeak, 3500);
+                        this.recorder.start();
+                          this.detectSilence(stream, this.audioContext, this.recorder, this.stopRecord, this.onSpeak, 3500);
                     }
                 )
             ).catch(function(err) {
@@ -91,9 +97,6 @@ constructor() {
 
 
     stopRecord = () => {
-    this.setState({
-      errorMessage: ""
-    })
 
       if (this.state.recording){
       if (this.isIOS()) {
@@ -188,24 +191,41 @@ constructor() {
 }
 
   toggleMicrophone() {
+    // this.speech.pause();
+         this.setState({
+              playing: false,
+          });
     if (this.state.recording) {
       this.stopRecord();
 
     } else {
-        let audio = new Audio("/sound.mp3")
-        audio.play()
-      this.startRecord();
+/* let audio = new Audio("/sound.mp3")
+        audio.play()*/
+  var promise = this.audio.play()
+
+                    if( typeof promise !== 'undefined' ) {
+                        promise.then(function() {
+                            // auto-play started!
+                            this.audio.play()
+                        }).catch(function(error) {
+                            // auto-play failed
+                        });
+                    }
+                          this.startRecord();
     }
   }
     
 
   componentDidMount(prevProps, prevState){
     if (this.supportsMediaDevices){
+        let audio = new Audio("/sound.mp3")
+        audio.play()
         this.startRecord();
     }
   }
 
   componentWillUnmount(prevProps, prevState){
+     //  this.speech.pause();
     if (this.supportsMediaDevices){
         this.stopRecord();
     }
