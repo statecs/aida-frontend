@@ -8,6 +8,7 @@ import Recorder from '../../helpers/Recorder';
 type SpeechInputProps = {
   onSpeechInput: (message: string) => Promise<void>,
   onSpeechEnd: () => Promise<void>,
+  onSpeechError: () => Promise<void>,
   language: string
 };
 
@@ -129,7 +130,7 @@ constructor() {
             listeners: {
 
               onend: () => {
-                  console.log("End utterance")
+                  console.log("End utterance");
               },
 
           }
@@ -138,6 +139,7 @@ constructor() {
                     this.setState({
                     playing: false,
                   });
+                  this.props.onSpeechError();
               }).catch(e => {
                 console.error("An error occurred :", e)
               })
@@ -199,8 +201,6 @@ constructor() {
       this.stopRecord();
 
     } else {
-/* let audio = new Audio("/sound.mp3")
-        audio.play()*/
   var promise = this.audio.play()
 
                     if( typeof promise !== 'undefined' ) {
@@ -218,8 +218,16 @@ constructor() {
 
   componentDidMount(prevProps, prevState){
     if (this.supportsMediaDevices){
-        let audio = new Audio("/sound.mp3")
-        audio.play()
+         var promise = this.audio.play()
+
+                    if( typeof promise !== 'undefined' ) {
+                        promise.then(function() {
+                            // auto-play started!
+                            this.audio.play()
+                        }).catch(function(error) {
+                            // auto-play failed
+                        });
+                    }
         this.startRecord();
     }
   }

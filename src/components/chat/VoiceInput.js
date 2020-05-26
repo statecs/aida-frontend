@@ -32,6 +32,11 @@ class VoiceInput extends Component {
     });
   };
 
+        sendRefresh = () => {
+            this.setState({ _isMounted: false });
+             this.setState({ _isMounted: true });
+        }
+
     sendMessage = () => {
         if(this.state.message){
 
@@ -97,6 +102,8 @@ class VoiceInput extends Component {
                 language="sv-SE"
                 onSpeechInput={message => this.handleInputChange(message, true)}
                 onSpeechEnd={message => this.sendMessage()}
+                onSpeechError={message => this.sendRefresh()}
+                
                 /> 
                 
     }
