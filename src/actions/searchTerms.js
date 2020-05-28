@@ -18,6 +18,30 @@ const searchTerms = [{
 
 },
 {
+    name: "Hostat i 4 veckor",
+
+},
+{
+    name: "hög feber sedan tre dagar",
+
+},
+{
+    name: "hög feber som går upp och ner i 10 dagar",
+
+},
+{
+    name: "feber och blir stel i nacken",
+
+},
+{
+    name: "Halsont i två dagar",
+
+},
+{
+    name: "Behöver ett läkarintyg för min hosta",
+
+},
+{
     name: "hosta och feber",
 
 }];

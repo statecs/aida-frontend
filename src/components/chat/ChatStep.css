@@ -255,6 +255,15 @@ button.item{
     max-width:200px;
 }
 
+/* Chrome 29+ */
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  and (min-resolution:.001dpcm) {
+    .choice .label{
+      -webkit-margin-before: 30px;
+      margin-block-start: 30px;
+  }
+}
+
   .choice svg {
     margin-top: 19px;
     margin-left: 20px;
@@ -268,6 +277,15 @@ button.item{
     inline-size: 22px!important;
     block-size: 22px!important;
   }
+
+  /* Chrome 29+ */
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  and (min-resolution:.001dpcm) {
+    .choice svg{
+      margin-block-start: 29px;
+      -webkit-margin-start: 20px;
+  }
+}
 
 .choice[aria-checked=true] svg {
     fill: #3875A8;
